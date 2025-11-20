@@ -1,0 +1,34 @@
+{
+  "name": "Find & Grow Your Ecological Garden",
+  "short_name": "Ecological Garden",
+  "description": "Discover your local Ecological Vegetation Class and find indigenous plants for your Melbourne garden",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff0dc",
+  "theme_color": "#3d4535",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "lifestyle", "utilities"],
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
