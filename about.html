@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- PWA Configuration -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3d4535">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ecological Garden">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <title>About Us | Gardener & Son</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "IBM Plex Mono", monospace;
+      background-color: #fff0dc;
+      color: #3d4535;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Back Button */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      width: 50px;
+      height: 50px;
+      background-color: #3d4535;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      color: #fff0dc;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .back-button:hover {
+      transform: scale(1.05);
+      background-color: #2f3928;
+    }
+
+    /* Brand Badge */
+    .brand-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #3d4535 0%, #2f3928 100%);
+      color: #fff0dc;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .brand-badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-badge::before {
+      content: "⚘ ";
+      margin-right: 5px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 2px solid rgba(61, 69, 53, 0.1);
+    }
+
+    h1 {
+      font-family: "Abril Fatface", serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: #3d4535;
+      margin-bottom: 1rem;
+      letter-spacing: 0px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #666;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    /* Intro Section */
+    .intro {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      margin-bottom: 4rem;
+      font-size: 1.1rem;
+      line-height: 1.9;
+    }
+
+    /* Profile Sections */
+    .profile {
+      margin-bottom: 4rem;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, #3d4535 0%, #2f3928 100%);
+      color: #fff0dc;
+      border-radius: 12px;
+    }
+
+    .profile h2 {
+      font-family: "Abril Fatface", serif;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0px;
+      line-height: 1.2;
+    }
+
+    .profile h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .profile p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Transition text between profiles */
+    .transition-text {
+      text-align: center;
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-style: italic;
+      color: #3d4535;
+      margin: 3rem 0;
+      padding: 0 2rem;
+      opacity: 0.85;
+    }
+
+    /* Together Section */
+    .together {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 2.5rem;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+    }
+
+    .together h2 {
+      font-family: "Abril Fatface", serif;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      color: #3d4535;
+      margin-bottom: 2rem;
+      letter-spacing: 0px;
+      line-height: 1.2;
+    }
+
+    .together p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .together ul {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    .together ul li {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      padding: 0.75rem 0;
+      padding-left: 2rem;
+      position: relative;
+    }
+
+    .together ul li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #3d4535;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* Vision */
+    .vision {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, #3d4535 0%, #2f3928 100%);
+      color: #fff0dc;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+    }
+
+    .vision p {
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      line-height: 1.8;
+      font-style: italic;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Contact Info Section */
+    .contact-info-section {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 2.5rem;
+      border-radius: 12px;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .contact-info-section h2 {
+      font-family: "Abril Fatface", serif;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      color: #3d4535;
+      margin-bottom: 2rem;
+      letter-spacing: 0px;
+    }
+
+    .contact-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-item {
+      padding: 1.5rem;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .contact-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+
+    .contact-item p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .contact-item a {
+      color: #3d4535;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-item a:hover {
+      opacity: 0.7;
+    }
+
+    /* Footer - matching evc-map page exactly */
+    footer {
+      margin-top: 0;
+      padding: 50px 20px;
+      background-color: #3d4535;
+      color: #fff0dc;
+      text-align: center;
+    }
+
+    footer .acknowledgement {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: rgba(255, 240, 220, 0.05);
+      border-radius: 8px;
+      text-align: left;
+      line-height: 1.8;
+    }
+
+    footer .acknowledgement p {
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    footer .acknowledgement p:last-child {
+      margin-bottom: 0;
+    }
+
+    footer > p {
+      margin-top: 40px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    footer a {
+      color: #fff0dc;
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+    }
+
+    footer a:hover {
+      opacity: 0.8;
+    }
+
+
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 4rem 1.5rem 2rem;
+      }
+
+      .intro, .profile, .together, .contact-info-section {
+        padding: 1.5rem;
+      }
+
+      .profile h3 {
+        font-size: 1rem;
+      }
+
+      .transition-text {
+        font-size: 1.2rem;
+        margin: 2rem 0;
+      }
+
+      .back-button {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+
+      .brand-badge {
+        bottom: 15px;
+        right: 15px;
+        font-size: 0.7rem;
+        padding: 8px 16px;
+      }
+
+      .contact-details {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      footer {
+        padding: 40px 15px;
+      }
+
+      footer .acknowledgement {
+        padding: 1.5rem;
+        margin: 0 auto;
+      }
+
+      footer .acknowledgement p {
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      footer > p {
+        font-size: 13px;
+        margin-top: 30px;
+        padding: 0 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 3.5rem 1rem 2rem;
+      }
+
+      .intro, .profile, .together, .contact-info-section {
+        padding: 1.2rem;
+      }
+
+      .transition-text {
+        font-size: 1.1rem;
+      }
+
+      footer .acknowledgement {
+        padding: 1.2rem;
+      }
+
+      footer .acknowledgement p {
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+
+      footer > p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">←</a>
+  <a href="https://www.gardenerandson.com" target="_blank" class="brand-badge">Gardener & Son</a>
+
+  <div class="container">
+    <div class="hero">
+      <h1>About Us</h1>
+      <p class="subtitle">Gardener & Son</p>
+    </div>
+
+    <div class="intro">
+      <p><strong>Tyson & Natasha — Co-Founders, Garden Makers, Storytellers</strong></p><br>
+      <p>Gardener & Son was founded by Tyson and Natasha, partners in life and creative vision, who share a belief that gardens can be both ecological and deeply human. Together, they've shaped one of Melbourne's most distinctive ecological garden design studios — where science, story, and design come together to restore beauty and biodiversity.</p>
+    </div>
+
+    <div class="profile">
+      <h2>Tyson</h2>
+      <h3>Ecological Designer & Land Reader</h3>
+      <p>Tyson approaches every landscape through the lens of custodianship, biophilic experience, and human health. He designs with the understanding that gardens should restore people as much as they restore place.</p>
+      <p>His work is anchored in regenerative practice, the circular economy, and a deep respect for how healthy ecosystems function — creating landscapes that elevate wellbeing and feel deeply connected to Country.</p>
+    </div>
+
+    <p class="transition-text">Where Tyson shapes the land, Natasha brings it to life.</p>
+
+    <div class="profile">
+      <h2>Natasha</h2>
+      <h3>Plant Stylist, Palette Maker, Aesthetic Visionary</h3>
+      <p>Natasha designs the plant palettes, plant combinations, and spatial planting rhythms that define each Gardener & Son project. Her intuition for colour, foliage texture, seasonal expression, and the emotional tone of a space is unmatched.</p>
+      <p>In the studio, she creates environments that feel warm, soulful, and curated. In the garden, she extends that same aesthetic into living form — crafting plant communities that are not only beautiful but ecologically functional, climate-responsive, and generous to wildlife.</p>
+    </div>
+
+    <div class="together">
+      <h2>Together — A Studio Built on Ecology, Design, and Story</h2>
+      <p>Tyson and Natasha blend their gifts to create gardens that are immersive, biodiverse, culturally grounded, and genuinely regenerative. Their work is defined by:</p>
+      <ul>
+        <li>respect for Indigenous ecologies and Country</li>
+        <li>a commitment to biodiversity and climate resilience</li>
+        <li>a belief in gardens as places of meaning and memory</li>
+        <li>a design style that is naturalistic, soulful, and deeply place-based</li>
+      </ul>
+    </div>
+
+    <div class="vision">
+      <p>Their vision is simple: To make biodiversity mainstream — one garden, one story, one community at a time.</p>
+    </div>
+
+    <div class="contact-info-section">
+      <h2>Visit Our Studio</h2>
+      <div class="contact-details">
+        <div class="contact-item">
+          <h3>Studio</h3>
+          <p>2 Churchill Street<br>Mont Albert 3127<br>(Grassy Woodland)</p>
+          <p><strong>Open:</strong> Tues, Thurs, Fri<br>9am–2pm</p>
+          
+        </div>
+        <div class="contact-item">
+          <h3>Email</h3>
+          <p><a href="/cdn-cgi/l/email-protection#6e060b0202012e090f1c0a0b000b1c0f000a1d0100400d0103"><span class="__cf_email__" data-cfemail="dbb3beb7b7b49bbcbaa9bfbeb5bea9bab5bfa8b4b5f5b8b4b6">[email&#160;protected]</span></a></p>
+        </div>
+        <div class="contact-item">
+          <h3>Mobile</h3>
+          <p><a href="tel:0406059866">0406 059 866</a></p>
+        </div>
+        <div class="contact-item">
+          <h3>Connect</h3>
+          <p>
+            <a href="https://www.instagram.com/gardenerandson/" target="_blank">Instagram</a><br>
+            <a href="https://www.gardenerandson.com" target="_blank">gardenerandson.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer - exact match from evc-map page -->
+  <footer id="footer">
+    <div class="acknowledgement">
+      <p>
+        At Gardener & Son, we acknowledge the Wurundjeri Woi Wurrung people of the Kulin Nation, the Traditional Custodians of the land on which we live and work. We honour their enduring connection to Country — and the grasslands, woodlands, and wetlands that once flourished here through generations of care and balance. These living systems were not lost to time, but to disconnection. Our work seeks to rekindle that relationship, restoring native ecologies and weaving biodiversity back into the urban fabric — each garden a quiet act of remembrance and renewal.
+      </p>
+    </div>
+    <p>
