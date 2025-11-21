@@ -444,7 +444,7 @@ function checkPlantImage(plantName) {
 function getKitDetails(evcName) {
   const kits = {
     'Box-Ironbark Forest': {
-      image: 'box-ironbark-forest.png',
+      image: 'box-ironbark-forest.jpg',
       description: 'Iconic ironbark and box eucalypts with diverse understory. Thrives in low-rainfall areas with nutrient-poor soils.',
       canopy: 3,
       shrub: 3,
@@ -453,7 +453,7 @@ function getKitDetails(evcName) {
       slug: 'box-ironbark-forest'
     },
     'Brackish Grassland': {
-      image: 'brackish-grassland.png',
+      image: 'brackish-grassland.jpg',
       description: 'Salt-tolerant grassland communities near coastal areas. Important habitat for migratory birds.',
       canopy: 1,
       shrub: 2,
@@ -462,7 +462,7 @@ function getKitDetails(evcName) {
       slug: 'brackish-grassland'
     },
     'Coast Banksia Woodland': {
-      image: 'coast-banksia-woodland.png',
+      image: 'coast-banksia-woodland.jpg',
       description: 'Coastal banksia-dominated woodland with heath understory. Perfect for sandy coastal soils.',
       canopy: 2,
       shrub: 4,
@@ -471,7 +471,7 @@ function getKitDetails(evcName) {
       slug: 'coast-banksia-woodland'
     },
     'Coastal Saltmarsh': {
-      image: 'coastal-saltmarsh.png',
+      image: 'coastal-saltmarsh.jpg',
       description: 'Intertidal vegetation adapted to regular tidal inundation. Critical ecosystem for coastal biodiversity.',
       canopy: 0,
       shrub: 2,
@@ -480,7 +480,7 @@ function getKitDetails(evcName) {
       slug: 'coastal-saltmarsh'
     },
     'Coastal Scrub': {
-      image: 'coastal-scrub.png',
+      image: 'coastal-scrub.jpg',
       description: 'Wind-pruned coastal vegetation adapted to salt spray and sandy soils. Essential dune stabilization.',
       canopy: 1,
       shrub: 5,
@@ -489,7 +489,7 @@ function getKitDetails(evcName) {
       slug: 'coastal-scrub'
     },
     'Creekline Grassy Woodland': {
-      image: 'creekline-grassy-woodland.png',
+      image: 'creekline-grassy-woodland.jpg',
       description: 'Riparian woodland with grassy groundlayer along minor creeks. Protects waterways and provides wildlife corridors.',
       canopy: 3,
       shrub: 3,
@@ -498,7 +498,7 @@ function getKitDetails(evcName) {
       slug: 'creekline-grassy-woodland'
     },
     'Creekline Herb-rich Woodland': {
-      image: 'creekline-herb-rich-woodland.png',
+      image: 'creekline-herb-rich-woodland.jpg',
       description: 'Diverse woodland along ephemeral creeks with rich herbaceous layer. High biodiversity in moist microhabitats.',
       canopy: 3,
       shrub: 3,
@@ -507,7 +507,7 @@ function getKitDetails(evcName) {
       slug: 'creekline-herb-rich-woodland'
     },
     'Damp Sands Herb-rich Woodland': {
-      image: 'damp-sands-herb-rich-woodland.png',
+      image: 'damp-sands-herb-rich-woodland.jpg',
       description: 'Diverse woodland on seasonally damp sandy soils. Rich herbaceous groundlayer with high biodiversity.',
       canopy: 3,
       shrub: 3,
@@ -516,7 +516,7 @@ function getKitDetails(evcName) {
       slug: 'damp-sands-herb-rich-woodland'
     },
     'Estuarine Woodlands': {
-      image: 'estuarine-woodlands.png',
+      image: 'estuarine-woodlands.jpg',
       description: 'Coastal vegetation where rivers meet the sea. Adapted to brackish water and tidal influence.',
       canopy: 3,
       shrub: 3,
@@ -525,7 +525,7 @@ function getKitDetails(evcName) {
       slug: 'estuarine-woodlands'
     },
     'Floodplain Riparian Woodland': {
-      image: 'floodplain-riparian-woodland.png',
+      image: 'floodplain-riparian-woodland.jpg',
       description: 'Riverine woodlands adapted to periodic flooding. Important for water quality and flood mitigation.',
       canopy: 3,
       shrub: 3,
@@ -534,7 +534,7 @@ function getKitDetails(evcName) {
       slug: 'floodplain-riparian-woodland'
     },
     'Grassy Dry Forest': {
-      image: 'grassy-dry-forest.png',
+      image: 'grassy-dry-forest.jpg',
       description: 'Open forest structure with colorful wildflowers. Thrives in well-drained soils.',
       canopy: 3,
       shrub: 3,
@@ -543,7 +543,7 @@ function getKitDetails(evcName) {
       slug: 'grassy-dry-forest'
     },
     'Grassy Forest': {
-      image: 'grassy-forest.png',
+      image: 'grassy-forest.jpg',
       description: 'Tall eucalypt forest with grassy understory. Supports diverse wildlife in suburban settings.',
       canopy: 3,
       shrub: 3,
@@ -552,7 +552,7 @@ function getKitDetails(evcName) {
       slug: 'grassy-forest'
     },
     'Grassy Woodland': {
-      image: 'grassy-woodland.png',
+      image: 'grassy-woodland.jpg',
       description: 'Open woodland with diverse native grasses. Perfect for larger suburban blocks.',
       canopy: 3,
       shrub: 3,
@@ -561,7 +561,7 @@ function getKitDetails(evcName) {
       slug: 'grassy-woodland'
     },
     'Heathy Dry Forest': {
-      image: 'heathy-dry-forest.png',
+      image: 'heathy-dry-forest.jpg',
       description: 'Forest with dense heath understory. Thrives on nutrient-poor, well-drained soils.',
       canopy: 3,
       shrub: 3,
@@ -570,7 +570,7 @@ function getKitDetails(evcName) {
       slug: 'heathy-dry-forest'
     },
     'Heathy Woodland': {
-      image: 'heathy-woodland.png',
+      image: 'heathy-woodland.jpg',
       description: 'Low open woodland with dense heath understory. Perfect for sandy soils.',
       canopy: 2,
       shrub: 4,
@@ -579,7 +579,7 @@ function getKitDetails(evcName) {
       slug: 'heathy-woodland'
     },
     'Herb-rich Foothill Forest': {
-      image: 'herb-rich-foothill.png',
+      image: 'herb-rich-foothill.jpg',
       description: 'Diverse forest with rich herbaceous layer. Found on fertile foothill soils.',
       canopy: 3,
       shrub: 3,
@@ -588,7 +588,7 @@ function getKitDetails(evcName) {
       slug: 'herb-rich-foothill'
     },
     'Lowland Forest': {
-      image: 'lowland-forest.png',
+      image: 'lowland-forest.jpg',
       description: 'Tall forest on flat to gently undulating terrain. Rich, productive ecosystems.',
       canopy: 4,
       shrub: 3,
@@ -597,7 +597,7 @@ function getKitDetails(evcName) {
       slug: 'lowland-forest'
     },
     'Plains Grassy Woodland': {
-      image: 'plains-grassy-woodland.png',
+      image: 'plains-grassy-woodland.jpg',
       description: 'Iconic River Red Gums with diverse grassland understory. Perfect for a Melbourne indigenous garden.',
       canopy: 3,
       shrub: 3,
@@ -606,7 +606,7 @@ function getKitDetails(evcName) {
       slug: 'plains-grassy-woodland'
     },
     'Riparian Forest': {
-      image: 'riparian-forest.png',
+      image: 'riparian-forest.jpg',
       description: 'Waterway vegetation with deep-rooted trees. Stabilizes banks and filters runoff.',
       canopy: 4,
       shrub: 3,
@@ -615,7 +615,7 @@ function getKitDetails(evcName) {
       slug: 'riparian-forest'
     },
     'Riparian Thicket': {
-      image: 'riparian-thicket.png',
+      image: 'riparian-thicket.jpg',
       description: 'Dense shrubby vegetation along streams. Excellent for erosion control and wildlife shelter.',
       canopy: 2,
       shrub: 5,
@@ -624,7 +624,7 @@ function getKitDetails(evcName) {
       slug: 'riparian-thicket'
     },
     'Riparian Woodland': {
-      image: 'riparian-woodland.png',
+      image: 'riparian-woodland.jpg',
       description: 'Open woodland along permanent and ephemeral waterways. Critical wildlife habitat.',
       canopy: 3,
       shrub: 3,
@@ -633,7 +633,7 @@ function getKitDetails(evcName) {
       slug: 'riparian-woodland'
     },
     'Riverine Escarpment Scrub': {
-      image: 'riverrine-escarpment-scrub.png',
+      image: 'riverrine-escarpment-scrub.jpg',
       description: 'Shrubby vegetation on steep riverine slopes. Prevents erosion and creates microclimates.',
       canopy: 2,
       shrub: 5,
@@ -642,7 +642,7 @@ function getKitDetails(evcName) {
       slug: 'riverrine-escarpment-scrub'
     },
     'Sand Heathland': {
-      image: 'sand-heathland.png',
+      image: 'sand-heathland.jpg',
       description: 'Low heathland on coastal and inland sand deposits. Vibrant flowering display year-round.',
       canopy: 1,
       shrub: 5,
@@ -651,7 +651,7 @@ function getKitDetails(evcName) {
       slug: 'sand-heathland'
     },
     'Shrubby Dry Forest': {
-      image: 'shrubby-dry-forest.png',
+      image: 'shrubby-dry-forest.jpg',
       description: 'Forest with prominent shrub layer. Thrives on drier, less fertile sites.',
       canopy: 3,
       shrub: 4,
@@ -660,7 +660,7 @@ function getKitDetails(evcName) {
       slug: 'shrubby-dry-forest'
     },
     'Shrubby Foothill Forest': {
-      image: 'shrubby-rich-foothill.png',
+      image: 'shrubby-rich-foothill.jpg',
       description: 'Dense shrubby forest on foothill slopes. Rich in wattles and understory species.',
       canopy: 3,
       shrub: 4,
@@ -669,7 +669,7 @@ function getKitDetails(evcName) {
       slug: 'shrubby-rich-foothill'
     },
     'Stream-bank Shrubland': {
-      image: 'stream-bank-shrubland.png',
+      image: 'stream-bank-shrubland.jpg',
       description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
       canopy: 2,
       shrub: 5,
@@ -678,7 +678,7 @@ function getKitDetails(evcName) {
       slug: 'stream-bank-shrubland'
     },
     'Swamp Scrub': {
-      image: 'swamp-scrub.png',
+      image: 'swamp-scrub.jpg',
       description: 'Dense shrubby vegetation in seasonally inundated areas. Creates important wetland habitat.',
       canopy: 1,
       shrub: 6,
@@ -687,7 +687,7 @@ function getKitDetails(evcName) {
       slug: 'swamp-scrub'
     },
     'Swampy Riparian Complex': {
-      image: 'swampy-riparian-complex.png',
+      image: 'swampy-riparian-complex.jpg',
       description: 'Wetland-riparian ecosystem along drainage lines with fluctuating water levels. Natural water filtration system.',
       canopy: 3,
       shrub: 3,
@@ -696,7 +696,7 @@ function getKitDetails(evcName) {
       slug: 'swampy-riparian-complex'
     },
     'Swampy Riparian Woodland': {
-      image: 'swampy-riparian-woodland.png',
+      image: 'swampy-riparian-woodland.jpg',
       description: 'Waterlogged riparian areas with specialised vegetation. Natural water filtration system.',
       canopy: 3,
       shrub: 3,
@@ -705,7 +705,7 @@ function getKitDetails(evcName) {
       slug: 'swampy-riparian-woodland'
     },
     'Treed Sand Heathland': {
-      image: 'treed-sand-heathland.png',
+      image: 'treed-sand-heathland.jpg',
       description: 'Heath with scattered tree cover on sandy soils. Diverse flowering shrub layer.',
       canopy: 2,
       shrub: 4,
@@ -714,7 +714,7 @@ function getKitDetails(evcName) {
       slug: 'treed-sand-heathland'
     },
     'Valley Grassy Forest': {
-      image: 'valley-grassy-forest.png',
+      image: 'valley-grassy-forest.jpg',
       description: 'Tall eucalypt forest with rich fern and herb layer. Ideal for shaded valley slopes.',
       canopy: 3,
       shrub: 3,
@@ -723,7 +723,7 @@ function getKitDetails(evcName) {
       slug: 'valley-grassy-forest'
     },
     'Valley Heathy Forest': {
-      image: 'valley-heathy-forest.png',
+      image: 'valley-heathy-forest.jpg',
       description: 'Forest with heathy understory in sheltered valleys. Rich in flowering shrubs.',
       canopy: 3,
       shrub: 3,
@@ -732,7 +732,7 @@ function getKitDetails(evcName) {
       slug: 'valley-heathy-forest'
     },
     'Wet Heathland': {
-      image: 'wet-heathland.png',
+      image: 'wet-heathland.jpg',
       description: 'Heath communities on poorly-drained soils. Spectacular seasonal flowering display.',
       canopy: 1,
       shrub: 5,
@@ -1160,8 +1160,6 @@ function displayModal(name, status, region, code, lat, lon) {
         
         kitSection.appendChild(kitButton);
         
-        // Removed "Learn more" button
-        
       } else {
         // No kit data available - show coming soon with button
         const comingSoon = document.createElement("p");
@@ -1206,7 +1204,7 @@ function displayModal(name, status, region, code, lat, lon) {
       const teeSection = document.createElement("div");
       teeSection.style.marginTop = "20px";
       teeSection.style.padding = "30px";
-      teeSection.style.background = "rgba(255, 255, 255, 0.5)";
+      teeSection.style.background = "rgba(255, 255, 255, 0.7)";
       teeSection.style.borderRadius = "12px";
       teeSection.style.border = "1px solid #e2e8f0";
       
@@ -1219,12 +1217,12 @@ function displayModal(name, status, region, code, lat, lon) {
       teeTitle.style.color = "#3d4535";
       teeSection.appendChild(teeTitle);
       
-      // Create image filename from EVC name
+      // Create image filename from EVC name - CHANGED TO .jpg
       const imageFilename = name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/['']/g, '')
         .replace(/&/g, 'and')
-        + '.png';
+        + '.jpg';
       
       // Image container
       const imageContainer = document.createElement("div");
