@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   
   <!-- PWA Configuration -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#3d4535">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Ecological Garden">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
   
   <title>Find & Grow Your Ecological Garden | Gardener & Son</title>
   <!-- Fonts & Leaflet CSS -->
@@ -1202,7 +1202,7 @@ By planting indigenous species, you help restore local biodiversity, support nat
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('./service-worker.js')
           .then((registration) => {
             console.log('ServiceWorker registered:', registration.scope);
           })
