@@ -1358,10 +1358,13 @@ function displayModal(name, status, region, code, lat, lon) {
             return;
           }
           
-          // Build Stripe URL with client reference ID containing size and EVC
-          const stripeUrl = new URL("https://buy.stripe.com/9B6aEXfKV0Cbcbjg8n5Vu00");
-          // Create a reference ID that includes size and EVC (visible in Stripe dashboard)
-          const referenceId = `Size-${size}_EVC-${name.replace(/\s+/g, '-')}`;
+          // Your live Stripe Payment Link
+          const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
+          
+          // Clearer reference format with EVC code, structured data, and timestamp
+          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+          const referenceId = `tee|evcCode:${code}|evcName:${name.replace(/\s+/g, '-')}|size:${size}|date:${timestamp}`;
+          
           stripeUrl.searchParams.append("client_reference_id", referenceId);
           
           // Open Stripe checkout in new tab
