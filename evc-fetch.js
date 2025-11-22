@@ -1100,7 +1100,7 @@ function displayModal(name, status, region, code, lat, lon) {
           featuresList.appendChild(li);
         });
         
-        kitSection.appendChild(featuresList);
+        featuresList && kitSection.appendChild(featuresList);
         
         // Price - matching Tee section styling with mobile line break
         const kitPrice = document.createElement("div");
@@ -1149,10 +1149,19 @@ function displayModal(name, status, region, code, lat, lon) {
         });
         
         kitButton.addEventListener("click", () => {
-          // Build Stripe URL with metadata
+          // Build Stripe URL with metadata (forest kit only needs EVC + address)
           const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
-          const referenceId = `EVC-${name.replace(/\s+/g, '-')}_Address-${(window.searchedAddress || '').replace(/\s+/g, '-').substring(0, 50)}`;
-          stripeUrl.searchParams.append("client_reference_id", referenceId);
+          const address = (window.searchedAddress || '').replace(/\s+/g, '-').substring(0, 80);
+          const date = new Date().toISOString().split('T')[0];
+          const referenceId = [
+            'kit',
+            `evcCode:${code}`,
+            `evcName:${name.replace(/\s+/g, '-')}`,
+            address ? `addr:${address}` : null,
+            `date:${date}`
+          ].filter(Boolean).join('|');
+
+          stripeUrl.searchParams.set("client_reference_id", referenceId);
           
           // Open Stripe checkout
           window.open(stripeUrl.toString(), '_blank');
@@ -1289,7 +1298,6 @@ function displayModal(name, status, region, code, lat, lon) {
         teeDescription.innerHTML = `
           <p style="margin-bottom: 10px; font-weight: 600; color: #3d4535;">Koa Goods Classic Hemp Tee</p>
           <p style="margin-bottom: 8px; color: #666;">A timeless everyday layer made from a 210 gsm blend of hemp and organic cotton. Each piece is crafted by Koa Goods in carbon-neutral workshops, where a tree is planted for every order. Naturally breathable, soft against the skin, and designed with a relaxed fit and ribbed detailing.</p>
-          
         `;
         teeDescription.style.marginBottom = "20px";
         teeDescription.style.fontSize = "16px";
@@ -1315,7 +1323,7 @@ function displayModal(name, status, region, code, lat, lon) {
         sizeSelect.style.flex = "1";
         sizeSelect.style.padding = "12px";
         sizeSelect.style.fontSize = "16px";
-        sizeSelect.style.border = "2px solid #3d4535";
+        sizeSelect.style.border = "2px solid "#3d4535";
         sizeSelect.style.borderRadius = "50px";
         sizeSelect.style.background = "white";
         sizeSelect.style.cursor = "pointer";
@@ -1351,21 +1359,30 @@ function displayModal(name, status, region, code, lat, lon) {
           teeButton.style.transform = "scale(1)";
         });
         
-        teeButton.addEventListener("click", async () => {
+        // UPDATED CLICK HANDLER – passes size + EVC via client_reference_id
+        teeButton.addEventListener("click", () => {
           const size = sizeSelect.value;
           if (!size) {
             alert("Please choose a size first.");
             return;
           }
           
-          // Your live Stripe Payment Link
+          // Your live Stripe Payment Link for tees
           const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
           
-          // Clearer reference format with EVC code, structured data, and timestamp
-          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-          const referenceId = `tee|evcCode:${code}|evcName:${name.replace(/\s+/g, '-')}|size:${size}|date:${timestamp}`;
+          const address = (window.searchedAddress || '').replace(/\s+/g, '-').substring(0, 80);
+          const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
           
-          stripeUrl.searchParams.append("client_reference_id", referenceId);
+          const referenceId = [
+            'tee',
+            `evcCode:${code}`,                          // numeric EVC code
+            `evcName:${name.replace(/\s+/g, '-')}`,     // slugged EVC name
+            `size:${size}`,                             // tee size
+            address ? `addr:${address}` : null,
+            `date:${date}`
+          ].filter(Boolean).join('|');
+          
+          stripeUrl.searchParams.set("client_reference_id", referenceId);
           
           // Open Stripe checkout in new tab
           window.open(stripeUrl.toString(), '_blank');
