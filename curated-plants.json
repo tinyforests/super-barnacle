@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "last_updated": "2025-11-06",
+    "last_updated": "2025-11-22",
     "coverage": "Victoria, Australia",
-    "total_evcs": 33
+    "total_evcs": 23
   },
   "evcs": {
     "2": {
@@ -840,6 +840,64 @@
             "Lomandra filiformis (Wattle Mat-rush)",
             "Microlaena stipoides var. stipoides (Weeping Grass)",
             "Pteridium esculentum (Austral Bracken)"
+          ]
+        }
+      ]
+    },
+    "127": {
+      "description": "Valley Heathy Forest is a low to medium height eucalypt forest that occurs on sheltered slopes and drainage lines with relatively infertile, often sandy or gravelly soils. A scattered canopy of boxes and stringybarks sits above a dense, heathy understorey of peas, cassinias, and small shrubs, interwoven with wallaby-grasses, sedges, Grass-trees, and seasonal herbs. This community blends elements of Grassy and Heathy Dry Forest, and is strongly shaped by low-nutrient soils and periodic fire, with many species adapted to resprouting or germinating after burns.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus melliodora (Yellow Box)",
+            "Eucalyptus goniocalyx s.l. (Bundy)",
+            "Eucalyptus cephalocarpa s.l. (Silverleaf Stringybark)",
+            "Eucalyptus obliqua (Messmate Stringybark)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Exocarpos cupressiformis (Cherry Ballart)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Epacris impressa (Common Heath)",
+            "Cassinia aculeata (Common Cassinia)",
+            "Daviesia leptophylla (Narrow-leaf Bitter-pea)",
+            "Cassinia arcuata (Drooping Cassinia)",
+            "Platylobium obtusangulum (Common Flat-pea)",
+            "Dillwynia cinerascens s.l. (Grey Parrot-pea)",
+            "Hovea heterophylla (Common Hovea)",
+            "Pimelea humilis (Common Rice-flower)",
+            "Acrotriche serrulata (Honey-pots)",
+            "Bossiaea prostrata (Creeping Bossiaea)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Leptorhynchos tenuifolius (Wiry Buttons)",
+            "Gonocarpus tetragynus (Common Raspwort)",
+            "Helichrysum scorpioides (Button Everlasting)",
+            "Opercularia varia (Variable Stinkweed)",
+            "Drosera whittakeri ssp. aberrans (Scented Sundew)",
+            "Oxalis corniculata s.l. (Yellow Wood-sorrel)",
+            "Xanthorrhoea minor ssp. lutea (Small Grass-tree)",
+            "Deyeuxia quadriseta (Reed Bent-grass)",
+            "Gahnia radula (Thatch Saw-sedge)",
+            "Joycea pallida (Silvertop Wallaby-grass)",
+            "Lomandra filiformis (Wattle Mat-rush)",
+            "Themeda triandra (Kangaroo Grass)",
+            "Poa morrisii (Soft Tussock-grass)",
+            "Dianella revoluta s.l. (Black-anther Flax-lily)",
+            "Microlaena stipoides var. stipoides (Weeping Grass)",
+            "Lindsaea linearis (Screw Fern)",
+            "Billardiera scandens (Common Apple-berry)",
+            "Hardenbergia violacea (Purple Coral-pea)"
           ]
         }
       ]
