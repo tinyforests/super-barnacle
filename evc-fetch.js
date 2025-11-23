@@ -668,24 +668,24 @@ function getKitDetails(evcName) {
       specialFeature: 'Diverse shrub and wattle mix',
       slug: 'shrubby-rich-foothill'
     },
-    'Stream Bank Shrubland': {  // NEW - matches what API returns (space, no hyphen)
-  image: 'stream-bank-shrubland.jpg',
-  description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
-  canopy: 2,
-  shrub: 5,
-  groundcover: 3,
-  specialFeature: 'Erosion-controlling shrubs',
-  slug: 'stream-bank-shrubland'
-},
-'Stream-bank Shrubland': {  // EXISTING - keep this one
-  image: 'stream-bank-shrubland.jpg',
-  description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
-  canopy: 2,
-  shrub: 5,
-  groundcover: 3,
-  specialFeature: 'Erosion-controlling shrubs',
-  slug: 'stream-bank-shrubland'
-},
+    'Stream Bank Shrubland': {
+      image: 'stream-bank-shrubland.jpg',
+      description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
+      canopy: 2,
+      shrub: 5,
+      groundcover: 3,
+      specialFeature: 'Erosion-controlling shrubs',
+      slug: 'stream-bank-shrubland'
+    },
+    'Stream-bank Shrubland': {
+      image: 'stream-bank-shrubland.jpg',
+      description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
+      canopy: 2,
+      shrub: 5,
+      groundcover: 3,
+      specialFeature: 'Erosion-controlling shrubs',
+      slug: 'stream-bank-shrubland'
+    },
     'Swamp Scrub': {
       image: 'swamp-scrub.jpg',
       description: 'Dense shrubby vegetation in seasonally inundated areas. Creates important wetland habitat.',
@@ -755,6 +755,12 @@ function getKitDetails(evcName) {
 }
 
 function displayModal(name, status, region, code, lat, lon) {
+  // Clean mosaic EVC names - use only the first part before "/"
+  if (name && name.includes('/')) {
+    name = name.split('/')[0].trim();
+    console.log('Cleaned mosaic EVC name to:', name);
+  }
+  
   // Reset buttons when modal opens
   const searchBtn = document.getElementById("search-button");
   searchBtn.disabled = false;
@@ -1157,38 +1163,35 @@ function displayModal(name, status, region, code, lat, lon) {
           kitButton.style.transform = "scale(1)";
         });
         
-kitButton.addEventListener("click", () => {
-  // Clean EVC name for reference ID
-  const cleanEvcName = name
-    .replace(/[^\w\s-]/g, '')  // Remove special characters
-    .replace(/\s+/g, '-')       // Replace spaces with hyphens
-    .toLowerCase();
-  
-  // Get timestamp
-  const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-  
-  // Build comprehensive reference ID
-  const referenceId = `KIT_${cleanEvcName}_EVC-${code}_DATE-${timestamp}`;
-  
-  // Build Stripe URL
-  const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
-  stripeUrl.searchParams.append("client_reference_id", referenceId);
-  
-  // DEBUG: Show what we're sending
-  console.log("=== Stripe Forest Kit Order ===");
-  console.log("EVC Name:", name);
-  console.log("EVC Code:", code);
-  console.log("Reference ID:", referenceId);
-  console.log("Full URL:", stripeUrl.toString());
-  console.log("==============================");
-  
-  // Open Stripe checkout
-  window.open(stripeUrl.toString(), '_blank');
-});
+        kitButton.addEventListener("click", () => {
+          // Clean EVC name for reference ID
+          const cleanEvcName = name
+            .replace(/[^\w\s-]/g, '')  // Remove special characters
+            .replace(/\s+/g, '-')       // Replace spaces with hyphens
+            .toLowerCase();
+          
+          // Get timestamp
+          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+          
+          // Build comprehensive reference ID
+          const referenceId = `KIT_${cleanEvcName}_EVC-${code}_DATE-${timestamp}`;
+          
+          // Build Stripe URL
+          const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
+          stripeUrl.searchParams.append("client_reference_id", referenceId);
+          
+          // DEBUG: Show what we're sending
+          console.log("=== Stripe Forest Kit Order ===");
+          console.log("EVC Name:", name);
+          console.log("EVC Code:", code);
+          console.log("Reference ID:", referenceId);
+          console.log("Full URL:", stripeUrl.toString());
+          console.log("==============================");
+          
+          // Open Stripe checkout
+          window.open(stripeUrl.toString(), '_blank');
+        });
 
-
-
-        
         kitSection.appendChild(kitButton);
         
       } else {
@@ -1382,41 +1385,41 @@ kitButton.addEventListener("click", () => {
           teeButton.style.transform = "scale(1)";
         });
         
-      teeButton.addEventListener("click", async () => {
-  const size = sizeSelect.value;
-  if (!size) {
-    alert("Please choose a size first.");
-    return;
-  }
-  
-  // Clean EVC name for reference ID
-  const cleanEvcName = name
-    .replace(/[^\w\s-]/g, '')  // Remove special characters
-    .replace(/\s+/g, '-')       // Replace spaces with hyphens
-    .toLowerCase();
-  
-  // Get timestamp
-  const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-  
-  // Build comprehensive reference ID
-  const referenceId = `TEE_${cleanEvcName}_SIZE-${size}_EVC-${code}_DATE-${timestamp}`;
-  
-  // Your live Stripe Payment Link
-  const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
-  stripeUrl.searchParams.append("client_reference_id", referenceId);
-  
-  // DEBUG: Show what we're sending
-  console.log("=== Stripe T-Shirt Order ===");
-  console.log("EVC Name:", name);
-  console.log("EVC Code:", code);
-  console.log("Size:", size);
-  console.log("Reference ID:", referenceId);
-  console.log("Full URL:", stripeUrl.toString());
-  console.log("===========================");
-  
-  // Open Stripe checkout in new tab
-  window.open(stripeUrl.toString(), '_blank');
-});
+        teeButton.addEventListener("click", async () => {
+          const size = sizeSelect.value;
+          if (!size) {
+            alert("Please choose a size first.");
+            return;
+          }
+          
+          // Clean EVC name for reference ID
+          const cleanEvcName = name
+            .replace(/[^\w\s-]/g, '')  // Remove special characters
+            .replace(/\s+/g, '-')       // Replace spaces with hyphens
+            .toLowerCase();
+          
+          // Get timestamp
+          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+          
+          // Build comprehensive reference ID
+          const referenceId = `TEE_${cleanEvcName}_SIZE-${size}_EVC-${code}_DATE-${timestamp}`;
+          
+          // Your live Stripe Payment Link
+          const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
+          stripeUrl.searchParams.append("client_reference_id", referenceId);
+          
+          // DEBUG: Show what we're sending
+          console.log("=== Stripe T-Shirt Order ===");
+          console.log("EVC Name:", name);
+          console.log("EVC Code:", code);
+          console.log("Size:", size);
+          console.log("Reference ID:", referenceId);
+          console.log("Full URL:", stripeUrl.toString());
+          console.log("===========================");
+          
+          // Open Stripe checkout in new tab
+          window.open(stripeUrl.toString(), '_blank');
+        });
         
         teeControls.appendChild(teeButton);
         teeSection.appendChild(teeControls);
