@@ -668,15 +668,24 @@ function getKitDetails(evcName) {
       specialFeature: 'Diverse shrub and wattle mix',
       slug: 'shrubby-rich-foothill'
     },
-    'Stream-bank Shrubland': {
-      image: 'stream-bank-shrubland.jpg',
-      description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
-      canopy: 2,
-      shrub: 5,
-      groundcover: 3,
-      specialFeature: 'Erosion-controlling shrubs',
-      slug: 'stream-bank-shrubland'
-    },
+    'Stream Bank Shrubland': {  // NEW - matches what API returns (space, no hyphen)
+  image: 'stream-bank-shrubland.jpg',
+  description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
+  canopy: 2,
+  shrub: 5,
+  groundcover: 3,
+  specialFeature: 'Erosion-controlling shrubs',
+  slug: 'stream-bank-shrubland'
+},
+'Stream-bank Shrubland': {  // EXISTING - keep this one
+  image: 'stream-bank-shrubland.jpg',
+  description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
+  canopy: 2,
+  shrub: 5,
+  groundcover: 3,
+  specialFeature: 'Erosion-controlling shrubs',
+  slug: 'stream-bank-shrubland'
+},
     'Swamp Scrub': {
       image: 'swamp-scrub.jpg',
       description: 'Dense shrubby vegetation in seasonally inundated areas. Creates important wetland habitat.',
