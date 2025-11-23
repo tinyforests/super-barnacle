@@ -1185,7 +1185,7 @@ kitButton.addEventListener("click", () => {
   // Open Stripe checkout
   window.open(stripeUrl.toString(), '_blank');
 });
-```
+
 
 
         
