@@ -1187,9 +1187,7 @@ kitButton.addEventListener("click", () => {
 });
 ```
 
-**Example output:**
-```
-KIT_plains-grassy-woodland_EVC-55_DATE-2025-11-23
+
         
         kitSection.appendChild(kitButton);
         
