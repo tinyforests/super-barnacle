@@ -1148,15 +1148,39 @@ function displayModal(name, status, region, code, lat, lon) {
           kitButton.style.transform = "scale(1)";
         });
         
-        kitButton.addEventListener("click", () => {
-          // Build Stripe URL with metadata
-          const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
-          const referenceId = `EVC-${name.replace(/\s+/g, '-')}_Address-${(window.searchedAddress || '').replace(/\s+/g, '-').substring(0, 50)}`;
-          stripeUrl.searchParams.append("client_reference_id", referenceId);
-          
-          // Open Stripe checkout
-          window.open(stripeUrl.toString(), '_blank');
-        });
+kitButton.addEventListener("click", () => {
+  // Clean EVC name for reference ID
+  const cleanEvcName = name
+    .replace(/[^\w\s-]/g, '')  // Remove special characters
+    .replace(/\s+/g, '-')       // Replace spaces with hyphens
+    .toLowerCase();
+  
+  // Get timestamp
+  const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  
+  // Build comprehensive reference ID
+  const referenceId = `KIT_${cleanEvcName}_EVC-${code}_DATE-${timestamp}`;
+  
+  // Build Stripe URL
+  const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
+  stripeUrl.searchParams.append("client_reference_id", referenceId);
+  
+  // DEBUG: Show what we're sending
+  console.log("=== Stripe Forest Kit Order ===");
+  console.log("EVC Name:", name);
+  console.log("EVC Code:", code);
+  console.log("Reference ID:", referenceId);
+  console.log("Full URL:", stripeUrl.toString());
+  console.log("==============================");
+  
+  // Open Stripe checkout
+  window.open(stripeUrl.toString(), '_blank');
+});
+```
+
+**Example output:**
+```
+KIT_plains-grassy-woodland_EVC-55_DATE-2025-11-23
         
         kitSection.appendChild(kitButton);
         
