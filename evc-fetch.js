@@ -1351,38 +1351,41 @@ function displayModal(name, status, region, code, lat, lon) {
           teeButton.style.transform = "scale(1)";
         });
         
-        teeButton.addEventListener("click", async () => {
-          const size = sizeSelect.value;
-          if (!size) {
-            alert("Please choose a size first.");
-            return;
-          }
-          
-          // Your live Stripe Payment Link
-          const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
-          
-          // Get timestamp
-          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-          
-          // Use metadata instead of client_reference_id (more reliable)
-          stripeUrl.searchParams.append("metadata[product]", "tee");
-          stripeUrl.searchParams.append("metadata[evcCode]", code);
-          stripeUrl.searchParams.append("metadata[evcName]", name.replace(/\s+/g, '-'));
-          stripeUrl.searchParams.append("metadata[size]", size);
-          stripeUrl.searchParams.append("metadata[date]", timestamp);
-          
-          // DEBUG: Show what we're sending
-          console.log("Sending to Stripe:");
-          console.log("  Product: tee");
-          console.log("  EVC Code:", code);
-          console.log("  EVC Name:", name);
-          console.log("  Size:", size);
-          console.log("  Date:", timestamp);
-          console.log("Full URL:", stripeUrl.toString());
-          
-          // Open Stripe checkout in new tab
-          window.open(stripeUrl.toString(), '_blank');
-        });
+      teeButton.addEventListener("click", async () => {
+  const size = sizeSelect.value;
+  if (!size) {
+    alert("Please choose a size first.");
+    return;
+  }
+  
+  // Clean EVC name for reference ID
+  const cleanEvcName = name
+    .replace(/[^\w\s-]/g, '')  // Remove special characters
+    .replace(/\s+/g, '-')       // Replace spaces with hyphens
+    .toLowerCase();
+  
+  // Get timestamp
+  const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  
+  // Build comprehensive reference ID
+  const referenceId = `TEE_${cleanEvcName}_SIZE-${size}_EVC-${code}_DATE-${timestamp}`;
+  
+  // Your live Stripe Payment Link
+  const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
+  stripeUrl.searchParams.append("client_reference_id", referenceId);
+  
+  // DEBUG: Show what we're sending
+  console.log("=== Stripe T-Shirt Order ===");
+  console.log("EVC Name:", name);
+  console.log("EVC Code:", code);
+  console.log("Size:", size);
+  console.log("Reference ID:", referenceId);
+  console.log("Full URL:", stripeUrl.toString());
+  console.log("===========================");
+  
+  // Open Stripe checkout in new tab
+  window.open(stripeUrl.toString(), '_blank');
+});
         
         teeControls.appendChild(teeButton);
         teeSection.appendChild(teeControls);
