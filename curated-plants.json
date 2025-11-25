@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "last_updated": "2025-11-25",
     "coverage": "Victoria, Australia",
     "total_evcs": 23
@@ -286,6 +286,7 @@
           "layer": "Sub-Canopy Layer",
           "plants": [
             "Pomaderris aspera (Hazel Pomaderris)",
+            "Pomaderris racemosa (Cluster Pomaderris)",
             "Acacia melanoxylon (Blackwood)",
             "Notelaea ligustrina (Privet Mock-olive)"
           ]
@@ -763,6 +764,7 @@
           "layer": "Sub-Canopy Layer",
           "plants": [
             "Acacia melanoxylon (Blackwood)",
+            "Pomaderris racemosa (Cluster Pomaderris)",
             "Melaleuca ericifolia (Swamp Paperbark)",
             "Leptospermum lanigerum (Woolly Tea-tree)"
           ]
@@ -813,6 +815,7 @@
           "layer": "Sub-Canopy Layer",
           "plants": [
             "Acacia melanoxylon (Blackwood)",
+            "Pomaderris racemosa (Cluster Pomaderris)",
             "Melaleuca ericifolia (Swamp Paperbark)",
             "Leptospermum lanigerum (Woolly Tea-tree)"
           ]
@@ -924,6 +927,7 @@
           "layer": "Shrub Layer",
           "plants": [
             "Leptospermum continentale (Prickly Tea-tree)",
+            "Pomaderris racemosa (Cluster Pomaderris)",
             "Ozothamnus ferrugineus (Tree Everlasting)",
             "Cassinia aculeata (Common Cassinia)"
           ]
