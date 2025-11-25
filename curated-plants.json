@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.0.0",
-    "last_updated": "2025-11-22",
+    "version": "1.0.1",
+    "last_updated": "2025-11-25",
     "coverage": "Victoria, Australia",
     "total_evcs": 23
   },
@@ -683,6 +683,7 @@
             "Brachyscome multifida (Cut-leaf Daisy)",
             "Leptorhynchos tenuifolius (Wiry Buttons)",
             "Einadia nutans (Nodding Saltbush)",
+            "Atriplex semibaccata (Berry Saltbush)",
             "Hypericum gramineum (Small St John's Wort)",
             "Oxalis perennans (Grassland Wood-sorrel)",
             "Dichondra repens (Kidney-weed)",
@@ -935,6 +936,7 @@
             "Senecio sp. aff. tenuiflorus (Beaked Fireweed)",
             "Acaena novae-zelandiae (Bidgee-widgee)",
             "Oxalis exilis (Shady Wood-sorrel)",
+            "Atriplex semibaccata (Berry Saltbush)",
             "Lomandra longifolia (Spiny-headed Mat-rush)",
             "Poa labillardierei (Common Tussock-grass)",
             "Gahnia radula (Thatch Saw-sedge)",
@@ -1000,6 +1002,7 @@
             "Pelargonium australe (Austral Stork's-bill)",
             "Dianella tasmanica (Tasman Flax-lily)",
             "Einadia nutans (Nodding Saltbush)",
+            "Atriplex semibaccata (Berry Saltbush)",
             "Pterostylis longifolia s.l. (Tall Greenhood)",
             "Gonocarpus tetragynus (Common Raspwort)",
             "Drosera peltata ssp. auriculata (Tall Sundew)",
@@ -1108,6 +1111,7 @@
             "Calocephalus lacteus (Milky Beauty-heads)",
             "Selliera radicans (Shiny Swamp-mat)",
             "Utricularia tenella (Pink Bladderwort)",
+            "Atriplex semibaccata (Berry Saltbush)",
             "Gahnia filum (Chaffy Saw-sedge)",
             "Gahnia trifida (Coast Saw-sedge)",
             "Poa labillardierei (Common Tussock-grass)",
