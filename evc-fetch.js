@@ -715,7 +715,7 @@ function getKitDetails(evcName) {
     },
     'Swampy Woodland': {
   image: 'swampy-woodland.jpg',
-  description: 'Waterlogged woodland on poorly drained soils in the Dandenongs. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
+  description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
   canopy: 3,
   shrub: 3,
   groundcover: 4,
