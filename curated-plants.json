@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "last_updated": "2025-11-30",
     "coverage": "Victoria, Australia",
-    "total_evcs": 23
+    "total_evcs": 24
   },
   "evcs": {
     "2": {
@@ -598,6 +598,41 @@
             "Arthropodium strictum s.l. (Chocolate Lily)",
             "Microlaena stipoides var. stipoides (Weeping Grass)",
             "Billardiera scandens (Common Apple-berry)"
+          ]
+        }
+      ]
+    },
+    "48": {
+      "description": "Heathy Woodland is a low, open woodland on sandy or gravelly soils with a dense understorey of heaths, peas, and grasses. Dominated by eucalypts like Messmate and Narrow-leaf Peppermint over a rich layer of flowering shrubs including Common Heath, tea-trees, and wattles. This community thrives on nutrient-poor soils and is adapted to periodic fire, supporting high biodiversity including nectar-feeding birds and native bees. Found across Melbourne's outer suburbs, particularly in the Dandenongs and eastern areas.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus willisii (Shining Peppermint)",
+            "Eucalyptus obliqua (Messmate Stringybark)",
+            "Eucalyptus radiata s.l. (Narrow-leaf Peppermint)",
+            "Eucalyptus viminalis ssp. pryoriana (Rough-barked Manna Gum)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Epacris impressa (Common Heath)",
+            "Leptospermum myrsinoides (Heath Tea-tree)",
+            "Leptospermum continentale (Prickly Tea-tree)",
+            "Monotoca scoparia (Prickly Broom-heath)",
+            "Amperea xiphoclada var. xiphoclada (Broom Spurge)",
+            "Leucopogon virgatus (Common Beard-heath)",
+            "Dillwynia glaberrima (Smooth Parrot-pea)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Gahnia sieberiana (Red-fruit Saw-sedge)",
+            "Xanthorrhoea minor ssp. lutea (Small Grass-tree)",
+            "Hypolaena fastigiata (Tassel Rope-rush)",
+            "Cassytha glabella (Slender Dodder-laurel)"
           ]
         }
       ]
