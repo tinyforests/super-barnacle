@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "version": "1.0.4",
+    "version": "1.0.5",
     "last_updated": "2025-11-30",
     "coverage": "Victoria, Australia",
-    "total_evcs": 24
+    "total_evcs": 25
   },
   "evcs": {
     "2": {
@@ -1159,6 +1159,45 @@
             "Schoenus apogon (Common Bog-sedge)",
             "Austrodanthonia geniculata (Kneed Wallaby-grass)",
             "Distichlis distichophylla (Australian Salt-grass)"
+          ]
+        }
+      ]
+    },
+    "937": {
+      "description": "Swampy Woodland is a waterlogged to seasonally inundated woodland community found in poorly drained depressions, swales, and valley floors across the Dandenong Ranges and surrounding areas. Dominated by Swamp Gum with a diverse understorey of moisture-tolerant shrubs, sedges, grasses, and herbs, it creates important wetland habitat and water filtration zones. This EVC thrives in areas with seasonal waterlogging and supports high biodiversity including frogs, water birds, and wetland-dependent invertebrates.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus ovata (Swamp Gum)",
+            "Eucalyptus cephalocarpa s.s. (Mealy Stringybark)",
+            "Eucalyptus radiata s.l. (Narrow-leaf Peppermint)",
+            "Eucalyptus obliqua (Messmate Stringybark)",
+            "Melaleuca ericifolia (Swamp Paperbark)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Leptospermum continentale (Prickly Tea-tree)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Acaena novae-zelandiae (Bidgee-widgee)",
+            "Centella cordifolia (Centella)",
+            "Gratiola peruviana (Austral Brooklime)",
+            "Mazus pumilio (Swamp Mazus)",
+            "Gahnia sieberiana (Red-fruit Saw-sedge)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Carex appressa (Tall Sedge)",
+            "Gahnia radula (Thatch Saw-sedge)",
+            "Phragmites australis (Common Reed)",
+            "Schoenus apogon (Common Bog-sedge)",
+            "Lepidosperma laterale (Variable Sword-sedge)",
+            "Poa tenera (Slender Tussock-grass)",
+            "Juncus holoschoenus (Joint-leaf Rush)"
           ]
         }
       ]
