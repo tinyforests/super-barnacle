@@ -713,6 +713,15 @@ function getKitDetails(evcName) {
       specialFeature: 'Waterlogged soil tolerant',
       slug: 'swampy-riparian-woodland'
     },
+    'Swampy Woodland': {
+  image: 'swampy-woodland.jpg',
+  description: 'Waterlogged woodland on poorly drained soils in the Dandenongs. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
+  canopy: 3,
+  shrub: 3,
+  groundcover: 4,
+  specialFeature: 'Wetland habitat specialists',
+  slug: 'swampy-woodland'
+},
     'Treed Sand Heathland': {
       image: 'treed-sand-heathland.jpg',
       description: 'Heath with scattered tree cover on sandy soils. Diverse flowering shrub layer.',
