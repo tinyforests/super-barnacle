@@ -1,4 +1,4 @@
-// evc-fetch.js - Complete version with all EVCs and smart camera icons
+// evc-fetch.js - Complete version with EVC code display
 
 let map, marker, modalMap;
 
@@ -571,11 +571,11 @@ function getKitDetails(evcName) {
     },
     'Heathy Woodland': {
       image: 'heathy-woodland.jpg',
-      description: 'Low open woodland with dense heath understory. Perfect for sandy soils.',
+      description: 'Low open woodland with dense heath understory on sandy soils. Year-round flowering display from heaths, tea-trees, and peas. Perfect for well-drained sites.',
       canopy: 2,
-      shrub: 4,
-      groundcover: 4,
-      specialFeature: 'Year-round flowering species',
+      shrub: 5,
+      groundcover: 3,
+      specialFeature: 'Continuous flowering heath species',
       slug: 'heathy-woodland'
     },
     'Herb-rich Foothill Forest': {
@@ -714,14 +714,14 @@ function getKitDetails(evcName) {
       slug: 'swampy-riparian-woodland'
     },
     'Swampy Woodland': {
-  image: 'swampy-woodland.jpg',
-  description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
-  canopy: 3,
-  shrub: 3,
-  groundcover: 4,
-  specialFeature: 'Wetland habitat specialists',
-  slug: 'swampy-woodland'
-},
+      image: 'swampy-woodland.jpg',
+      description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
+      canopy: 3,
+      shrub: 3,
+      groundcover: 4,
+      specialFeature: 'Wetland habitat specialists',
+      slug: 'swampy-woodland'
+    },
     'Treed Sand Heathland': {
       image: 'treed-sand-heathland.jpg',
       description: 'Heath with scattered tree cover on sandy soils. Diverse flowering shrub layer.',
@@ -783,6 +783,7 @@ function displayModal(name, status, region, code, lat, lon) {
   window.currentLat = lat;
   window.currentLon = lon;
   window.currentEvcName = name;
+  window.currentEvcCode = code;
   
   // Log this EVC lookup to Google Sheet
   const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
@@ -828,6 +829,13 @@ function displayModal(name, status, region, code, lat, lon) {
   const regionEl = document.getElementById("modal-evc-region");
   regionEl.textContent = region || "Not specified";
   regionEl.style.lineHeight = "1.2";
+  regionEl.style.marginBottom = "5px";
+  
+  // ADD EVC CODE DISPLAY
+  const codeEl = document.getElementById("modal-evc-code");
+  codeEl.textContent = `EVC ${code}` || "Not specified";
+  codeEl.style.lineHeight = "1.2";
+  codeEl.style.marginBottom = "5px";
 
   // Setup modal map
   modalMap && modalMap.remove();
