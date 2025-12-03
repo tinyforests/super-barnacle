@@ -524,6 +524,15 @@ function getKitDetails(evcName) {
       specialFeature: 'Brackish water-tolerant species',
       slug: 'estuarine-woodlands'
     },
+    'Floodplain Wetland': {
+  image: 'floodplain-wetland.jpg',
+  description: 'Wetland vegetation adapted to seasonal waterlogging. Dominated by moisture-loving sedges, rushes, and wetland herbs. Natural water filtration system.',
+  canopy: 3,
+  shrub: 3,
+  groundcover: 4,
+  specialFeature: 'Wetland and waterway specialists',
+  slug: 'floodplain-wetland'
+},
     'Floodplain Riparian Woodland': {
       image: 'floodplain-riparian-woodland.jpg',
       description: 'Riverine woodlands adapted to periodic flooding. Important for water quality and flood mitigation.',
