@@ -266,21 +266,17 @@ function fetchAddressSuggestions(query) {
                result.display_name.includes('VIC');
         
         // ✅ NEW: Filter out businesses and POIs - prioritize residential addresses
-        const isResidential = (
-          // Has a house number (most important indicator of residential address)
-          address.house_number ||
-          // Is classified as a residential address type
-          result.class === 'highway' ||
-          result.class === 'place' ||
-          result.type === 'house' ||
-          result.type === 'residential' ||
-          // Has road/street/avenue in address without business name
-          (address.road && !result.name) ||
-          // Avoid businesses (no amenity, shop, or office tags)
-          (!result.class?.includes('amenity') && 
-           !result.class?.includes('shop') && 
-           !result.class?.includes('office'))
-        );
+   // ✅ FIXED: Stricter residential filter
+const isResidential = (
+  // MUST have house number (strongest indicator)
+  address.house_number &&
+  // AND must NOT be a business/POI
+  !address.amenity &&
+  !address.shop &&
+  !address.office &&
+  !address.tourism &&
+  !result.name // Exclude named places (they're usually businesses)
+);
         
         return isVictoria && isResidential;  // ✅ CHANGED: Added residential filter
       })
