@@ -990,6 +990,43 @@
         }
       ]
     },
+    "172": {
+    "name": "Floodplain Wetland",
+    "description": "Floodplain Wetland occurs in seasonally waterlogged depressions and drainage lines along creeks and rivers. Dominated by moisture-loving sedges, rushes, and wetland herbs, this community creates vital habitat for frogs, waterbirds, and aquatic invertebrates while naturally filtering water and storing floodwaters. Perfect for low-lying garden areas prone to seasonal moisture.",
+    "recommendations": [
+      {
+        "layer": "Canopy Layer",
+        "plants": [
+          "Eucalyptus ovata (Swamp Gum)",
+          "Eucalyptus camaldulensis (River Red Gum)",
+          "Melaleuca ericifolia (Swamp Paperbark)"
+        ]
+      },
+      {
+        "layer": "Shrub Layer",
+        "plants": [
+          "Leptospermum continentale (Prickly Tea-tree)",
+          "Melaleuca squarrosa (Scented Paperbark)",
+          "Coprosma quadrifida (Prickly Currant-bush)"
+        ]
+      },
+      {
+        "layer": "Groundcover & Herb Layer",
+        "plants": [
+          "Carex appressa (Tall Sedge)",
+          "Juncus pallidus (Pale Rush)",
+          "Phragmites australis (Common Reed)",
+          "Baumea articulata (Jointed Twig-rush)",
+          "Eleocharis acuta (Common Spike-sedge)",
+          "Triglochin procerum (Water Ribbons)",
+          "Persicaria decipiens (Slender Knotweed)",
+          "Lobelia anceps (Angled Lobelia)",
+          "Poa labillardierei (Common Tussock-grass)",
+          "Microlaena stipoides (Weeping Grass)"
+        ]
+      }
+    ]
+  },
     "175": {
       "description": "Grassy Woodland is a scattered open woodland found on gentle slopes and undulating plains, typically with a sparse canopy of Grey Box, Yellow Box, or Red Gum over a species-rich ground layer of grasses, lilies, and wildflowers. The shrub layer is usually sparse, giving way to a light-filled understorey dominated by Kangaroo Grass and seasonal herbs.",
       "recommendations": [
