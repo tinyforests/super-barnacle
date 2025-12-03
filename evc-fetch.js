@@ -293,21 +293,11 @@ const isResidential = (
 function displayAutocompleteSuggestions(results) {
   const dropdown = document.getElementById("address-autocomplete");
   
-  if (!results || results.length === 0) {
-    // Show "Victoria only" message if no results
-    dropdown.innerHTML = "";
-    const noResults = document.createElement("div");
-    noResults.style.padding = "12px 16px";
-    noResults.style.fontFamily = "'IBM Plex Mono', monospace";
-    noResults.style.fontSize = "14px";
-    noResults.style.color = "#666";
-    noResults.style.textAlign = "center";
-    noResults.textContent = "No Victorian addresses found. We currently only serve Victoria.";
-    dropdown.appendChild(noResults);
-    dropdown.positionDropdown();
-    dropdown.style.display = "block";
-    return;
-  }
+if (!results || results.length === 0) {
+  // Just hide the dropdown silently - don't show error message
+  dropdown.style.display = "none";
+  return;
+}
   
   dropdown.innerHTML = "";
   
