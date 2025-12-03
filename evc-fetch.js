@@ -799,6 +799,12 @@ function displayModal(name, status, region, code, lat, lon) {
     console.log('Cleaned mosaic EVC name to:', name);
   }
   
+  // Clean aggregate EVC names - remove "Aggregate" suffix
+  if (name && name.includes('Aggregate')) {
+    name = name.replace(/\s+Aggregate$/i, '').trim();
+    console.log('Cleaned aggregate EVC name to:', name);
+  }
+  
   // Reset buttons when modal opens
   const searchBtn = document.getElementById("search-button");
   searchBtn.disabled = false;
