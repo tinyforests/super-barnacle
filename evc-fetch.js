@@ -251,20 +251,40 @@ function fetchAddressSuggestions(query) {
     `format=json` +
     `&q=${encodeURIComponent(query + ', Victoria, Australia')}` +
     `&countrycodes=au` +
-    `&limit=5` +
+    `&limit=10` +  // ✅ CHANGED: Increased from 5 to 10
     `&addressdetails=1`;
   
   fetch(url)
     .then(r => r.json())
     .then(results => {
-      // Filter to only Victoria results
+      // Filter to only Victoria results AND residential addresses
       const victoriaResults = results.filter(result => {
         const address = result.address || {};
-        return address.state === 'Victoria' || 
+        const isVictoria = address.state === 'Victoria' || 
                address.state === 'VIC' ||
                result.display_name.includes('Victoria') ||
                result.display_name.includes('VIC');
-      });
+        
+        // ✅ NEW: Filter out businesses and POIs - prioritize residential addresses
+        const isResidential = (
+          // Has a house number (most important indicator of residential address)
+          address.house_number ||
+          // Is classified as a residential address type
+          result.class === 'highway' ||
+          result.class === 'place' ||
+          result.type === 'house' ||
+          result.type === 'residential' ||
+          // Has road/street/avenue in address without business name
+          (address.road && !result.name) ||
+          // Avoid businesses (no amenity, shop, or office tags)
+          (!result.class?.includes('amenity') && 
+           !result.class?.includes('shop') && 
+           !result.class?.includes('office'))
+        );
+        
+        return isVictoria && isResidential;  // ✅ CHANGED: Added residential filter
+      })
+      .slice(0, 5); // ✅ CHANGED: Take only first 5 AFTER filtering
       
       autocompleteResults = victoriaResults;
       displayAutocompleteSuggestions(victoriaResults);
