@@ -829,6 +829,18 @@ function displayModal(name, status, region, code, lat, lon) {
   regionEl.textContent = region || "Not specified";
   regionEl.style.lineHeight = "1.2";
 
+  const regionEl = document.getElementById("modal-evc-region");
+  regionEl.textContent = region || "Not specified";
+  regionEl.style.lineHeight = "1.2";
+  
+  // Add EVC code (safe check - won't crash if HTML element missing)
+  const codeEl = document.getElementById("modal-evc-code");
+  if (codeEl) {
+    codeEl.textContent = `EVC ${code}`;
+  } else {
+    console.log("🌿 EVC Code:", code, "| Name:", name);
+  }
+
   // Setup modal map
   modalMap && modalMap.remove();
   modalMap = L.map("modal-map").setView([lat, lon], 12);
