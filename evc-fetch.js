@@ -879,12 +879,16 @@ function displayModal(name, status, region, code, lat, lon) {
 
   // Fetch curated plant data from external JSON (async)
   fetch('curated-plants.json')
-    .then(r => {
-      if (!r.ok) throw new Error('Could not load plant data');
-      return r.json();
-    })
-    .then(data => {
-      const evcInfo = data.evcs[code];
+  .then(r => {
+    if (!r.ok) throw new Error('Could not load plant data');
+    return r.json();
+  })
+  .then(data => {
+    console.log('EVC Code being looked up:', code);
+    console.log('EVC Name:', name);
+    console.log('Data structure keys:', Object.keys(data.evcs));
+    const evcInfo = data.evcs[code];
+    console.log('Found evcInfo:', evcInfo);
       
       // Set description
       const descriptionEl = document.getElementById("modal-evc-description");
