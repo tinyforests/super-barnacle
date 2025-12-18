@@ -476,6 +476,15 @@ function getKitDetails(evcName) {
       specialFeature: 'Wind and salt resistant',
       slug: 'coast-banksia-woodland'
     },
+    'Coastal Alkaline Scrub': {
+  image: 'coastal-alkaline-scrub.jpg',
+  description: 'Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.',
+  canopy: 3,
+  shrub: 3,
+  groundcover: 4,
+  specialFeature: 'Alkaline soil specialists',
+  slug: 'coastal-alkaline-scrub'
+},
     'Coastal Saltmarsh': {
       image: 'coastal-saltmarsh.jpg',
       description: 'Intertidal vegetation adapted to regular tidal inundation. Critical ecosystem for coastal biodiversity.',
