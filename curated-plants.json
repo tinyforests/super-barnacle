@@ -1180,7 +1180,7 @@
   "description": "Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.",
   "recommendations": [
     {
-      "layer": "Canopy (Small Trees 8-15m)",
+      "layer": "Canopy Layer",
       "plants": [
         "Banksia integrifolia (Coast Banksia)",
         "Eucalyptus viminalis subsp. pryoriana (Coast Manna Gum)",
@@ -1188,7 +1188,7 @@
       ]
     },
     {
-      "layer": "Shrubs (1-4m)",
+      "layer": "Shrub Layer",
       "plants": [
         "Leptospermum laevigatum (Coast Tea-tree)",
         "Leucopogon parviflorus (Coast Beard-heath)",
@@ -1200,7 +1200,7 @@
       ]
     },
     {
-      "layer": "Groundcovers & Grasses",
+      "layer": "Herb Layer",
       "plants": [
         "Tetragonia implexicoma (Bower Spinach)",
         "Carpobrotus rossii (Karkalla)",
