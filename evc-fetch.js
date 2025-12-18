@@ -799,6 +799,18 @@ function displayModal(name, status, region, code, lat, lon) {
     name = name.replace(/\s+Aggregate$/i, '').trim();
     console.log('Cleaned aggregate EVC name to:', name);
   }
+  // Map mosaic/complex EVC codes to their primary component
+const mosaicCodeMapping = {
+  '921': '2',   // Coast Banksia Woodland/Coastal Dune Scrub Mosaic → Coast Banksia Woodland
+  '904': '2',   // Coast Banksia Woodland/Swamp Scrub Mosaic → Coast Banksia Woodland
+  '1': '160',   // Coastal Dune Scrub/Coastal Dune Grassland Mosaic → Coastal Dune Scrub
+};
+
+// Remap code if it's a mosaic
+if (mosaicCodeMapping[code]) {
+  console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
+  code = mosaicCodeMapping[code];
+}
   
   // Reset buttons when modal opens
   const searchBtn = document.getElementById("search-button");
