@@ -1175,6 +1175,44 @@
         }
       ]
     },
+    "858": {
+  "name": "Coastal Alkaline Scrub",
+  "description": "Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.",
+  "recommendations": [
+    {
+      "layer": "Canopy (Small Trees 8-15m)",
+      "plants": [
+        "Banksia integrifolia (Coast Banksia)",
+        "Eucalyptus viminalis subsp. pryoriana (Coast Manna Gum)",
+        "Allocasuarina verticillata (Drooping Sheoak)"
+      ]
+    },
+    {
+      "layer": "Shrubs (1-4m)",
+      "plants": [
+        "Leptospermum laevigatum (Coast Tea-tree)",
+        "Leucopogon parviflorus (Coast Beard-heath)",
+        "Rhagodia candolleana (Seaberry Saltbush)",
+        "Acacia longifolia var. sophorae (Coast Wattle)",
+        "Alyxia buxifolia (Sea Box)",
+        "Correa alba (White Correa)",
+        "Leucophyta brownii (Cushion Bush)"
+      ]
+    },
+    {
+      "layer": "Groundcovers & Grasses",
+      "plants": [
+        "Tetragonia implexicoma (Bower Spinach)",
+        "Carpobrotus rossii (Karkalla)",
+        "Atriplex cinerea (Coast Saltbush)",
+        "Disphyma crassifolium (Rounded Noon-flower)",
+        "Poa poiformis (Coast Tussock-grass)",
+        "Austrostipa stipoides (Coast Spear-grass)",
+        "Senecio lautus (Variable Groundsel)"
+      ]
+    }
+  ]
+}
     "934": {
       "description": "Brackish Grassland is a salt-tolerant grassy ecosystem found in low-lying areas of the Gippsland Plain, where saline groundwater or estuarine flooding influences the soil. These open, wind-exposed grasslands are dominated by saltbushes, low sedges, and halophytic herbs, with few or no trees.",
       "recommendations": [
