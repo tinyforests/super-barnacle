@@ -785,6 +785,50 @@
         }
       ]
     },
+    {
+  "68": {
+    "name": "Creekline Grassy Woodland",
+    "description": "Eucalypt woodland along minor drainage lines with grassy and sedgy groundlayer. Found on fertile alluvial soils along ephemeral to intermittent creeks and drainage channels. These linear wetland systems support diverse graminoids and herbs adapted to periodic waterlogging.",
+    "recommendations": [
+      {
+        "layer": "Canopy Layer",
+        "plants": [
+          "Eucalyptus camaldulensis (River Red-gum)"
+        ]
+      },
+      {
+        "layer": "Sub-Canopy Layer",
+        "plants": [
+          "Acacia melanoxylon (Blackwood)",
+          "Acacia retinodes (Wirilda)"
+        ]
+      },
+      {
+        "layer": "Shrub Layer",
+        "plants": [
+          "Hymenanthera dentata (Tree Violet)",
+          "Rubus parvifolius (Small-leaf Bramble)",
+          "Enchylaena tomentosa (Ruby Saltbush)"
+        ]
+      },
+      {
+        "layer": "Herb Layer",
+        "plants": [
+          "Austrostipa bigeniculata (Kneed Spear-grass)",
+          "Poa labillardierei (Common Tussock-grass)",
+          "Phragmites australis (Common Reed)",
+          "Austrodanthonia racemosa (Stiped Wallaby-grass)",
+          "Austrodanthonia caespitosa (Common Wallaby-grass)",
+          "Microlaena stipoides (Weeping Grass)",
+          "Oxalis perennans (Grassland Wood-sorrel)",
+          "Azolla filiculoides (Pacific Azolla)",
+          "Lemna disperma (Common Duckweed)",
+          "Glycine clandestina (Twining Glycine)"
+        ]
+      }
+    ]
+  }
+}
     "83": {
       "description": "Swampy Riparian Woodland occupies low-lying stream margins and seasonally waterlogged flats, where fluctuating water tables support a mix of wetland and woodland species. Dominated by Swamp Gum and sometimes River Red Gum, it has a patchy understorey of sedges, tussock grasses, and moisture-loving herbs.",
       "recommendations": [
