@@ -1,5 +1,4 @@
 // evc-fetch.js - Complete version with all EVCs and smart camera icons
-// UPDATED: Added separate email collection for missing plant data (keeps original email section at bottom)
 
 let map, marker, modalMap;
 
@@ -252,7 +251,7 @@ function fetchAddressSuggestions(query) {
     `format=json` +
     `&q=${encodeURIComponent(query + ', Victoria, Australia')}` +
     `&countrycodes=au` +
-    `&limit=10` +
+    `&limit=10` +  // ✅ CHANGED: Increased from 5 to 10
     `&addressdetails=1`;
   
   fetch(url)
@@ -266,21 +265,22 @@ function fetchAddressSuggestions(query) {
                result.display_name.includes('Victoria') ||
                result.display_name.includes('VIC');
         
-        // Strict residential filter
-        const isResidential = (
-          // MUST have house number (strongest indicator)
-          address.house_number &&
-          // AND must NOT be a business/POI
-          !address.amenity &&
-          !address.shop &&
-          !address.office &&
-          !address.tourism &&
-          !result.name // Exclude named places (they're usually businesses)
-        );
+        // ✅ NEW: Filter out businesses and POIs - prioritize residential addresses
+   // ✅ FIXED: Stricter residential filter
+const isResidential = (
+  // MUST have house number (strongest indicator)
+  address.house_number &&
+  // AND must NOT be a business/POI
+  !address.amenity &&
+  !address.shop &&
+  !address.office &&
+  !address.tourism &&
+  !result.name // Exclude named places (they're usually businesses)
+);
         
-        return isVictoria && isResidential;
+        return isVictoria && isResidential;  // ✅ CHANGED: Added residential filter
       })
-      .slice(0, 5); // Take only first 5 AFTER filtering
+      .slice(0, 5); // ✅ CHANGED: Take only first 5 AFTER filtering
       
       autocompleteResults = victoriaResults;
       displayAutocompleteSuggestions(victoriaResults);
@@ -293,11 +293,11 @@ function fetchAddressSuggestions(query) {
 function displayAutocompleteSuggestions(results) {
   const dropdown = document.getElementById("address-autocomplete");
   
-  if (!results || results.length === 0) {
-    // Just hide the dropdown silently - don't show error message
-    dropdown.style.display = "none";
-    return;
-  }
+if (!results || results.length === 0) {
+  // Just hide the dropdown silently - don't show error message
+  dropdown.style.display = "none";
+  return;
+}
   
   dropdown.innerHTML = "";
   
@@ -477,14 +477,14 @@ function getKitDetails(evcName) {
       slug: 'coast-banksia-woodland'
     },
     'Coastal Alkaline Scrub': {
-      image: 'coastal-alkaline-scrub.jpg',
-      description: 'Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
-      specialFeature: 'Alkaline soil specialists',
-      slug: 'coastal-alkaline-scrub'
-    },
+  image: 'coastal-alkaline-scrub.jpg',
+  description: 'Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.',
+  canopy: 3,
+  shrub: 3,
+  groundcover: 4,
+  specialFeature: 'Alkaline soil specialists',
+  slug: 'coastal-alkaline-scrub'
+},
     'Coastal Saltmarsh': {
       image: 'coastal-saltmarsh.jpg',
       description: 'Intertidal vegetation adapted to regular tidal inundation. Critical ecosystem for coastal biodiversity.',
@@ -540,14 +540,14 @@ function getKitDetails(evcName) {
       slug: 'estuarine-woodlands'
     },
     'Floodplain Wetland': {
-      image: 'floodplain-wetland.jpg',
-      description: 'Wetland vegetation adapted to seasonal waterlogging. Dominated by moisture-loving sedges, rushes, and wetland herbs. Natural water filtration system.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
-      specialFeature: 'Wetland and waterway specialists',
-      slug: 'floodplain-wetland'
-    },
+  image: 'floodplain-wetland.jpg',
+  description: 'Wetland vegetation adapted to seasonal waterlogging. Dominated by moisture-loving sedges, rushes, and wetland herbs. Natural water filtration system.',
+  canopy: 3,
+  shrub: 3,
+  groundcover: 4,
+  specialFeature: 'Wetland and waterway specialists',
+  slug: 'floodplain-wetland'
+},
     'Floodplain Riparian Woodland': {
       image: 'floodplain-riparian-woodland.jpg',
       description: 'Riverine woodlands adapted to periodic flooding. Important for water quality and flood mitigation.',
@@ -738,14 +738,14 @@ function getKitDetails(evcName) {
       slug: 'swampy-riparian-woodland'
     },
     'Swampy Woodland': {
-      image: 'swampy-woodland.jpg',
-      description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
-      specialFeature: 'Wetland habitat specialists',
-      slug: 'swampy-woodland'
-    },
+  image: 'swampy-woodland.jpg',
+  description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
+  canopy: 3,
+  shrub: 3,
+  groundcover: 4,
+  specialFeature: 'Wetland habitat specialists',
+  slug: 'swampy-woodland'
+},
     'Treed Sand Heathland': {
       image: 'treed-sand-heathland.jpg',
       description: 'Heath with scattered tree cover on sandy soils. Diverse flowering shrub layer.',
@@ -799,19 +799,18 @@ function displayModal(name, status, region, code, lat, lon) {
     name = name.replace(/\s+Aggregate$/i, '').trim();
     console.log('Cleaned aggregate EVC name to:', name);
   }
-  
   // Map mosaic/complex EVC codes to their primary component
-  const mosaicCodeMapping = {
-    '921': '2',   // Coast Banksia Woodland/Coastal Dune Scrub Mosaic → Coast Banksia Woodland
-    '904': '2',   // Coast Banksia Woodland/Swamp Scrub Mosaic → Coast Banksia Woodland
-    '1': '160',   // Coastal Dune Scrub/Coastal Dune Grassland Mosaic → Coastal Dune Scrub
-  };
+const mosaicCodeMapping = {
+  '921': '2',   // Coast Banksia Woodland/Coastal Dune Scrub Mosaic → Coast Banksia Woodland
+  '904': '2',   // Coast Banksia Woodland/Swamp Scrub Mosaic → Coast Banksia Woodland
+  '1': '160',   // Coastal Dune Scrub/Coastal Dune Grassland Mosaic → Coastal Dune Scrub
+};
 
-  // Remap code if it's a mosaic
-  if (mosaicCodeMapping[code]) {
-    console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
-    code = mosaicCodeMapping[code];
-  }
+// Remap code if it's a mosaic
+if (mosaicCodeMapping[code]) {
+  console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
+  code = mosaicCodeMapping[code];
+}
   
   // Reset buttons when modal opens
   const searchBtn = document.getElementById("search-button");
@@ -892,24 +891,23 @@ function displayModal(name, status, region, code, lat, lon) {
 
   // Fetch curated plant data from external JSON (async)
   fetch('curated-plants.json')
-    .then(r => {
-      if (!r.ok) throw new Error('Could not load plant data');
-      return r.json();
-    })
-    .then(data => {
-      console.log('EVC Code being looked up:', code);
-      console.log('EVC Name:', name);
-      console.log('Data structure keys:', Object.keys(data.evcs));
-      const evcInfo = data.evcs[code];
-      console.log('Found evcInfo:', evcInfo);
+  .then(r => {
+    if (!r.ok) throw new Error('Could not load plant data');
+    return r.json();
+  })
+  .then(data => {
+    console.log('EVC Code being looked up:', code);
+    console.log('EVC Name:', name);
+    console.log('Data structure keys:', Object.keys(data.evcs));
+    const evcInfo = data.evcs[code];
+    console.log('Found evcInfo:', evcInfo);
       
       // Set description
       const descriptionEl = document.getElementById("modal-evc-description");
       if (evcInfo?.description) {
         descriptionEl.textContent = evcInfo.description;
       } else {
-        // UPDATED: New message for missing plant data
-        descriptionEl.innerHTML = `We're currently curating the best indigenous plant species for <strong>${name}</strong>. Check back soon for our curated recommendations!`;
+        descriptionEl.innerHTML = `We're still researching the best plant species for <strong>${name}</strong>. Check back soon for our curated recommendations!`;
         descriptionEl.style.fontStyle = "normal";
         descriptionEl.style.color = "#666";
       }
@@ -918,11 +916,8 @@ function displayModal(name, status, region, code, lat, lon) {
       const plantsDiv = document.getElementById("modal-plants");
       plantsDiv.innerHTML = "";
       
-      // Check if we have plant data
-      const hasPlantData = evcInfo?.recommendations && evcInfo.recommendations.length > 0;
-      
-      if (hasPlantData) {
-        // HAS PLANT DATA - Show plant list
+      if (evcInfo?.recommendations && evcInfo.recommendations.length > 0) {
+        // Add title
         const titleEl = document.createElement("h2");
         titleEl.textContent = "Here's the indigenous plants that belong in your garden.";
         titleEl.style.fontFamily = "'Abril Fatface', serif";
@@ -1067,132 +1062,10 @@ function displayModal(name, status, region, code, lat, lon) {
           plantsDiv.appendChild(layerDiv);
         });
       } else {
-        // NO PLANT DATA - Show separate email collection form
-        const notifySection = document.createElement("div");
-        notifySection.style.marginTop = "30px";
-        notifySection.style.padding = "30px";
-        notifySection.style.background = "linear-gradient(135deg, #3d4535 0%, #2f3928 100%)";
-        notifySection.style.borderRadius = "12px";
-        notifySection.style.color = "#fff0dc";
-        notifySection.style.textAlign = "center";
-        
-        const notifyTitle = document.createElement("h2");
-        notifyTitle.textContent = `Want to know when the ${name} plant list is ready?`;
-        notifyTitle.style.fontFamily = "'Abril Fatface', serif";
-        notifyTitle.style.fontSize = "clamp(1.5rem, 4vw, 2rem)";
-        notifyTitle.style.marginBottom = "1rem";
-        notifyTitle.style.letterSpacing = "0px";
-        notifyTitle.style.lineHeight = "1.2";
-        notifySection.appendChild(notifyTitle);
-        
-        const notifyPara = document.createElement("p");
-        notifyPara.textContent = `Leave your email and we'll notify you as soon as we've finished curating the perfect indigenous species for this EVC.`;
-        notifyPara.style.fontSize = "1rem";
-        notifyPara.style.marginBottom = "2rem";
-        notifyPara.style.opacity = "0.9";
-        notifyPara.style.lineHeight = "1.6";
-        notifySection.appendChild(notifyPara);
-        
-        // Create the notification form (separate from bottom email section)
-        const notifyForm = document.createElement("form");
-        notifyForm.action = "https://docs.google.com/forms/d/e/1FAIpQLScQPHZI3_aT51WnDUpszhO03xYKPVJ76r9uiKC6KoZDP8oXYQ/formResponse";
-        notifyForm.method = "POST";
-        notifyForm.target = "notify-iframe";
-        notifyForm.style.display = "flex";
-        notifyForm.style.flexDirection = "column";
-        notifyForm.style.gap = "1rem";
-        notifyForm.style.maxWidth = "500px";
-        notifyForm.style.margin = "0 auto";
-        
-        // Hidden fields
-        const hiddenAddress = document.createElement("input");
-        hiddenAddress.type = "hidden";
-        hiddenAddress.name = "entry.1492023911";
-        hiddenAddress.value = window.searchedAddress || `${lat}, ${lon}`;
-        notifyForm.appendChild(hiddenAddress);
-        
-        const hiddenEvcCode = document.createElement("input");
-        hiddenEvcCode.type = "hidden";
-        hiddenEvcCode.name = "entry.1435626710";
-        hiddenEvcCode.value = `EVC ${code}`;
-        notifyForm.appendChild(hiddenEvcCode);
-        
-        // Email input
-        const emailInput = document.createElement("input");
-        emailInput.type = "email";
-        emailInput.name = "entry.732959100";
-        emailInput.placeholder = "you@example.com";
-        emailInput.required = true;
-        emailInput.style.padding = "1.2rem 1.5rem";
-        emailInput.style.fontFamily = "'IBM Plex Mono', monospace";
-        emailInput.style.fontSize = "1rem";
-        emailInput.style.border = "2px solid #fff0dc";
-        emailInput.style.borderRadius = "50px";
-        emailInput.style.backgroundColor = "rgba(255, 240, 220, 0.1)";
-        emailInput.style.color = "#fff0dc";
-        emailInput.style.outline = "none";
-        emailInput.style.transition = "all 0.3s ease";
-        notifyForm.appendChild(emailInput);
-        
-        // Email input placeholder styling
-        const placeholderStyle = document.createElement("style");
-        placeholderStyle.textContent = `
-          input::placeholder { color: rgba(255, 240, 220, 0.6); }
-        `;
-        document.head.appendChild(placeholderStyle);
-        
-        // Submit button
-        const submitButton = document.createElement("button");
-        submitButton.type = "submit";
-        submitButton.textContent = "Notify me when ready";
-        submitButton.style.padding = "1.2rem 2.5rem";
-        submitButton.style.backgroundColor = "#fff0dc";
-        submitButton.style.color = "#3d4535";
-        submitButton.style.border = "none";
-        submitButton.style.borderRadius = "50px";
-        submitButton.style.fontFamily = "'IBM Plex Mono', monospace";
-        submitButton.style.fontWeight = "700";
-        submitButton.style.fontSize = "1rem";
-        submitButton.style.cursor = "pointer";
-        submitButton.style.transition = "all 0.3s ease";
-        notifyForm.appendChild(submitButton);
-        
-        // Hover effects
-        submitButton.addEventListener("mouseenter", () => {
-          submitButton.style.transform = "scale(1.05)";
-          submitButton.style.boxShadow = "0 8px 25px rgba(255, 240, 220, 0.3)";
-        });
-        
-        submitButton.addEventListener("mouseleave", () => {
-          submitButton.style.transform = "scale(1)";
-          submitButton.style.boxShadow = "none";
-        });
-        
-        // Form submission handler
-        notifyForm.addEventListener("submit", (e) => {
-          setTimeout(() => {
-            submitButton.textContent = "Thanks! We'll notify you soon.";
-            submitButton.disabled = true;
-            submitButton.style.opacity = "0.7";
-          }, 500);
-        });
-        
-        notifySection.appendChild(notifyForm);
-        
-        // Create hidden iframe for form submission
-        let notifyIframe = document.getElementById('notify-iframe');
-        if (!notifyIframe) {
-          notifyIframe = document.createElement('iframe');
-          notifyIframe.id = 'notify-iframe';
-          notifyIframe.name = 'notify-iframe';
-          notifyIframe.style.display = 'none';
-          document.body.appendChild(notifyIframe);
-        }
-        
-        plantsDiv.appendChild(notifySection);
+        // No plant data available - description already shows message
       }
 
-      // Always show Forest Kit, Tee sections regardless of plant data
+      // Always show Forest Kit, Tee, and Ebook sections regardless of plant data
       
       const kitDetails = getKitDetails(name);
       
@@ -1616,7 +1489,7 @@ function displayModal(name, status, region, code, lat, lon) {
       
       plantsDiv.appendChild(teeSection);
       
-      // Show plants div (with either plant list OR notification form, plus kit/tee sections)
+      // Show plants immediately (no email gate)
       plantsDiv.style.display = "block";
     })
     .catch(err => {
@@ -1628,7 +1501,7 @@ function displayModal(name, status, region, code, lat, lon) {
       plantsDiv.style.display = "block";
     });
 
-  // Populate hidden form fields for the BOTTOM email section (unchanged)
+  // Populate hidden form fields
   document.getElementById("gf-evcCode").value = `EVC ${code}`;
   
   // Get address from reverse geocoding (async, doesn't block modal)
