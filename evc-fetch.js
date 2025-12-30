@@ -1281,7 +1281,7 @@ if (mosaicCodeMapping[code]) {
         });
         
         exploreButton.addEventListener("click", () => {
-          window.open("https://tinyforests.github.io/tinyforest/forest-kits.html", '_blank');
+          window.location.href = "explore.html";
         });
         
         kitSection.appendChild(exploreButton);
