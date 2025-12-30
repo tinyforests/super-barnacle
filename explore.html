@@ -398,6 +398,144 @@
       }
     }
 
+    /* Filter Bar */
+    .filter-container {
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .filter-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-header h3 {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3d4535;
+    }
+
+    .results-count {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .filter-groups {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .filter-group {
+      margin-bottom: 1rem;
+    }
+
+    .filter-group-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-chip {
+      padding: 0.5rem 1rem;
+      background: #f0f0f0;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .filter-chip:hover {
+      background: #e0e0e0;
+    }
+
+    .filter-chip.active {
+      background: #3d4535;
+      color: #fff0dc;
+      border-color: #3d4535;
+    }
+
+    .clear-filters {
+      padding: 0.5rem 1.5rem;
+      background: transparent;
+      border: 2px solid #3d4535;
+      border-radius: 20px;
+      color: #3d4535;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+    }
+
+    .clear-filters:hover {
+      background: #3d4535;
+      color: #fff0dc;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: #3d4535;
+    }
+
+    /* Product badges on cards */
+    .product-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 0.3rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-kit {
+      background: rgba(61, 69, 53, 0.1);
+      color: #3d4535;
+    }
+
+    .badge-tee {
+      background: rgba(142, 68, 173, 0.1);
+      color: #6a1b9a;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       header {
@@ -408,6 +546,20 @@
         padding: 2rem 1rem;
         gap: 1.5rem;
         grid-template-columns: 1fr;
+      }
+
+      .filter-container {
+        padding: 1rem;
+      }
+
+      .filter-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .search-box {
+        max-width: 100%;
       }
 
       .modal-content {
@@ -432,6 +584,62 @@
     <h1>Explore All Ecological Vegetation Classes</h1>
     <p class="subtitle">Browse Victoria's diverse native plant communities and discover what belongs in your garden.</p>
   </header>
+
+  <!-- Filter Bar -->
+  <div class="filter-container">
+    <div class="filter-header">
+      <h3>Filter EVCs</h3>
+      <span class="results-count" id="results-count">Showing 25 EVCs</span>
+    </div>
+
+    <div class="filter-groups">
+      <!-- Search -->
+      <div class="filter-group">
+        <input 
+          type="text" 
+          id="search-box" 
+          class="search-box" 
+          placeholder="Search by name or description..."
+        />
+      </div>
+
+      <!-- Habitat Type -->
+      <div class="filter-group">
+        <div class="filter-group-label">Habitat Type</div>
+        <div class="filter-chips">
+          <div class="filter-chip" data-filter="habitat" data-value="woodland">Woodland</div>
+          <div class="filter-chip" data-filter="habitat" data-value="forest">Forest</div>
+          <div class="filter-chip" data-filter="habitat" data-value="wetland">Wetland</div>
+          <div class="filter-chip" data-filter="habitat" data-value="heathland">Heathland</div>
+          <div class="filter-chip" data-filter="habitat" data-value="scrub">Scrub</div>
+          <div class="filter-chip" data-filter="habitat" data-value="grassland">Grassland</div>
+        </div>
+      </div>
+
+      <!-- Moisture -->
+      <div class="filter-group">
+        <div class="filter-group-label">Moisture</div>
+        <div class="filter-chips">
+          <div class="filter-chip" data-filter="moisture" data-value="wet">Wet/Swampy</div>
+          <div class="filter-chip" data-filter="moisture" data-value="moist">Moist/Riparian</div>
+          <div class="filter-chip" data-filter="moisture" data-value="dry">Dry</div>
+        </div>
+      </div>
+
+      <!-- Availability -->
+      <div class="filter-group">
+        <div class="filter-group-label">Products</div>
+        <div class="filter-chips">
+          <div class="filter-chip" data-filter="product" data-value="kit">🌱 Forest Kit Available</div>
+          <div class="filter-chip" data-filter="product" data-value="tee">👕 Tee Available</div>
+          <div class="filter-chip" data-filter="product" data-value="plants">✓ Plant List Available</div>
+        </div>
+      </div>
+
+      <!-- Clear button -->
+      <button class="clear-filters" id="clear-filters">Clear All Filters</button>
+    </div>
+  </div>
 
   <!-- EVC Grid -->
   <div class="evc-grid" id="evc-grid">
@@ -489,6 +697,50 @@
   <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
   
   <script>
+    // Forest Kit Details - matching evc-fetch.js
+    const FOREST_KITS = {
+      'Box-Ironbark Forest': { available: true, slug: 'box-ironbark-forest' },
+      'Coast Banksia Woodland': { available: true, slug: 'coast-banksia-woodland' },
+      'Coastal Alkaline Scrub': { available: true, slug: 'coastal-alkaline-scrub' },
+      'Creekline Grassy Woodland': { available: true, slug: 'creekline-grassy-woodland' },
+      'Damp Sands Herb-rich Woodland': { available: true, slug: 'damp-sands-herb-rich-woodland' },
+      'Floodplain Wetland': { available: true, slug: 'floodplain-wetland' },
+      'Grassy Woodland': { available: true, slug: 'grassy-woodland' },
+      'Heathy Woodland': { available: true, slug: 'heathy-woodland' },
+      'Plains Grassy Woodland': { available: true, slug: 'plains-grassy-woodland' },
+      'Swampy Woodland': { available: true, slug: 'swampy-woodland' }
+    };
+    
+    // EVC Categorization for Filtering
+    function categorizeEvc(name, description) {
+      const nameLower = name.toLowerCase();
+      const descLower = description.toLowerCase();
+      
+      return {
+        habitat: getHabitatType(nameLower),
+        moisture: getMoistureType(nameLower, descLower),
+        hasKit: FOREST_KITS[name]?.available || false,
+        hasTee: FOREST_KITS[name]?.available || false // Assuming tees match kits for now
+      };
+    }
+    
+    function getHabitatType(name) {
+      if (name.includes('woodland')) return 'woodland';
+      if (name.includes('forest')) return 'forest';
+      if (name.includes('wetland') || name.includes('swamp')) return 'wetland';
+      if (name.includes('heathland') || name.includes('heath')) return 'heathland';
+      if (name.includes('scrub')) return 'scrub';
+      if (name.includes('grassland')) return 'grassland';
+      return 'other';
+    }
+    
+    function getMoistureType(name, desc) {
+      if (name.includes('swamp') || name.includes('wetland') || desc.includes('waterlogged')) return 'wet';
+      if (name.includes('riparian') || name.includes('creek') || desc.includes('stream')) return 'moist';
+      if (name.includes('dry') || desc.includes('well-drained')) return 'dry';
+      return 'moderate';
+    }
+    
     // Function to extract EVC name from description or name field
     function getEvcName(code, evcData) {
       // Check if name field exists
@@ -554,6 +806,18 @@
       const card = document.createElement('div');
       card.className = 'evc-card';
       
+      // Categorize for filtering
+      const categories = categorizeEvc(evc.name, evc.description);
+      
+      // Store filter data as attributes
+      card.dataset.habitat = categories.habitat;
+      card.dataset.moisture = categories.moisture;
+      card.dataset.hasKit = categories.hasKit;
+      card.dataset.hasTee = categories.hasTee;
+      card.dataset.hasPlants = evc.hasPlants;
+      card.dataset.name = evc.name.toLowerCase();
+      card.dataset.description = evc.description.toLowerCase();
+      
       // Generate image filename from EVC name
       const imageName = (evc.name || '')
         .toLowerCase()
@@ -565,6 +829,15 @@
       const shortDesc = evc.description.length > 150 
         ? evc.description.substring(0, 150) + '...' 
         : evc.description;
+      
+      // Product badges
+      let badgesHTML = '';
+      if (categories.hasKit || categories.hasTee) {
+        badgesHTML = '<div class="product-badges">';
+        if (categories.hasKit) badgesHTML += '<span class="badge badge-kit">🌱 Kit Available</span>';
+        if (categories.hasTee) badgesHTML += '<span class="badge badge-tee">👕 Tee Available</span>';
+        badgesHTML += '</div>';
+      }
       
       card.innerHTML = `
         <img 
@@ -579,6 +852,7 @@
           <span class="evc-status ${evc.hasPlants ? 'status-available' : 'status-pending'}">
             ${evc.hasPlants ? '✓ Plant List Available' : '⏳ Being Curated'}
           </span>
+          ${badgesHTML}
           <p class="evc-description">${shortDesc}</p>
           <button class="view-button" onclick="openEvcModal('${evc.code}')">View Details</button>
         </div>
@@ -696,6 +970,111 @@
         btn.textContent = 'Thanks! Check your email soon.';
         btn.disabled = true;
       }, 500);
+    });
+    
+    // FILTERING SYSTEM
+    let activeFilters = {
+      habitat: null,
+      moisture: null,
+      product: null,
+      search: ''
+    };
+    
+    function applyFilters() {
+      const cards = document.querySelectorAll('.evc-card');
+      let visibleCount = 0;
+      
+      cards.forEach(card => {
+        let show = true;
+        
+        // Habitat filter
+        if (activeFilters.habitat && card.dataset.habitat !== activeFilters.habitat) {
+          show = false;
+        }
+        
+        // Moisture filter
+        if (activeFilters.moisture && card.dataset.moisture !== activeFilters.moisture) {
+          show = false;
+        }
+        
+        // Product filter
+        if (activeFilters.product) {
+          if (activeFilters.product === 'kit' && card.dataset.hasKit !== 'true') show = false;
+          if (activeFilters.product === 'tee' && card.dataset.hasTee !== 'true') show = false;
+          if (activeFilters.product === 'plants' && card.dataset.hasPlants !== 'true') show = false;
+        }
+        
+        // Search filter
+        if (activeFilters.search) {
+          const searchTerm = activeFilters.search.toLowerCase();
+          const matchesName = card.dataset.name.includes(searchTerm);
+          const matchesDesc = card.dataset.description.includes(searchTerm);
+          if (!matchesName && !matchesDesc) show = false;
+        }
+        
+        // Show/hide card
+        if (show) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      
+      // Update results count
+      document.getElementById('results-count').textContent = `Showing ${visibleCount} EVC${visibleCount !== 1 ? 's' : ''}`;
+    }
+    
+    // Filter chip click handlers
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const filterType = chip.dataset.filter;
+        const filterValue = chip.dataset.value;
+        
+        // Toggle active state
+        if (chip.classList.contains('active')) {
+          chip.classList.remove('active');
+          activeFilters[filterType] = null;
+        } else {
+          // Remove active from siblings
+          document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilters[filterType] = filterValue;
+        }
+        
+        applyFilters();
+      });
+    });
+    
+    // Search box
+    const searchBox = document.getElementById('search-box');
+    let searchTimeout;
+    searchBox.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        activeFilters.search = e.target.value;
+        applyFilters();
+      }, 300);
+    });
+    
+    // Clear filters button
+    document.getElementById('clear-filters').addEventListener('click', () => {
+      // Reset filters
+      activeFilters = {
+        habitat: null,
+        moisture: null,
+        product: null,
+        search: ''
+      };
+      
+      // Remove active classes
+      document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+      
+      // Clear search box
+      searchBox.value = '';
+      
+      // Reapply (show all)
+      applyFilters();
     });
   </script>
 </body>
