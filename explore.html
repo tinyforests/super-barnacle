@@ -401,32 +401,67 @@
     /* Filter Bar */
     .filter-container {
       background: white;
-      padding: 2rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-bottom: 2px solid #e0e0e0;
       position: sticky;
       top: 0;
       z-index: 100;
+      transition: all 0.3s ease;
     }
 
-    .filter-header {
+    .filter-toggle {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .filter-header h3 {
+    .filter-toggle:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .filter-toggle-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .filter-toggle h3 {
       font-family: "IBM Plex Mono", monospace;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: #3d4535;
+      margin: 0;
+    }
+
+    .filter-arrow {
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+      color: #3d4535;
+    }
+
+    .filter-container.collapsed .filter-arrow {
+      transform: rotate(-90deg);
     }
 
     .results-count {
       color: #666;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+    }
+
+    .filter-content {
+      max-height: 500px;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 2rem 1.5rem;
+    }
+
+    .filter-container.collapsed .filter-content {
+      max-height: 0;
+      padding: 0 2rem;
     }
 
     .filter-groups {
@@ -439,7 +474,7 @@
     }
 
     .filter-group-label {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: #666;
       margin-bottom: 0.5rem;
@@ -454,11 +489,11 @@
     }
 
     .filter-chip {
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.8rem;
       background: #f0f0f0;
       border: 2px solid transparent;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       cursor: pointer;
       transition: all 0.2s;
       user-select: none;
@@ -476,12 +511,12 @@
     }
 
     .clear-filters {
-      padding: 0.5rem 1.5rem;
+      padding: 0.5rem 1.2rem;
       background: transparent;
       border: 2px solid #3d4535;
       border-radius: 20px;
       color: #3d4535;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       cursor: pointer;
       transition: all 0.2s;
       font-family: "IBM Plex Mono", monospace;
@@ -495,12 +530,12 @@
 
     .search-box {
       width: 100%;
-      max-width: 400px;
-      padding: 0.75rem 1rem;
+      max-width: 100%;
+      padding: 0.6rem 1rem;
       border: 2px solid #e0e0e0;
-      border-radius: 25px;
+      border-radius: 20px;
       font-family: "IBM Plex Mono", monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       transition: border-color 0.2s;
     }
 
@@ -586,58 +621,63 @@
   </header>
 
   <!-- Filter Bar -->
-  <div class="filter-container">
-    <div class="filter-header">
-      <h3>Filter EVCs</h3>
+  <div class="filter-container" id="filter-container">
+    <div class="filter-toggle" id="filter-toggle">
+      <div class="filter-toggle-left">
+        <span class="filter-arrow">▼</span>
+        <h3>Filter EVCs</h3>
+      </div>
       <span class="results-count" id="results-count">Showing 25 EVCs</span>
     </div>
 
-    <div class="filter-groups">
-      <!-- Search -->
-      <div class="filter-group">
-        <input 
-          type="text" 
-          id="search-box" 
-          class="search-box" 
-          placeholder="Search by name or description..."
-        />
-      </div>
-
-      <!-- Habitat Type -->
-      <div class="filter-group">
-        <div class="filter-group-label">Habitat Type</div>
-        <div class="filter-chips">
-          <div class="filter-chip" data-filter="habitat" data-value="woodland">Woodland</div>
-          <div class="filter-chip" data-filter="habitat" data-value="forest">Forest</div>
-          <div class="filter-chip" data-filter="habitat" data-value="wetland">Wetland</div>
-          <div class="filter-chip" data-filter="habitat" data-value="heathland">Heathland</div>
-          <div class="filter-chip" data-filter="habitat" data-value="scrub">Scrub</div>
-          <div class="filter-chip" data-filter="habitat" data-value="grassland">Grassland</div>
+    <div class="filter-content" id="filter-content">
+      <div class="filter-groups">
+        <!-- Search -->
+        <div class="filter-group">
+          <input 
+            type="text" 
+            id="search-box" 
+            class="search-box" 
+            placeholder="Search by name or description..."
+          />
         </div>
-      </div>
 
-      <!-- Moisture -->
-      <div class="filter-group">
-        <div class="filter-group-label">Moisture</div>
-        <div class="filter-chips">
-          <div class="filter-chip" data-filter="moisture" data-value="wet">Wet/Swampy</div>
-          <div class="filter-chip" data-filter="moisture" data-value="moist">Moist/Riparian</div>
-          <div class="filter-chip" data-filter="moisture" data-value="dry">Dry</div>
+        <!-- Habitat Type -->
+        <div class="filter-group">
+          <div class="filter-group-label">Habitat Type</div>
+          <div class="filter-chips">
+            <div class="filter-chip" data-filter="habitat" data-value="woodland">Woodland</div>
+            <div class="filter-chip" data-filter="habitat" data-value="forest">Forest</div>
+            <div class="filter-chip" data-filter="habitat" data-value="wetland">Wetland</div>
+            <div class="filter-chip" data-filter="habitat" data-value="heathland">Heathland</div>
+            <div class="filter-chip" data-filter="habitat" data-value="scrub">Scrub</div>
+            <div class="filter-chip" data-filter="habitat" data-value="grassland">Grassland</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Availability -->
-      <div class="filter-group">
-        <div class="filter-group-label">Products</div>
-        <div class="filter-chips">
-          <div class="filter-chip" data-filter="product" data-value="kit">🌱 Forest Kit Available</div>
-          <div class="filter-chip" data-filter="product" data-value="tee">👕 Tee Available</div>
-          <div class="filter-chip" data-filter="product" data-value="plants">✓ Plant List Available</div>
+        <!-- Moisture -->
+        <div class="filter-group">
+          <div class="filter-group-label">Moisture</div>
+          <div class="filter-chips">
+            <div class="filter-chip" data-filter="moisture" data-value="wet">Wet/Swampy</div>
+            <div class="filter-chip" data-filter="moisture" data-value="moist">Moist/Riparian</div>
+            <div class="filter-chip" data-filter="moisture" data-value="dry">Dry</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Clear button -->
-      <button class="clear-filters" id="clear-filters">Clear All Filters</button>
+        <!-- Availability -->
+        <div class="filter-group">
+          <div class="filter-group-label">Products</div>
+          <div class="filter-chips">
+            <div class="filter-chip" data-filter="product" data-value="kit">🌱 Kit</div>
+            <div class="filter-chip" data-filter="product" data-value="tee">👕 Tee</div>
+            <div class="filter-chip" data-filter="product" data-value="plants">✓ Plants</div>
+          </div>
+        </div>
+
+        <!-- Clear button -->
+        <button class="clear-filters" id="clear-filters">Clear All</button>
+      </div>
     </div>
   </div>
 
@@ -743,6 +783,24 @@
     
     // Function to extract EVC name from description or name field
     function getEvcName(code, evcData) {
+      // Manual mapping for edge cases
+      const manualNames = {
+        '3': 'Damp Sands Herb-rich Woodland',
+        '6': 'Sand Heathland',
+        '8': 'Wet Heathland',
+        '21': 'Shrubby Dry Forest',
+        '23': 'Herb-rich Foothill Forest',
+        '55': 'Plains Grassy Woodland',
+        '172': 'Floodplain Wetland',
+        '858': 'Coastal Alkaline Scrub',
+        '937': 'Swampy Woodland'
+      };
+      
+      // Check manual mapping first
+      if (manualNames[code]) {
+        return manualNames[code];
+      }
+      
       // Check if name field exists
       if (evcData.name) {
         return evcData.name;
@@ -758,8 +816,15 @@
           return isPattern[1].trim();
         }
         
-        // Pattern 2: "Found on..." or "This EVC..." (needs manual mapping)
-        // Pattern 3: "A scattered woodland..." (needs manual mapping)
+        // Pattern 2: "A scattered woodland..." extract from context
+        if (desc.startsWith('A scattered woodland')) {
+          return 'Plains Grassy Woodland';
+        }
+        
+        // Pattern 3: "Found on..." extract from context
+        if (desc.startsWith('Found on rocky')) {
+          return 'Shrubby Dry Forest';
+        }
         
         // Fallback to first sentence
         const firstSentence = desc.split('.')[0];
@@ -973,6 +1038,13 @@
     });
     
     // FILTERING SYSTEM
+    
+    // Toggle filter bar
+    document.getElementById('filter-toggle').addEventListener('click', () => {
+      const container = document.getElementById('filter-container');
+      container.classList.toggle('collapsed');
+    });
+    
     let activeFilters = {
       habitat: null,
       moisture: null,
