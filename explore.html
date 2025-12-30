@@ -489,8 +489,20 @@
   <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
   
   <script>
+    // EVC Code to Name mapping
+    const EVC_NAMES = {
+      '2': 'Coast Banksia Woodland',
+      '3': 'Damp Sands Herb-rich Woodland',
+      '48': 'Heathy Woodland',
+      '56': 'Creekline Grassy Woodland',
+      '68': 'Swampy Woodland',
+      '172': 'Floodplain Wetland',
+      '858': 'Coastal Alkaline Scrub',
+      '937': 'Plains Grassy Woodland'
+    };
+    
     // Load EVCs and build grid
-    fetch('curated-plants.json')
+    fetch('curatedplants.json')
       .then(r => r.json())
       .then(data => {
         const grid = document.getElementById('evc-grid');
@@ -499,7 +511,7 @@
         // Convert EVCs object to array and sort by code number
         const evcsArray = Object.entries(data.evcs).map(([code, info]) => ({
           code,
-          name: info.name || getEvcNameFromDescription(info),
+          name: EVC_NAMES[code] || `EVC ${code}`,
           description: info.description || 'Description coming soon.',
           hasPlants: info.recommendations && info.recommendations.length > 0,
           info
@@ -519,15 +531,6 @@
         document.getElementById('evc-grid').innerHTML = '<p class="loading" style="color: red;">Failed to load EVCs. Please try again later.</p>';
       });
     
-    function getEvcNameFromDescription(info) {
-      // Extract name from description if name field doesn't exist
-      // Fallback to first few words of description
-      if (info.description) {
-        const firstSentence = info.description.split('.')[0];
-        return firstSentence.length > 50 ? firstSentence.substring(0, 50) + '...' : firstSentence;
-      }
-      return 'Unnamed EVC';
-    }
     
     function createEvcCard(evc) {
       const card = document.createElement('div');
@@ -585,8 +588,11 @@
       const modal = document.getElementById('evc-modal');
       modal.style.display = 'flex';
       
+      // Get EVC name from mapping
+      const evcName = EVC_NAMES[code] || `EVC ${code}`;
+      
       // Populate modal
-      document.getElementById('modal-evc-name').textContent = evcInfo.name || `EVC ${code}`;
+      document.getElementById('modal-evc-name').textContent = evcName;
       document.getElementById('modal-evc-description').textContent = evcInfo.description || 'Description coming soon.';
       document.getElementById('gf-evcCode').value = `EVC ${code}`;
       
@@ -643,7 +649,7 @@
             This plant list is currently being curated 🌿
           </h3>
           <p style="text-align: center; margin-bottom: 1rem; color: #666;">
-            We're still researching the most suitable plant species for <strong>${evcInfo.name || 'this EVC'}</strong>, 
+            We're still researching the most suitable plant species for <strong>${evcName}</strong>, 
             including structure, local provenance, and seasonal availability.
           </p>
           <p style="text-align: center; margin-bottom: 1rem; color: #666;">
