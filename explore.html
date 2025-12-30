@@ -489,37 +489,35 @@
   <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
   
   <script>
-    // EVC Code to Name mapping - from curated-plants.json
-    const EVC_NAMES = {
-      '2': 'Coast Banksia Woodland',
-      '3': 'Damp Sands Herb-rich Woodland',
-      '6': 'Sand Heathland',
-      '8': 'Wet Heathland',
-      '10': 'Estuarine Wetland',
-      '16': 'Lowland Forest',
-      '18': 'Riparian Forest',
-      '20': 'Heathy Dry Forest',
-      '21': 'Shrubby Dry Forest',
-      '22': 'Grassy Dry Forest',
-      '23': 'Herb-rich Foothill Forest',
-      '47': 'Valley Grassy Forest',
-      '48': 'Heathy Woodland',
-      '53': 'Swamp Scrub',
-      '55': 'Plains Grassy Woodland',
-      '56': 'Floodplain Riparian Woodland',
-      '68': 'Creekline Grassy Woodland',
-      '83': 'Swampy Riparian Woodland',
-      '126': 'Swampy Riparian Complex',
-      '127': 'Valley Heathy Forest',
-      '164': 'Creekline Herb-rich Woodland',
-      '172': 'Floodplain Wetland',
-      '175': 'Grassy Woodland',
-      '641': 'Riparian Woodland',
-      '851': 'Stream Bank Shrubland',
-      '858': 'Coastal Alkaline Scrub',
-      '934': 'Brackish Grassland',
-      '937': 'Swampy Woodland'
-    };
+    // Function to extract EVC name from description or name field
+    function getEvcName(code, evcData) {
+      // Check if name field exists
+      if (evcData.name) {
+        return evcData.name;
+      }
+      
+      // Extract from description - look for pattern at start
+      if (evcData.description) {
+        const desc = evcData.description;
+        
+        // Pattern 1: "EVC Name is a/grows/occurs..." (extract before " is ")
+        const isPattern = desc.match(/^([A-Z][^.]+?)\s+(?:is|grows|occurs|occupies|forms|features|supports)\s/);
+        if (isPattern) {
+          return isPattern[1].trim();
+        }
+        
+        // Pattern 2: "Found on..." or "This EVC..." (needs manual mapping)
+        // Pattern 3: "A scattered woodland..." (needs manual mapping)
+        
+        // Fallback to first sentence
+        const firstSentence = desc.split('.')[0];
+        if (firstSentence.length < 60) {
+          return firstSentence;
+        }
+      }
+      
+      return `EVC ${code}`;
+    }
     
     // Load EVCs and build grid
     fetch('curated-plants.json')
@@ -531,7 +529,7 @@
         // Convert EVCs object to array and sort by code number
         const evcsArray = Object.entries(data.evcs).map(([code, info]) => ({
           code,
-          name: EVC_NAMES[code] || `EVC ${code}`,
+          name: getEvcName(code, info),
           description: info.description || 'Description coming soon.',
           hasPlants: info.recommendations && info.recommendations.length > 0,
           info
@@ -608,8 +606,8 @@
       const modal = document.getElementById('evc-modal');
       modal.style.display = 'flex';
       
-      // Get EVC name from mapping
-      const evcName = EVC_NAMES[code] || `EVC ${code}`;
+      // Get EVC name dynamically
+      const evcName = getEvcName(code, evcInfo);
       
       // Populate modal
       document.getElementById('modal-evc-name').textContent = evcName;
