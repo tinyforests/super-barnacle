@@ -489,35 +489,36 @@
   <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
   
   <script>
-    // EVC Code to Name mapping - COMPLETE
+    // EVC Code to Name mapping - from curated-plants.json
     const EVC_NAMES = {
       '2': 'Coast Banksia Woodland',
       '3': 'Damp Sands Herb-rich Woodland',
-      '6': 'Floodplain Riparian Woodland',
-      '8': 'Swampy Riparian Complex',
+      '6': 'Sand Heathland',
+      '8': 'Wet Heathland',
       '10': 'Estuarine Wetland',
       '16': 'Lowland Forest',
       '18': 'Riparian Forest',
-      '20': 'Swamp Scrub',
-      '21': 'Cranberry Heath',
-      '22': 'Grassy Woodland',
+      '20': 'Heathy Dry Forest',
+      '21': 'Shrubby Dry Forest',
+      '22': 'Grassy Dry Forest',
       '23': 'Herb-rich Foothill Forest',
       '47': 'Valley Grassy Forest',
       '48': 'Heathy Woodland',
-      '53': 'Swampy Riparian Woodland',
+      '53': 'Swamp Scrub',
       '55': 'Plains Grassy Woodland',
-      '56': 'Creekline Grassy Woodland',
-      '68': 'Swampy Woodland',
-      '83': 'Swamp Scrub',
-      '126': 'Coastal Saltmarsh',
-      '127': 'Coastal Tussock Grassland',
-      '164': 'Coastal Headland Scrub',
+      '56': 'Floodplain Riparian Woodland',
+      '68': 'Creekline Grassy Woodland',
+      '83': 'Swampy Riparian Woodland',
+      '126': 'Swampy Riparian Complex',
+      '127': 'Valley Heathy Forest',
+      '164': 'Creekline Herb-rich Woodland',
+      '172': 'Floodplain Wetland',
       '175': 'Grassy Woodland',
       '641': 'Riparian Woodland',
-      '851': 'Coastal Alkaline Scrub',
+      '851': 'Stream Bank Shrubland',
       '858': 'Coastal Alkaline Scrub',
-      '934': 'Floodplain Riparian Woodland',
-      '937': 'Plains Grassy Woodland'
+      '934': 'Brackish Grassland',
+      '937': 'Swampy Woodland'
     };
     
     // Load EVCs and build grid
