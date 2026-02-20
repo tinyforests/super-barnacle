@@ -694,69 +694,90 @@ function displayModal(name, status, region, code, lat, lon) {
   
   // Reset buttons
   const searchBtn = document.getElementById("search-button");
-  searchBtn.disabled = false;
-  searchBtn.textContent = "Find My Garden";
+  if (searchBtn) {
+    searchBtn.disabled = false;
+    searchBtn.textContent = "Find My Garden";
+  }
   
   const locationBtn = document.getElementById("location-button");
-  locationBtn.disabled = false;
-  locationBtn.textContent = "📍 Use My Location";
+  if (locationBtn) {
+    locationBtn.disabled = false;
+    locationBtn.textContent = "📍 Use My Location";
+  }
   
   // Store coordinates globally
   window.currentLat = lat;
   window.currentLon = lon;
   window.currentEvcName = name;
   
-  // Log lookup
-  const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
-  logEVCLookup(searchAddress, lat, lon, code, name);
+  // Log lookup (only when we have coordinates — i.e. not coming from findmyevc.com)
+  if (lat && lon) {
+    const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
+    logEVCLookup(searchAddress, lat, lon, code, name);
+  }
   
   // Populate modal address
   const modalAddressEl = document.getElementById("modal-address");
+  const modalTitleEl = document.querySelector("#modal-info .title");
   if (modalAddressEl) {
-    let displayAddress;
-    if (window.searchedAddress) {
-      const parts = window.searchedAddress.split(',').map(p => p.trim());
-      
-      if (parts.length >= 3) {
-        const streetNumber = parts[0];
-        const streetName = parts[1];
-        const suburb = parts[2];
-        displayAddress = `${streetNumber} ${streetName}, ${suburb}`;
-      } else if (parts.length === 2) {
-        displayAddress = `${parts[0]}, ${parts[1]}`;
+    if (lat && lon) {
+      // Normal flow — show address
+      if (modalTitleEl) modalTitleEl.style.display = "";
+      let displayAddress;
+      if (window.searchedAddress) {
+        const parts = window.searchedAddress.split(',').map(p => p.trim());
+        if (parts.length >= 3) {
+          displayAddress = `${parts[0]} ${parts[1]}, ${parts[2]}`;
+        } else if (parts.length === 2) {
+          displayAddress = `${parts[0]}, ${parts[1]}`;
+        } else {
+          displayAddress = parts[0];
+        }
       } else {
-        displayAddress = parts[0];
+        displayAddress = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
       }
+      modalAddressEl.textContent = displayAddress;
     } else {
-      displayAddress = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+      // Coming from findmyevc.com — hide address line
+      if (modalTitleEl) modalTitleEl.style.display = "none";
     }
-    modalAddressEl.textContent = displayAddress;
   }
   
   // Set basic info
   document.getElementById("modal-evc-name").textContent = name || "Unknown";
   
   const statusEl = document.getElementById("modal-evc-status");
-  statusEl.textContent = status || "Not specified";
-  statusEl.style.lineHeight = "1.2";
-  statusEl.style.marginBottom = "5px";
+  if (statusEl) {
+    statusEl.textContent = status || "Not specified";
+    statusEl.style.lineHeight = "1.2";
+    statusEl.style.marginBottom = "5px";
+  }
   
   const regionEl = document.getElementById("modal-evc-region");
-  regionEl.textContent = region || "Not specified";
-  regionEl.style.lineHeight = "1.2";
+  if (regionEl) {
+    regionEl.textContent = region || "Not specified";
+    regionEl.style.lineHeight = "1.2";
+  }
 
-  // Setup modal map
+  // Setup modal map — only when we have coordinates
   modalMap && modalMap.remove();
-  modalMap = L.map("modal-map").setView([lat, lon], 12);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap contributors"
-  }).addTo(modalMap);
-  L.marker([lat, lon]).addTo(modalMap);
+  modalMap = null;
+  const modalMapEl = document.getElementById("modal-map");
+  if (lat && lon) {
+    modalMapEl.style.display = "block";
+    modalMap = L.map("modal-map").setView([lat, lon], 12);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors"
+    }).addTo(modalMap);
+    L.marker([lat, lon]).addTo(modalMap);
+  } else {
+    modalMapEl.style.display = "none";
+  }
 
   // Show modal
   const modal = document.getElementById("evc-modal");
   modal.style.display = "flex";
-  setTimeout(() => modalMap.invalidateSize(), 0);
+  if (modalMap) setTimeout(() => modalMap.invalidateSize(), 0);
   
   // Show loading
   const plantsDiv = document.getElementById("modal-plants");
@@ -1329,15 +1350,18 @@ function displayModal(name, status, region, code, lat, lon) {
 
   document.getElementById("gf-evcCode").value = `EVC ${code}`;
   
-  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-    .then(r => r.json())
-    .then(data => {
-      const address = data.display_name || `${lat}, ${lon}`;
-      document.getElementById("gf-address").value = address;
-    })
-    .catch(() => {
-      document.getElementById("gf-address").value = `${lat}, ${lon}`;
-    });
+  // Only reverse geocode if we have coordinates
+  if (lat && lon) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+      .then(r => r.json())
+      .then(data => {
+        const address = data.display_name || `${lat}, ${lon}`;
+        document.getElementById("gf-address").value = address;
+      })
+      .catch(() => {
+        document.getElementById("gf-address").value = `${lat}, ${lon}`;
+      });
+  }
 }
 
 function logEVCLookup(address, lat, lon, evcCode, evcName) {
