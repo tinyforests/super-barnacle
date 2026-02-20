@@ -1,4 +1,4 @@
-// evc-fetch.js - Complete version with all EVCs and smart camera icons
+// evc-fetch.js - Complete working version with all 29 EVCs and placeholder fallback
 
 let map, marker, modalMap;
 
@@ -15,10 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const addr = document.getElementById("address-input").value.trim();
     if (!addr) return alert("Please enter an address.");
     
-    // Hide autocomplete when submitting
     hideAutocomplete();
     
-    // Add loading state to button
     const searchBtn = document.getElementById("search-button");
     searchBtn.disabled = true;
     searchBtn.textContent = "Finding your garden...";
@@ -26,15 +24,12 @@ document.addEventListener("DOMContentLoaded", () => {
     geocodeAddress(addr);
   });
 
-  // Setup address autocomplete
   setupAddressAutocomplete();
 
-  // Close modal
   document.getElementById("modal-close").addEventListener("click", () => {
     document.getElementById("evc-modal").style.display = "none";
   });
 
-  // Email form - submit to Google Forms
   document.getElementById("gf-form").addEventListener("submit", e => {
     const btn = e.target.querySelector("button");
     setTimeout(() => {
@@ -47,13 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const locationBtn = document.getElementById("location-button");
   if (locationBtn) {
     locationBtn.addEventListener("click", () => {
-      // Check if geolocation is supported
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
         return;
       }
 
-      // Check if we're on a secure context (HTTPS)
       if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
         alert("Geolocation requires a secure connection (HTTPS). Please use the address search instead.");
         return;
@@ -62,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
       locationBtn.textContent = "Finding your garden...";
       locationBtn.disabled = true;
 
-      // iOS Safari specific options
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       const options = {
         enableHighAccuracy: !isIOS,
@@ -80,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
           marker = L.marker([lat, lon]).addTo(map);
           
           fetchEVCData(lat, lon);
-          
-          // Button will be reset in displayModal
         },
         (error) => {
           console.error("Geolocation error:", error);
@@ -120,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function geocodeAddress(address) {
-  // Store the searched address globally
   window.searchedAddress = address;
   
   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&addressdetails=1`)
@@ -131,7 +120,6 @@ function geocodeAddress(address) {
     .then(results => {
       if (!results.length) throw new Error("Address not found.");
       
-      // Check if address is in Victoria
       const result = results[0];
       const isVictoria = result.address?.state === 'Victoria' || 
                         result.address?.state === 'VIC' ||
@@ -150,14 +138,12 @@ function geocodeAddress(address) {
     })
     .catch(err => {
       alert(err.message);
-      // Reset button on error
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
       searchBtn.textContent = "Find My Garden";
     });
 }
 
-// Address autocomplete functionality
 let autocompleteTimeout;
 let autocompleteResults = [];
 
@@ -165,7 +151,6 @@ function setupAddressAutocomplete() {
   const input = document.getElementById("address-input");
   const form = document.getElementById("address-form");
   
-  // Create autocomplete dropdown
   const dropdown = document.createElement("div");
   dropdown.id = "address-autocomplete";
   dropdown.style.display = "none";
@@ -178,25 +163,21 @@ function setupAddressAutocomplete() {
   dropdown.style.overflowY = "auto";
   dropdown.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
   dropdown.style.width = input.offsetWidth + "px";
-  dropdown.style.marginTop = "8px"; // Space between input and dropdown
+  dropdown.style.marginTop = "8px";
   
-  // Insert dropdown after the form
   form.parentNode.insertBefore(dropdown, form.nextSibling);
   
-  // Position dropdown properly
   function positionDropdown() {
     const rect = input.getBoundingClientRect();
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
-      // On mobile: fixed to input position, scrolls with page
       dropdown.style.position = "absolute";
       const formRect = form.getBoundingClientRect();
       dropdown.style.top = (formRect.height + 8) + "px";
       dropdown.style.left = "0";
       dropdown.style.width = "100%";
     } else {
-      // On desktop: fixed position
       dropdown.style.position = "fixed";
       dropdown.style.top = (rect.bottom + 8) + "px";
       dropdown.style.left = rect.left + "px";
@@ -204,7 +185,6 @@ function setupAddressAutocomplete() {
     }
   }
   
-  // Listen for input changes
   input.addEventListener("input", (e) => {
     const query = e.target.value.trim();
     
@@ -213,51 +193,44 @@ function setupAddressAutocomplete() {
       return;
     }
     
-    // Debounce API calls
     clearTimeout(autocompleteTimeout);
     autocompleteTimeout = setTimeout(() => {
       fetchAddressSuggestions(query);
-    }, 300); // Wait 300ms after user stops typing
+    }, 300);
   });
   
-  // Reposition on scroll
   window.addEventListener("scroll", () => {
     if (dropdown.style.display !== "none") {
       positionDropdown();
     }
   });
   
-  // Hide dropdown when clicking outside
   document.addEventListener("click", (e) => {
     if (e.target !== input && e.target.closest("#address-autocomplete") === null) {
       hideAutocomplete();
     }
   });
   
-  // Update dropdown position on window resize
   window.addEventListener("resize", () => {
     if (dropdown.style.display !== "none") {
       positionDropdown();
     }
   });
   
-  // Store positionDropdown for later use
   dropdown.positionDropdown = positionDropdown;
 }
 
 function fetchAddressSuggestions(query) {
-  // Focus on Victoria, Australia for better results
   const url = `https://nominatim.openstreetmap.org/search?` +
     `format=json` +
     `&q=${encodeURIComponent(query + ', Victoria, Australia')}` +
     `&countrycodes=au` +
-    `&limit=10` +  // ✅ CHANGED: Increased from 5 to 10
+    `&limit=10` +
     `&addressdetails=1`;
   
   fetch(url)
     .then(r => r.json())
     .then(results => {
-      // Filter to only Victoria results AND residential addresses
       const victoriaResults = results.filter(result => {
         const address = result.address || {};
         const isVictoria = address.state === 'Victoria' || 
@@ -265,22 +238,18 @@ function fetchAddressSuggestions(query) {
                result.display_name.includes('Victoria') ||
                result.display_name.includes('VIC');
         
-        // ✅ NEW: Filter out businesses and POIs - prioritize residential addresses
-   // ✅ FIXED: Stricter residential filter
-const isResidential = (
-  // MUST have house number (strongest indicator)
-  address.house_number &&
-  // AND must NOT be a business/POI
-  !address.amenity &&
-  !address.shop &&
-  !address.office &&
-  !address.tourism &&
-  !result.name // Exclude named places (they're usually businesses)
-);
+        const isResidential = (
+          address.house_number &&
+          !address.amenity &&
+          !address.shop &&
+          !address.office &&
+          !address.tourism &&
+          !result.name
+        );
         
-        return isVictoria && isResidential;  // ✅ CHANGED: Added residential filter
+        return isVictoria && isResidential;
       })
-      .slice(0, 5); // ✅ CHANGED: Take only first 5 AFTER filtering
+      .slice(0, 5);
       
       autocompleteResults = victoriaResults;
       displayAutocompleteSuggestions(victoriaResults);
@@ -293,11 +262,10 @@ const isResidential = (
 function displayAutocompleteSuggestions(results) {
   const dropdown = document.getElementById("address-autocomplete");
   
-if (!results || results.length === 0) {
-  // Just hide the dropdown silently - don't show error message
-  dropdown.style.display = "none";
-  return;
-}
+  if (!results || results.length === 0) {
+    dropdown.style.display = "none";
+    return;
+  }
   
   dropdown.innerHTML = "";
   
@@ -311,11 +279,9 @@ if (!results || results.length === 0) {
     item.style.fontFamily = "'IBM Plex Mono', monospace";
     item.style.fontSize = "14px";
     
-    // Format the address nicely
     const displayName = result.display_name;
     item.textContent = displayName;
     
-    // Hover effect
     item.addEventListener("mouseenter", () => {
       item.style.backgroundColor = "#f7f7f7";
     });
@@ -324,7 +290,6 @@ if (!results || results.length === 0) {
       item.style.backgroundColor = "white";
     });
     
-    // Click to select
     item.addEventListener("click", () => {
       selectAddress(result);
     });
@@ -332,7 +297,6 @@ if (!results || results.length === 0) {
     dropdown.appendChild(item);
   });
   
-  // Position and show dropdown
   dropdown.positionDropdown();
   dropdown.style.display = "block";
 }
@@ -342,7 +306,6 @@ function selectAddress(result) {
   input.value = result.display_name;
   hideAutocomplete();
   
-  // Double-check it's in Victoria (should already be filtered)
   const isVictoria = result.address?.state === 'Victoria' || 
                     result.address?.state === 'VIC' ||
                     result.display_name.includes('Victoria') ||
@@ -353,24 +316,19 @@ function selectAddress(result) {
     return;
   }
   
-  // Trigger the search automatically
   const lat = parseFloat(result.lat);
   const lon = parseFloat(result.lon);
   
-  // Store the address
   window.searchedAddress = result.display_name;
   
-  // Update map
   map.setView([lat, lon], 12);
   marker && map.removeLayer(marker);
   marker = L.marker([lat, lon]).addTo(map);
   
-  // Add loading state
   const searchBtn = document.getElementById("search-button");
   searchBtn.disabled = true;
   searchBtn.textContent = "Finding your garden...";
   
-  // Fetch EVC data
   fetchEVCData(lat, lon);
 }
 
@@ -412,7 +370,6 @@ function fetchEVCData(lat, lon) {
     })
     .catch(err => {
       alert(err.message);
-      // Reset buttons on error
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
       searchBtn.textContent = "Find My Garden";
@@ -423,18 +380,14 @@ function fetchEVCData(lat, lon) {
     });
 }
 
-// Helper function to check if plant image exists
 function checkPlantImage(plantName) {
   return new Promise((resolve) => {
-    // Extract common name from parentheses if present
-    // e.g., "Eucalyptus camaldulensis (River Red-gum)" -> "River Red-gum"
     let nameForImage = plantName;
     const commonNameMatch = plantName.match(/\(([^)]+)\)/);
     if (commonNameMatch) {
       nameForImage = commonNameMatch[1].trim();
     }
     
-    // Convert to lowercase filename with hyphens
     const imageName = nameForImage.toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/['']/g, '');
@@ -446,14 +399,8 @@ function checkPlantImage(plantName) {
   });
 }
 
-
-// COMPLETE getKitDetails() function for all 29 EVCs
-// Replace lines 449-789 in your evc-fetch.js with this
-
-// Helper function to get kit details based on EVC name
 function getKitDetails(evcName) {
   const kits = {
-    // EVC 2
     'Coast Banksia Woodland': {
       image: 'coast-banksia-woodland.jpg',
       description: 'Coastal banksia-dominated woodland with heath understory. Perfect for sandy coastal soils.',
@@ -463,8 +410,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Wind and salt resistant',
       slug: 'coast-banksia-woodland'
     },
-    
-    // EVC 3
     'Damp Sands Herb-rich Woodland': {
       image: 'damp-sands-herb-rich-woodland.jpg',
       description: 'Diverse woodland on seasonally damp sandy soils. Rich herbaceous groundlayer with high biodiversity.',
@@ -474,8 +419,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Seasonal wetland species',
       slug: 'damp-sands-herb-rich-woodland'
     },
-    
-    // EVC 6
     'Sand Heathland': {
       image: 'sand-heathland.jpg',
       description: 'Low heathland on coastal and inland sand deposits. Vibrant flowering display year-round.',
@@ -485,8 +428,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Sandy soil specialists',
       slug: 'sand-heathland'
     },
-    
-    // EVC 8
     'Wet Heathland': {
       image: 'wet-heathland.jpg',
       description: 'Heath communities on poorly-drained soils. Spectacular seasonal flowering display.',
@@ -496,8 +437,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Wetland heath specialists',
       slug: 'wet-heathland'
     },
-    
-    // EVC 10
     'Estuarine Wetland': {
       image: 'estuarine-wetland.jpg',
       description: 'Brackish wetland where tidal estuaries meet floodplains. Vital habitat for migratory birds.',
@@ -507,8 +446,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Salt and flood-tolerant species',
       slug: 'estuarine-wetland'
     },
-    
-    // EVC 16
     'Lowland Forest': {
       image: 'lowland-forest.jpg',
       description: 'Tall forest on flat to gently undulating terrain. Rich, productive ecosystems.',
@@ -518,8 +455,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Tall canopy shade providers',
       slug: 'lowland-forest'
     },
-    
-    // EVC 18
     'Riparian Forest': {
       image: 'riparian-forest.jpg',
       description: 'Waterway vegetation with deep-rooted trees. Stabilizes banks and filters runoff.',
@@ -529,8 +464,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Moisture-loving species',
       slug: 'riparian-forest'
     },
-    
-    // EVC 20
     'Heathy Dry Forest': {
       image: 'heathy-dry-forest.jpg',
       description: 'Forest with dense heath understory. Thrives on nutrient-poor, well-drained soils.',
@@ -540,8 +473,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Year-round flowering heaths',
       slug: 'heathy-dry-forest'
     },
-    
-    // EVC 21
     'Shrubby Dry Forest': {
       image: 'shrubby-dry-forest.jpg',
       description: 'Forest with prominent shrub layer. Thrives on drier, less fertile sites.',
@@ -551,8 +482,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Drought-adapted shrub layer',
       slug: 'shrubby-dry-forest'
     },
-    
-    // EVC 22
     'Grassy Dry Forest': {
       image: 'grassy-dry-forest.jpg',
       description: 'Open forest structure with colorful wildflowers. Thrives in well-drained soils.',
@@ -562,8 +491,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Low-maintenance once established',
       slug: 'grassy-dry-forest'
     },
-    
-    // EVC 23
     'Herb-rich Foothill Forest': {
       image: 'herb-rich-foothill-forest.jpg',
       description: 'Diverse forest with rich herbaceous layer. Found on fertile foothill soils.',
@@ -573,8 +500,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Diverse herb and wildflower mix',
       slug: 'herb-rich-foothill-forest'
     },
-    
-    // EVC 29 - NEW!
     'Damp Forest': {
       image: 'damp-forest.jpg',
       description: 'Cool, moist forest with tree ferns and moisture-loving plants. Perfect for sheltered gullies and shaded areas with reliable moisture.',
@@ -584,8 +509,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Tree fern specialists',
       slug: 'damp-forest'
     },
-    
-    // EVC 47
     'Valley Grassy Forest': {
       image: 'valley-grassy-forest.jpg',
       description: 'Tall eucalypt forest with rich fern and herb layer. Ideal for shaded valley slopes.',
@@ -595,8 +518,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Shade-tolerant species mix',
       slug: 'valley-grassy-forest'
     },
-    
-    // EVC 48
     'Heathy Woodland': {
       image: 'heathy-woodland.jpg',
       description: 'Low open woodland with dense heath understory. Perfect for sandy soils.',
@@ -606,8 +527,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Year-round flowering species',
       slug: 'heathy-woodland'
     },
-    
-    // EVC 53
     'Swamp Scrub': {
       image: 'swamp-scrub.jpg',
       description: 'Dense shrubby vegetation in seasonally inundated areas. Creates important wetland habitat.',
@@ -617,8 +536,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Wetland and swamp specialists',
       slug: 'swamp-scrub'
     },
-    
-    // EVC 55
     'Plains Grassy Woodland': {
       image: 'plains-grassy-woodland.jpg',
       description: 'Iconic River Red Gums with diverse grassland understory. Perfect for a Melbourne indigenous garden.',
@@ -628,8 +545,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Drought-tolerant species mix',
       slug: 'plains-grassy-woodland'
     },
-    
-    // EVC 56
     'Floodplain Riparian Woodland': {
       image: 'floodplain-riparian-woodland.jpg',
       description: 'Riverine woodlands adapted to periodic flooding. Important for water quality and flood mitigation.',
@@ -639,8 +554,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Flood-tolerant species',
       slug: 'floodplain-riparian-woodland'
     },
-    
-    // EVC 68
     'Creekline Grassy Woodland': {
       image: 'creekline-grassy-woodland.jpg',
       description: 'Riparian woodland with grassy groundlayer along minor creeks. Protects waterways and provides wildlife corridors.',
@@ -650,8 +563,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Creek edge specialists',
       slug: 'creekline-grassy-woodland'
     },
-    
-    // EVC 83
     'Swampy Riparian Woodland': {
       image: 'swampy-riparian-woodland.jpg',
       description: 'Waterlogged riparian areas with specialised vegetation. Natural water filtration system.',
@@ -661,8 +572,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Waterlogged soil tolerant',
       slug: 'swampy-riparian-woodland'
     },
-    
-    // EVC 126
     'Swampy Riparian Complex': {
       image: 'swampy-riparian-complex.jpg',
       description: 'Wetland-riparian ecosystem along drainage lines with fluctuating water levels. Natural water filtration system.',
@@ -672,8 +581,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Waterlogged soil tolerant',
       slug: 'swampy-riparian-complex'
     },
-    
-    // EVC 127
     'Valley Heathy Forest': {
       image: 'valley-heathy-forest.jpg',
       description: 'Forest with heathy understory in sheltered valleys. Rich in flowering shrubs.',
@@ -683,8 +590,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Valley-adapted heath mix',
       slug: 'valley-heathy-forest'
     },
-    
-    // EVC 164
     'Creekline Herb-rich Woodland': {
       image: 'creekline-herb-rich-woodland.jpg',
       description: 'Diverse woodland along ephemeral creeks with rich herbaceous layer. High biodiversity in moist microhabitats.',
@@ -694,8 +599,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Moisture-loving herb specialists',
       slug: 'creekline-herb-rich-woodland'
     },
-    
-    // EVC 172
     'Floodplain Wetland': {
       image: 'floodplain-wetland.jpg',
       description: 'Wetland vegetation adapted to seasonal waterlogging. Dominated by moisture-loving sedges, rushes, and wetland herbs. Natural water filtration system.',
@@ -705,8 +608,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Wetland and waterway specialists',
       slug: 'floodplain-wetland'
     },
-    
-    // EVC 175
     'Grassy Woodland': {
       image: 'grassy-woodland.jpg',
       description: 'Open woodland with diverse native grasses. Perfect for larger suburban blocks.',
@@ -716,8 +617,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Low-maintenance grassland mix',
       slug: 'grassy-woodland'
     },
-    
-    // EVC 641
     'Riparian Woodland': {
       image: 'riparian-woodland.jpg',
       description: 'Open woodland along permanent and ephemeral waterways. Critical wildlife habitat.',
@@ -727,8 +626,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Creek and river specialists',
       slug: 'riparian-woodland'
     },
-    
-    // EVC 851
     'Stream Bank Shrubland': {
       image: 'stream-bank-shrubland.jpg',
       description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
@@ -738,8 +635,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Erosion-controlling shrubs',
       slug: 'stream-bank-shrubland'
     },
-    
-    // EVC 858
     'Coastal Alkaline Scrub': {
       image: 'coastal-alkaline-scrub.jpg',
       description: 'Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.',
@@ -749,8 +644,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Alkaline soil specialists',
       slug: 'coastal-alkaline-scrub'
     },
-    
-    // EVC 934
     'Brackish Grassland': {
       image: 'brackish-grassland.jpg',
       description: 'Salt-tolerant grassland communities near coastal areas. Important habitat for migratory birds.',
@@ -760,8 +653,6 @@ function getKitDetails(evcName) {
       specialFeature: 'Salt-tolerant species mix',
       slug: 'brackish-grassland'
     },
-    
-    // EVC 937
     'Swampy Woodland': {
       image: 'swampy-woodland.jpg',
       description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
@@ -775,26 +666,33 @@ function getKitDetails(evcName) {
 
   return kits[evcName] || null;
 }
+
+function displayModal(name, status, region, code, lat, lon) {
+  // Clean mosaic EVC names
+  if (name && name.includes('/')) {
+    name = name.split('/')[0].trim();
+    console.log('Cleaned mosaic EVC name to:', name);
+  }
   
-  // Clean aggregate EVC names - remove "Aggregate" suffix
+  // Clean aggregate EVC names
   if (name && name.includes('Aggregate')) {
     name = name.replace(/\s+Aggregate$/i, '').trim();
     console.log('Cleaned aggregate EVC name to:', name);
   }
-  // Map mosaic/complex EVC codes to their primary component
-const mosaicCodeMapping = {
-  '921': '2',   // Coast Banksia Woodland/Coastal Dune Scrub Mosaic → Coast Banksia Woodland
-  '904': '2',   // Coast Banksia Woodland/Swamp Scrub Mosaic → Coast Banksia Woodland
-  '1': '160',   // Coastal Dune Scrub/Coastal Dune Grassland Mosaic → Coastal Dune Scrub
-};
-
-// Remap code if it's a mosaic
-if (mosaicCodeMapping[code]) {
-  console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
-  code = mosaicCodeMapping[code];
-}
   
-  // Reset buttons when modal opens
+  // Map mosaic/complex EVC codes
+  const mosaicCodeMapping = {
+    '921': '2',
+    '904': '2',
+    '1': '160'
+  };
+
+  if (mosaicCodeMapping[code]) {
+    console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
+    code = mosaicCodeMapping[code];
+  }
+  
+  // Reset buttons
   const searchBtn = document.getElementById("search-button");
   searchBtn.disabled = false;
   searchBtn.textContent = "Find My Garden";
@@ -803,45 +701,39 @@ if (mosaicCodeMapping[code]) {
   locationBtn.disabled = false;
   locationBtn.textContent = "📍 Use My Location";
   
-  // Store coordinates globally for pre-order form
+  // Store coordinates globally
   window.currentLat = lat;
   window.currentLon = lon;
   window.currentEvcName = name;
   
-  // Log this EVC lookup to Google Sheet
+  // Log lookup
   const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
   logEVCLookup(searchAddress, lat, lon, code, name);
   
-  // Populate modal address with better formatting
+  // Populate modal address
   const modalAddressEl = document.getElementById("modal-address");
   if (modalAddressEl) {
     let displayAddress;
     if (window.searchedAddress) {
-      // Format: "158 Tyson Road, Balwyn"
-      // Input example: "158, Tyson Road, Balwyn, VIC 3103, Australia"
       const parts = window.searchedAddress.split(',').map(p => p.trim());
       
       if (parts.length >= 3) {
-        // parts[0] = "158", parts[1] = "Tyson Road", parts[2] = "Balwyn"
         const streetNumber = parts[0];
         const streetName = parts[1];
         const suburb = parts[2];
-        
         displayAddress = `${streetNumber} ${streetName}, ${suburb}`;
       } else if (parts.length === 2) {
-        // Fallback if only 2 parts
         displayAddress = `${parts[0]}, ${parts[1]}`;
       } else {
         displayAddress = parts[0];
       }
     } else {
-      // Use coordinates if no address
       displayAddress = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
     }
     modalAddressEl.textContent = displayAddress;
   }
   
-  // Set basic info from API
+  // Set basic info
   document.getElementById("modal-evc-name").textContent = name || "Unknown";
   
   const statusEl = document.getElementById("modal-evc-status");
@@ -861,17 +753,17 @@ if (mosaicCodeMapping[code]) {
   }).addTo(modalMap);
   L.marker([lat, lon]).addTo(modalMap);
 
-  // Show modal immediately with loading state
+  // Show modal
   const modal = document.getElementById("evc-modal");
   modal.style.display = "flex";
   setTimeout(() => modalMap.invalidateSize(), 0);
   
-  // Show loading message
+  // Show loading
   const plantsDiv = document.getElementById("modal-plants");
   plantsDiv.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Loading plant data...</p>';
   plantsDiv.style.display = "block";
 
-  // Fetch curated plant data from external JSON (async)
+  // Fetch plant data
   fetch('curated-plants.json')
   .then(r => {
     if (!r.ok) throw new Error('Could not load plant data');
@@ -880,7 +772,6 @@ if (mosaicCodeMapping[code]) {
   .then(data => {
     console.log('EVC Code being looked up:', code);
     console.log('EVC Name:', name);
-    console.log('Data structure keys:', Object.keys(data.evcs));
     const evcInfo = data.evcs[code];
     console.log('Found evcInfo:', evcInfo);
       
@@ -899,7 +790,6 @@ if (mosaicCodeMapping[code]) {
       plantsDiv.innerHTML = "";
       
       if (evcInfo?.recommendations && evcInfo.recommendations.length > 0) {
-        // Add title
         const titleEl = document.createElement("h2");
         titleEl.textContent = "Here's the indigenous plants that belong in your garden.";
         titleEl.style.fontFamily = "'Abril Fatface', serif";
@@ -910,7 +800,6 @@ if (mosaicCodeMapping[code]) {
         titleEl.style.color = "inherit";
         plantsDiv.appendChild(titleEl);
 
-        // Add plant layers
         evcInfo.recommendations.forEach(sec => {
           const layerDiv = document.createElement("div");
           layerDiv.className = "layer";
@@ -932,7 +821,6 @@ if (mosaicCodeMapping[code]) {
           list.style.margin = "0";
           list.style.overflow = "visible";
           
-          // Process plants with image checking
           sec.plants.forEach(async (plant) => {
             const item = document.createElement("li");
             item.style.padding = "8px 12px";
@@ -945,20 +833,17 @@ if (mosaicCodeMapping[code]) {
             item.style.position = "relative";
             item.style.overflow = "visible";
             
-            // Plant name
             const nameSpan = document.createElement("span");
             nameSpan.textContent = plant;
             nameSpan.style.flex = "1";
             item.appendChild(nameSpan);
             
-            // Check if image exists before adding camera icon
             const imageCheck = await checkPlantImage(plant);
             
             if (imageCheck.exists) {
-              // Camera icon with tooltip
               const cameraSpan = document.createElement("span");
               cameraSpan.className = "plant-camera";
-              cameraSpan.innerHTML = "&#128247;"; // Camera emoji as HTML entity
+              cameraSpan.innerHTML = "&#128247;";
               cameraSpan.style.cursor = "pointer";
               cameraSpan.style.fontSize = "1.2rem";
               cameraSpan.style.padding = "0.3rem 0.5rem";
@@ -966,7 +851,6 @@ if (mosaicCodeMapping[code]) {
               cameraSpan.style.transition = "all 0.3s";
               cameraSpan.style.userSelect = "none";
               
-              // Hover effect for camera
               cameraSpan.addEventListener("mouseenter", () => {
                 cameraSpan.style.backgroundColor = "#3d4535";
                 cameraSpan.style.transform = "scale(1.1)";
@@ -977,11 +861,10 @@ if (mosaicCodeMapping[code]) {
                 cameraSpan.style.transform = "scale(1)";
               });
               
-              // Image tooltip - append to body to avoid z-index issues
               const tooltip = document.createElement("div");
               tooltip.className = "plant-image-tooltip";
               tooltip.style.display = "none";
-              tooltip.style.position = "fixed"; // Changed to fixed
+              tooltip.style.position = "fixed";
               tooltip.style.zIndex = "99999";
               tooltip.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.3)";
               tooltip.style.borderRadius = "8px";
@@ -995,7 +878,6 @@ if (mosaicCodeMapping[code]) {
               img.style.display = "block";
               img.style.borderRadius = "8px";
               
-              // Set size based on screen
               if (window.innerWidth <= 768) {
                 tooltip.style.width = "200px";
                 tooltip.style.height = "200px";
@@ -1009,19 +891,16 @@ if (mosaicCodeMapping[code]) {
               }
               
               tooltip.appendChild(img);
-              document.body.appendChild(tooltip); // Append to body, not to item
+              document.body.appendChild(tooltip);
               
-              // Show/hide tooltip on hover with positioning
               cameraSpan.addEventListener("mouseenter", () => {
                 const rect = cameraSpan.getBoundingClientRect();
                 
                 if (window.innerWidth <= 768) {
-                  // Mobile: centered in viewport, below the camera
                   tooltip.style.left = "50%";
                   tooltip.style.top = (rect.bottom + 10) + "px";
                   tooltip.style.transform = "translateX(-50%)";
                 } else {
-                  // Desktop: to the left of the camera
                   tooltip.style.left = (rect.left - 250 - 20) + "px";
                   tooltip.style.top = (rect.top + rect.height / 2) + "px";
                   tooltip.style.transform = "translateY(-50%)";
@@ -1043,12 +922,9 @@ if (mosaicCodeMapping[code]) {
           layerDiv.appendChild(list);
           plantsDiv.appendChild(layerDiv);
         });
-      } else {
-        // No plant data available - description already shows message
       }
 
-      // Always show Forest Kit, Tee, and Ebook sections regardless of plant data
-      
+      // Forest Kit Section
       const kitDetails = getKitDetails(name);
       
       const kitSection = document.createElement("div");
@@ -1067,7 +943,6 @@ if (mosaicCodeMapping[code]) {
       kitTitle.style.color = "#3d4535";
       kitSection.appendChild(kitTitle);
       
-      // Add descriptive text
       const kitIntro = document.createElement("p");
       kitIntro.textContent = "Purchase a curated indigenous planting kit ecologically suited to your location. Hand selected for structural diversity, wildlife value, and aesthetic beauty.";
       kitIntro.style.fontSize = "16px";
@@ -1077,29 +952,32 @@ if (mosaicCodeMapping[code]) {
       kitSection.appendChild(kitIntro);
       
       if (kitDetails) {
-        // Single image for all kits - using a generic ecological garden kit image
         const kitImageContainer = document.createElement("div");
         kitImageContainer.style.marginBottom = "20px";
         kitImageContainer.style.borderRadius = "8px";
         kitImageContainer.style.overflow = "hidden";
         
         const kitImage = document.createElement("img");
-        kitImage.src = `images/evcs/ecological-garden-kit.jpg`;
-        kitImage.alt = `Ecological Garden Kit`;
+        kitImage.src = `images/evcs/${kitDetails.image}`;
+        kitImage.alt = `${name} Forest Kit`;
         kitImage.style.width = "100%";
         kitImage.style.height = "200px";
         kitImage.style.objectFit = "cover";
         kitImage.style.display = "block";
         
         kitImage.onerror = function() {
-          this.style.display = 'none';
-          console.log(`Kit image not found: images/evcs/ecological-garden-kit.jpg`);
+          console.log(`Kit image not found: images/evcs/${kitDetails.image}, using fallback`);
+          this.src = 'images/evcs/ecological-garden-kit.jpg';
+          
+          this.onerror = function() {
+            this.style.display = 'none';
+            console.log('Fallback image also not found, hiding image');
+          };
         };
         
         kitImageContainer.appendChild(kitImage);
         kitSection.appendChild(kitImageContainer);
         
-        // EVC Name title above price
         const kitEvcName = document.createElement("h3");
         kitEvcName.textContent = name;
         kitEvcName.style.fontFamily = "'Abril Fatface', serif";
@@ -1110,7 +988,6 @@ if (mosaicCodeMapping[code]) {
         kitEvcName.style.letterSpacing = "0px";
         kitSection.appendChild(kitEvcName);
         
-        // Description
         const kitDescription = document.createElement("p");
         kitDescription.textContent = kitDetails.description;
         kitDescription.style.marginBottom = "20px";
@@ -1119,7 +996,6 @@ if (mosaicCodeMapping[code]) {
         kitDescription.style.lineHeight = "1.6";
         kitSection.appendChild(kitDescription);
         
-        // Features list
         const featuresList = document.createElement("ul");
         featuresList.style.listStyle = "none";
         featuresList.style.margin = "1.5rem 0";
@@ -1140,7 +1016,6 @@ if (mosaicCodeMapping[code]) {
           li.style.position = "relative";
           li.style.color = "#3d4535";
           
-          // Add checkmark
           const checkmark = document.createElement("span");
           checkmark.textContent = "✓";
           checkmark.style.position = "absolute";
@@ -1154,7 +1029,6 @@ if (mosaicCodeMapping[code]) {
         
         kitSection.appendChild(featuresList);
         
-        // Price - matching Tee section styling with mobile line break
         const kitPrice = document.createElement("div");
         kitPrice.style.fontFamily = "'Abril Fatface', serif";
         kitPrice.style.fontSize = "2.5rem";
@@ -1163,7 +1037,6 @@ if (mosaicCodeMapping[code]) {
         kitPrice.innerHTML = '$89 <span style="font-size: 1rem; font-family: \'IBM Plex Mono\', monospace; font-weight: normal;">per m²</span> <span class="mobile-break" style="font-size: 1rem; font-family: \'IBM Plex Mono\', monospace; font-weight: normal;">plus shipping</span>';
         kitSection.appendChild(kitPrice);
         
-        // Add mobile-specific styling for line break (only once)
         if (!document.getElementById('kit-mobile-style')) {
           const style = document.createElement('style');
           style.id = 'kit-mobile-style';
@@ -1178,7 +1051,6 @@ if (mosaicCodeMapping[code]) {
           document.head.appendChild(style);
         }
         
-        // Buy Your Garden Kit button
         const kitButton = document.createElement("button");
         kitButton.textContent = "Buy Your Garden Kit";
         kitButton.style.background = "#3d4535";
@@ -1201,38 +1073,29 @@ if (mosaicCodeMapping[code]) {
         });
         
         kitButton.addEventListener("click", () => {
-          // Clean EVC name for reference ID
           const cleanEvcName = name
-            .replace(/[^\w\s-]/g, '')  // Remove special characters
-            .replace(/\s+/g, '-')       // Replace spaces with hyphens
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
             .toLowerCase();
           
-          // Get timestamp
-          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-          
-          // Build comprehensive reference ID
+          const timestamp = new Date().toISOString().split('T')[0];
           const referenceId = `KIT_${cleanEvcName}_EVC-${code}_DATE-${timestamp}`;
           
-          // Build Stripe URL
           const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
           stripeUrl.searchParams.append("client_reference_id", referenceId);
           
-          // DEBUG: Show what we're sending
           console.log("=== Stripe Forest Kit Order ===");
           console.log("EVC Name:", name);
           console.log("EVC Code:", code);
           console.log("Reference ID:", referenceId);
-          console.log("Full URL:", stripeUrl.toString());
           console.log("==============================");
           
-          // Open Stripe checkout
           window.open(stripeUrl.toString(), '_blank');
         });
 
         kitSection.appendChild(kitButton);
         
       } else {
-        // No kit data available - show coming soon with button
         const comingSoon = document.createElement("p");
         comingSoon.innerHTML = `We don't have a forest kit for <strong>${name}</strong> yet, but we're curating one! In the meantime, explore our other kits to see what's possible with native plantings.`;
         comingSoon.style.color = "#666";
@@ -1271,7 +1134,7 @@ if (mosaicCodeMapping[code]) {
       
       plantsDiv.appendChild(kitSection);
       
-      // Add EVC Tee section
+      // Tee Section
       const teeSection = document.createElement("div");
       teeSection.style.marginTop = "20px";
       teeSection.style.padding = "30px";
@@ -1288,14 +1151,12 @@ if (mosaicCodeMapping[code]) {
       teeTitle.style.color = "#3d4535";
       teeSection.appendChild(teeTitle);
       
-      // Create image filename from EVC name - CHANGED TO .jpg
       const imageFilename = name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/['']/g, '')
         .replace(/&/g, 'and')
         + '.jpg';
       
-      // Image container
       const imageContainer = document.createElement("div");
       imageContainer.style.marginBottom = "20px";
       imageContainer.style.textAlign = "center";
@@ -1316,7 +1177,6 @@ if (mosaicCodeMapping[code]) {
         this.style.display = 'none';
         console.log(`Tee image not found: images/tees/${imageFilename}`);
         
-        // Show coming soon message
         const comingSoon = document.createElement("div");
         comingSoon.style.padding = "30px 20px";
         comingSoon.style.textAlign = "center";
@@ -1343,9 +1203,7 @@ if (mosaicCodeMapping[code]) {
       imageContainer.appendChild(teeImage);
       teeSection.appendChild(imageContainer);
       
-      // Only show purchase UI if tee is available
       teeImage.onload = function() {
-        // Tee title with EVC name
         const teeEvcTitle = document.createElement("h3");
         teeEvcTitle.innerHTML = `${name} Tee`;
         teeEvcTitle.style.fontFamily = "'Abril Fatface', serif";
@@ -1355,18 +1213,15 @@ if (mosaicCodeMapping[code]) {
         teeEvcTitle.style.lineHeight = "1.2";
         teeSection.appendChild(teeEvcTitle);
         
-        // Koa Goods product details
         const teeDescription = document.createElement("div");
         teeDescription.innerHTML = `
           <p style="margin-bottom: 10px; font-weight: 600; color: #3d4535;">Koa Goods Classic Hemp Tee</p>
           <p style="margin-bottom: 8px; color: #666;">A timeless everyday layer made from a 210 gsm blend of hemp and organic cotton. Each piece is crafted by Koa Goods in carbon-neutral workshops, where a tree is planted for every order. Naturally breathable, soft against the skin, and designed with a relaxed fit and ribbed detailing.</p>
-          
         `;
         teeDescription.style.marginBottom = "20px";
         teeDescription.style.fontSize = "16px";
         teeSection.appendChild(teeDescription);
         
-        // Price
         const teePrice = document.createElement("div");
         teePrice.style.fontFamily = "'Abril Fatface', serif";
         teePrice.style.fontSize = "2.5rem";
@@ -1375,7 +1230,6 @@ if (mosaicCodeMapping[code]) {
         teePrice.innerHTML = '$55 <span style="font-size: 1rem; font-family: \'IBM Plex Mono\', monospace; font-weight: normal;">plus shipping</span>';
         teeSection.appendChild(teePrice);
         
-        // Size selector and button container
         const teeControls = document.createElement("div");
         teeControls.style.display = "flex";
         teeControls.style.gap = "10px";
@@ -1429,32 +1283,24 @@ if (mosaicCodeMapping[code]) {
             return;
           }
           
-          // Clean EVC name for reference ID
           const cleanEvcName = name
-            .replace(/[^\w\s-]/g, '')  // Remove special characters
-            .replace(/\s+/g, '-')       // Replace spaces with hyphens
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
             .toLowerCase();
           
-          // Get timestamp
-          const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-          
-          // Build comprehensive reference ID
+          const timestamp = new Date().toISOString().split('T')[0];
           const referenceId = `TEE_${cleanEvcName}_SIZE-${size}_EVC-${code}_DATE-${timestamp}`;
           
-          // Your live Stripe Payment Link
           const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
           stripeUrl.searchParams.append("client_reference_id", referenceId);
           
-          // DEBUG: Show what we're sending
           console.log("=== Stripe T-Shirt Order ===");
           console.log("EVC Name:", name);
           console.log("EVC Code:", code);
           console.log("Size:", size);
           console.log("Reference ID:", referenceId);
-          console.log("Full URL:", stripeUrl.toString());
           console.log("===========================");
           
-          // Open Stripe checkout in new tab
           window.open(stripeUrl.toString(), '_blank');
         });
         
@@ -1470,8 +1316,6 @@ if (mosaicCodeMapping[code]) {
       };
       
       plantsDiv.appendChild(teeSection);
-      
-      // Show plants immediately (no email gate)
       plantsDiv.style.display = "block";
     })
     .catch(err => {
@@ -1483,10 +1327,8 @@ if (mosaicCodeMapping[code]) {
       plantsDiv.style.display = "block";
     });
 
-  // Populate hidden form fields
   document.getElementById("gf-evcCode").value = `EVC ${code}`;
   
-  // Get address from reverse geocoding (async, doesn't block modal)
   fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
     .then(r => r.json())
     .then(data => {
@@ -1498,9 +1340,7 @@ if (mosaicCodeMapping[code]) {
     });
 }
 
-// EVC Lookup Logging Function
 function logEVCLookup(address, lat, lon, evcCode, evcName) {
-  // Google Form submission details
   const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScmuvklj5OJq7tJLLS2TCR8fRYoOh96WA_63a9YsGOsznLgdQ/formResponse';
   const ENTRY_IDS = {
     address: 'entry.124085928',
@@ -1511,14 +1351,12 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
   };
 
   try {
-    // Create a hidden form
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = FORM_URL;
     form.target = 'log-iframe';
     form.style.display = 'none';
 
-    // Add form fields
     const fields = {
       [ENTRY_IDS.address]: address || 'Unknown',
       [ENTRY_IDS.latitude]: lat?.toFixed(6) || '',
@@ -1535,7 +1373,6 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
       form.appendChild(input);
     });
 
-    // Create hidden iframe if it doesn't exist
     let iframe = document.getElementById('log-iframe');
     if (!iframe) {
       iframe = document.createElement('iframe');
@@ -1545,11 +1382,9 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
       document.body.appendChild(iframe);
     }
 
-    // Submit the form
     document.body.appendChild(form);
     form.submit();
     
-    // Clean up
     setTimeout(() => {
       document.body.removeChild(form);
     }, 1000);
@@ -1557,25 +1392,19 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
     console.log('EVC lookup logged:', { address, lat, lon, evcCode, evcName });
   } catch (error) {
     console.error('Failed to log EVC lookup:', error);
-    // Fail silently - don't interrupt user experience
   }
 }
 
-// Pre-order modal functions
 function openPreorderModal(evcName) {
   const modal = document.getElementById("preorder-modal");
   const evcField = document.getElementById("preorder-evc");
   const addressField = document.getElementById("preorder-address");
   
-  // Pre-fill the EVC field
   evcField.value = window.currentEvcName || evcName;
   
-  // Pre-fill address - use stored searched address if available
   if (window.searchedAddress) {
-    // Use the address they originally searched for
     addressField.value = window.searchedAddress;
   } else if (window.currentLat && window.currentLon) {
-    // Fall back to reverse geocoding (for geolocation users)
     addressField.value = "Loading address...";
     fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${window.currentLat}&lon=${window.currentLon}`)
       .then(r => r.json())
@@ -1588,7 +1417,6 @@ function openPreorderModal(evcName) {
       });
   }
   
-  // Show modal
   modal.style.display = "flex";
   document.body.style.overflow = "hidden";
 }
@@ -1597,19 +1425,15 @@ function closePreorderModal() {
   const modal = document.getElementById("preorder-modal");
   modal.style.display = "none";
   document.body.style.overflow = "auto";
-  
-  // Reset form
   document.getElementById("preorder-form").reset();
 }
 
-// Setup preorder modal close button
 document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("preorder-close");
   if (closeBtn) {
     closeBtn.addEventListener("click", closePreorderModal);
   }
   
-  // Close modal when clicking outside
   const modal = document.getElementById("preorder-modal");
   if (modal) {
     modal.addEventListener("click", (e) => {
@@ -1619,7 +1443,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
-  // Handle form submission
   const form = document.getElementById("preorder-form");
   if (form) {
     form.addEventListener("submit", (e) => {
