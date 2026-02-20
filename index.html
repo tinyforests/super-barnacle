@@ -1264,5 +1264,21 @@ By planting indigenous species, you help restore local biodiversity, support nat
       });
     });
   </script>
+
+  <!-- Handle incoming EVC from findmyevc.com -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const evcCode = params.get("evc");
+      const evcName = params.get("name") ? decodeURIComponent(params.get("name")) : null;
+
+      if (evcCode && evcName) {
+        // Scroll to section 3 so the user sees the search context
+        scrollToSection("section-3");
+        // Open modal without coordinates — no location passed from findmyevc.com
+        displayModal(evcName, null, null, evcCode, null, null);
+      }
+    });
+  </script>
 </body>
 </html>
