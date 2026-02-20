@@ -1,8 +1,11 @@
-// evc-fetch.js - Complete working version with all 29 EVCs and placeholder fallback
+// evc-fetch.js - Complete working version with URL parameter handling and FindMyEVC-matched polygon detection
 
 let map, marker, modalMap;
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Check for URL parameters from FindMyEVC FIRST
+  handleURLParameters();
+  
   // Legacy map (hidden via CSS)
   map = L.map("map").setView([-37.8136, 144.9631], 8);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -108,6 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// NEW: Handle URL parameters from FindMyEVC
+function handleURLParameters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const evcCode = urlParams.get('evc');
+  const evcName = urlParams.get('name');
+  
+  if (evcCode && evcName) {
+    console.log('🔗 Loading EVC from FindMyEVC:', evcCode, evcName);
+    
+    // Decode the name
+    const decodedName = decodeURIComponent(evcName);
+    
+    // Call displayModal with EVC info (no coordinates since coming from external link)
+    displayModal(decodedName, null, null, evcCode, null, null);
+    
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
 
 function geocodeAddress(address) {
   window.searchedAddress = address;
@@ -340,35 +363,47 @@ function hideAutocomplete() {
   }
 }
 
+// UPDATED: Polygon detection to match FindMyEVC
 function fetchEVCData(lat, lon) {
-  const d = 0.02,
-        bbox = `${lon - d},${lat - d},${lon + d},${lat + d}`,
-        url  = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
-               "?service=WFS&version=1.0.0&request=GetFeature" +
-               "&typeName=open-data-platform:nv2005_evcbcs" +
-               `&bbox=${bbox},EPSG:4326` +
-               "&outputFormat=application/json";
+  // CHANGE 1: Use buffer = 0.01 (matches FindMyEVC)
+  const buffer = 0.01;
+  
+  // CHANGE 2: Try lat,lon order first
+  const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
+  
+  // CHANGE 3: Use version 1.1.0
+  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+             "?service=WFS&version=1.1.0&request=GetFeature" +
+             "&typeName=open-data-platform:nv2005_evcbcs" +
+             `&bbox=${bbox}` +
+             "&srsName=EPSG:4326" +
+             "&outputFormat=application/json";
 
+  console.log('Fetching EVC data (lat,lon order, buffer=0.01)');
+  
   fetch(url)
-    .then(r => r.text())
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+      return r.text();
+    })
     .then(txt => {
       if (txt.trim().startsWith("<"))
         throw new Error("EVC service error. Try again later.");
       return JSON.parse(txt);
     })
     .then(data => {
-      if (!data.features?.length)
-        throw new Error("No EVC data found for this location.");
-      const pt   = turf.point([lon, lat]),
-            feat = data.features.find(f =>
-                     f.geometry.type === "Polygon" &&
-                     turf.booleanPointInPolygon(pt, turf.polygon(f.geometry.coordinates))
-                   ) || data.features[0],
-            p    = feat.properties;
-
-      displayModal(p.x_evcname, p.evc_bcs_desc, p.bioregion, p.evc, lat, lon);
+      console.log('WFS response (lat,lon):', data.features ? data.features.length + ' features' : 'no features');
+      
+      if (!data.features || data.features.length === 0) {
+        // Try lon,lat order as fallback
+        console.log('No features with lat,lon, trying lon,lat...');
+        return fetchEVCDataLonLat(lat, lon);
+      }
+      
+      processEVCResults(data, lat, lon);
     })
     .catch(err => {
+      console.error('EVC fetch error:', err);
       alert(err.message);
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
@@ -379,6 +414,159 @@ function fetchEVCData(lat, lon) {
       locationBtn.textContent = "📍 Use My Location";
     });
 }
+
+// NEW: Fallback for lon,lat coordinate order
+function fetchEVCDataLonLat(lat, lon) {
+  const buffer = 0.01;
+  const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
+  
+  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+             "?service=WFS&version=1.1.0&request=GetFeature" +
+             "&typeName=open-data-platform:nv2005_evcbcs" +
+             `&bbox=${bbox}` +
+             "&srsName=EPSG:4326" +
+             "&outputFormat=application/json";
+
+  console.log('Fetching EVC data (lon,lat order, buffer=0.01)');
+  
+  return fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+      return r.text();
+    })
+    .then(txt => {
+      if (txt.trim().startsWith("<"))
+        throw new Error("EVC service error. Try again later.");
+      return JSON.parse(txt);
+    })
+    .then(data => {
+      console.log('WFS response (lon,lat):', data.features ? data.features.length + ' features' : 'no features');
+      
+      if (!data.features || data.features.length === 0) {
+        throw new Error('No EVC data found for this location.');
+      }
+      
+      processEVCResults(data, lat, lon);
+    });
+}
+
+// UPDATED: Better polygon matching (matches FindMyEVC)
+function processEVCResults(data, lat, lon) {
+  const point = turf.point([lon, lat]);
+  let matchedFeature = null;
+
+  // Find exact match
+  for (let i = 0; i < data.features.length; i++) {
+    if (turf.booleanPointInPolygon(point, data.features[i])) {
+      matchedFeature = data.features[i];
+      console.log('Found exact match at index:', i);
+      break;
+    }
+  }
+
+  // If no exact match, use first feature (nearest)
+  if (!matchedFeature) {
+    console.log('No exact match, using first feature');
+    matchedFeature = data.features[0];
+  }
+
+  const p = matchedFeature.properties;
+  displayModal(p.x_evcname, p.evc_bcs_desc, p.bioregion, p.evc, lat, lon);
+}
+
+// NEW FUNCTION: Fallback to try lon,lat coordinate order
+function fetchEVCDataLonLat(lat, lon) {
+  const buffer = 0.01;
+  
+  // Try lon,lat order (standard EPSG:4326)
+  const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
+  
+  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+              "?service=WFS&version=1.1.0&request=GetFeature" +
+              "&typeName=open-data-platform:nv2005_evcbcs" +
+              `&bbox=${bbox}` +
+              "&srsName=EPSG:4326" +
+              "&outputFormat=application/json";
+
+  console.log('Fetching EVC data with lon,lat bbox:', bbox);
+  
+  return fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+      return r.text();
+    })
+    .then(txt => {
+      if (txt.trim().startsWith("<"))
+        throw new Error("EVC service error. Try again later.");
+      return JSON.parse(txt);
+    })
+    .then(data => {
+      console.log('WFS response (lon,lat order):', data);
+      console.log('Number of features:', data.features ? data.features.length : 0);
+      
+      if (!data.features || data.features.length === 0) {
+        throw new Error('No EVC data found for this location. This may be outside mapped areas.');
+      }
+      
+      processEVCResults(data, lat, lon);
+    });
+}
+
+// CHANGE 5: Better polygon matching logic (matches FindMyEVC)
+function processEVCResults(data, lat, lon) {
+  const point = turf.point([lon, lat]);
+  let matchedFeature = null;
+
+  // Try to find exact polygon match
+  for (let i = 0; i < data.features.length; i++) {
+    if (turf.booleanPointInPolygon(point, data.features[i])) {
+      matchedFeature = data.features[i];
+      console.log('Found exact polygon match at index:', i);
+      break;  // Stop at first match
+    }
+  }
+
+  // If no exact match, use first feature (nearest)
+  if (!matchedFeature) {
+    console.log('No exact match, using first feature (nearest)');
+    matchedFeature = data.features[0];
+  }
+
+  console.log('Matched feature:', matchedFeature);
+  
+  const p = matchedFeature.properties;
+  
+  // Clean mosaic EVC names
+  let name = p.x_evcname;
+  if (name && name.includes('/')) {
+    name = name.split('/')[0].trim();
+    console.log('Cleaned mosaic EVC name to:', name);
+  }
+  
+  // Clean aggregate EVC names
+  if (name && name.includes('Aggregate')) {
+    name = name.replace(/\s+Aggregate$/i, '').trim();
+    console.log('Cleaned aggregate EVC name to:', name);
+  }
+  
+  // Map mosaic/complex EVC codes
+  const mosaicCodeMapping = {
+    '921': '2',
+    '904': '2',
+    '1': '160'
+  };
+
+  let code = p.evc;
+  if (mosaicCodeMapping[code]) {
+    console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
+    code = mosaicCodeMapping[code];
+  }
+  
+  displayModal(name, p.evc_bcs_desc, p.bioregion, code, lat, lon);
+}
+// ============================================================================
+// END OF CORRECTED SECTION
+// ============================================================================
 
 function checkPlantImage(plantName) {
   return new Promise((resolve) => {
@@ -694,90 +882,69 @@ function displayModal(name, status, region, code, lat, lon) {
   
   // Reset buttons
   const searchBtn = document.getElementById("search-button");
-  if (searchBtn) {
-    searchBtn.disabled = false;
-    searchBtn.textContent = "Find My Garden";
-  }
+  searchBtn.disabled = false;
+  searchBtn.textContent = "Find My Garden";
   
   const locationBtn = document.getElementById("location-button");
-  if (locationBtn) {
-    locationBtn.disabled = false;
-    locationBtn.textContent = "📍 Use My Location";
-  }
+  locationBtn.disabled = false;
+  locationBtn.textContent = "📍 Use My Location";
   
   // Store coordinates globally
   window.currentLat = lat;
   window.currentLon = lon;
   window.currentEvcName = name;
   
-  // Log lookup (only when we have coordinates — i.e. not coming from findmyevc.com)
-  if (lat && lon) {
-    const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
-    logEVCLookup(searchAddress, lat, lon, code, name);
-  }
+  // Log lookup
+  const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
+  logEVCLookup(searchAddress, lat, lon, code, name);
   
   // Populate modal address
   const modalAddressEl = document.getElementById("modal-address");
-  const modalTitleEl = document.querySelector("#modal-info .title");
   if (modalAddressEl) {
-    if (lat && lon) {
-      // Normal flow — show address
-      if (modalTitleEl) modalTitleEl.style.display = "";
-      let displayAddress;
-      if (window.searchedAddress) {
-        const parts = window.searchedAddress.split(',').map(p => p.trim());
-        if (parts.length >= 3) {
-          displayAddress = `${parts[0]} ${parts[1]}, ${parts[2]}`;
-        } else if (parts.length === 2) {
-          displayAddress = `${parts[0]}, ${parts[1]}`;
-        } else {
-          displayAddress = parts[0];
-        }
+    let displayAddress;
+    if (window.searchedAddress) {
+      const parts = window.searchedAddress.split(',').map(p => p.trim());
+      
+      if (parts.length >= 3) {
+        const streetNumber = parts[0];
+        const streetName = parts[1];
+        const suburb = parts[2];
+        displayAddress = `${streetNumber} ${streetName}, ${suburb}`;
+      } else if (parts.length === 2) {
+        displayAddress = `${parts[0]}, ${parts[1]}`;
       } else {
-        displayAddress = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+        displayAddress = parts[0];
       }
-      modalAddressEl.textContent = displayAddress;
     } else {
-      // Coming from findmyevc.com — hide address line
-      if (modalTitleEl) modalTitleEl.style.display = "none";
+      displayAddress = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
     }
+    modalAddressEl.textContent = displayAddress;
   }
   
   // Set basic info
   document.getElementById("modal-evc-name").textContent = name || "Unknown";
   
   const statusEl = document.getElementById("modal-evc-status");
-  if (statusEl) {
-    statusEl.textContent = status || "Not specified";
-    statusEl.style.lineHeight = "1.2";
-    statusEl.style.marginBottom = "5px";
-  }
+  statusEl.textContent = status || "Not specified";
+  statusEl.style.lineHeight = "1.2";
+  statusEl.style.marginBottom = "5px";
   
   const regionEl = document.getElementById("modal-evc-region");
-  if (regionEl) {
-    regionEl.textContent = region || "Not specified";
-    regionEl.style.lineHeight = "1.2";
-  }
+  regionEl.textContent = region || "Not specified";
+  regionEl.style.lineHeight = "1.2";
 
-  // Setup modal map — only when we have coordinates
+  // Setup modal map
   modalMap && modalMap.remove();
-  modalMap = null;
-  const modalMapEl = document.getElementById("modal-map");
-  if (lat && lon) {
-    modalMapEl.style.display = "block";
-    modalMap = L.map("modal-map").setView([lat, lon], 12);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors"
-    }).addTo(modalMap);
-    L.marker([lat, lon]).addTo(modalMap);
-  } else {
-    modalMapEl.style.display = "none";
-  }
+  modalMap = L.map("modal-map").setView([lat, lon], 12);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+  }).addTo(modalMap);
+  L.marker([lat, lon]).addTo(modalMap);
 
   // Show modal
   const modal = document.getElementById("evc-modal");
   modal.style.display = "flex";
-  if (modalMap) setTimeout(() => modalMap.invalidateSize(), 0);
+  setTimeout(() => modalMap.invalidateSize(), 0);
   
   // Show loading
   const plantsDiv = document.getElementById("modal-plants");
@@ -1350,18 +1517,15 @@ function displayModal(name, status, region, code, lat, lon) {
 
   document.getElementById("gf-evcCode").value = `EVC ${code}`;
   
-  // Only reverse geocode if we have coordinates
-  if (lat && lon) {
-    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-      .then(r => r.json())
-      .then(data => {
-        const address = data.display_name || `${lat}, ${lon}`;
-        document.getElementById("gf-address").value = address;
-      })
-      .catch(() => {
-        document.getElementById("gf-address").value = `${lat}, ${lon}`;
-      });
-  }
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+    .then(r => r.json())
+    .then(data => {
+      const address = data.display_name || `${lat}, ${lon}`;
+      document.getElementById("gf-address").value = address;
+    })
+    .catch(() => {
+      document.getElementById("gf-address").value = `${lat}, ${lon}`;
+    });
 }
 
 function logEVCLookup(address, lat, lon, evcCode, evcName) {
