@@ -1,8 +1,11 @@
-// evc-fetch.js - Complete working version with FindMyEVC-matched polygon detection
+// evc-fetch.js - Complete working version with URL parameter handling and FindMyEVC-matched polygon detection
 
 let map, marker, modalMap;
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Check for URL parameters from FindMyEVC FIRST
+  handleURLParameters();
+  
   // Legacy map (hidden via CSS)
   map = L.map("map").setView([-37.8136, 144.9631], 8);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -108,6 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// NEW: Handle URL parameters from FindMyEVC
+function handleURLParameters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const evcCode = urlParams.get('evc');
+  const evcName = urlParams.get('name');
+  
+  if (evcCode && evcName) {
+    console.log('🔗 Loading EVC from FindMyEVC:', evcCode, evcName);
+    
+    // Decode the name
+    const decodedName = decodeURIComponent(evcName);
+    
+    // Call displayModal with EVC info (no coordinates since coming from external link)
+    displayModal(decodedName, null, null, evcCode, null, null);
+    
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
 
 function geocodeAddress(address) {
   window.searchedAddress = address;
@@ -340,25 +363,23 @@ function hideAutocomplete() {
   }
 }
 
-// ============================================================================
-// CORRECTED fetchEVCData() - Matches FindMyEVC logic
-// ============================================================================
+// UPDATED: Polygon detection to match FindMyEVC
 function fetchEVCData(lat, lon) {
-  // CHANGE 1: Smaller buffer (0.01 instead of 0.02)
+  // CHANGE 1: Use buffer = 0.01 (matches FindMyEVC)
   const buffer = 0.01;
   
-  // CHANGE 2: Try lat,lon order first (like FindMyEVC)
+  // CHANGE 2: Try lat,lon order first
   const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
   
-  // CHANGE 3: Use WFS version 1.1.0 (not 1.0.0)
+  // CHANGE 3: Use version 1.1.0
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
-              "?service=WFS&version=1.1.0&request=GetFeature" +
-              "&typeName=open-data-platform:nv2005_evcbcs" +
-              `&bbox=${bbox}` +
-              "&srsName=EPSG:4326" +
-              "&outputFormat=application/json";
+             "?service=WFS&version=1.1.0&request=GetFeature" +
+             "&typeName=open-data-platform:nv2005_evcbcs" +
+             `&bbox=${bbox}` +
+             "&srsName=EPSG:4326" +
+             "&outputFormat=application/json";
 
-  console.log('Fetching EVC data with lat,lon bbox:', bbox);
+  console.log('Fetching EVC data (lat,lon order, buffer=0.01)');
   
   fetch(url)
     .then(r => {
@@ -371,12 +392,11 @@ function fetchEVCData(lat, lon) {
       return JSON.parse(txt);
     })
     .then(data => {
-      console.log('WFS response (lat,lon order):', data);
-      console.log('Number of features:', data.features ? data.features.length : 0);
+      console.log('WFS response (lat,lon):', data.features ? data.features.length + ' features' : 'no features');
       
       if (!data.features || data.features.length === 0) {
-        // CHANGE 4: Try lon,lat order as fallback
-        console.log('No features with lat,lon order, trying lon,lat...');
+        // Try lon,lat order as fallback
+        console.log('No features with lat,lon, trying lon,lat...');
         return fetchEVCDataLonLat(lat, lon);
       }
       
@@ -385,8 +405,6 @@ function fetchEVCData(lat, lon) {
     .catch(err => {
       console.error('EVC fetch error:', err);
       alert(err.message);
-      
-      // Reset buttons on error
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
       searchBtn.textContent = "Find My Garden";
@@ -395,6 +413,65 @@ function fetchEVCData(lat, lon) {
       locationBtn.disabled = false;
       locationBtn.textContent = "📍 Use My Location";
     });
+}
+
+// NEW: Fallback for lon,lat coordinate order
+function fetchEVCDataLonLat(lat, lon) {
+  const buffer = 0.01;
+  const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
+  
+  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+             "?service=WFS&version=1.1.0&request=GetFeature" +
+             "&typeName=open-data-platform:nv2005_evcbcs" +
+             `&bbox=${bbox}` +
+             "&srsName=EPSG:4326" +
+             "&outputFormat=application/json";
+
+  console.log('Fetching EVC data (lon,lat order, buffer=0.01)');
+  
+  return fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+      return r.text();
+    })
+    .then(txt => {
+      if (txt.trim().startsWith("<"))
+        throw new Error("EVC service error. Try again later.");
+      return JSON.parse(txt);
+    })
+    .then(data => {
+      console.log('WFS response (lon,lat):', data.features ? data.features.length + ' features' : 'no features');
+      
+      if (!data.features || data.features.length === 0) {
+        throw new Error('No EVC data found for this location.');
+      }
+      
+      processEVCResults(data, lat, lon);
+    });
+}
+
+// UPDATED: Better polygon matching (matches FindMyEVC)
+function processEVCResults(data, lat, lon) {
+  const point = turf.point([lon, lat]);
+  let matchedFeature = null;
+
+  // Find exact match
+  for (let i = 0; i < data.features.length; i++) {
+    if (turf.booleanPointInPolygon(point, data.features[i])) {
+      matchedFeature = data.features[i];
+      console.log('Found exact match at index:', i);
+      break;
+    }
+  }
+
+  // If no exact match, use first feature (nearest)
+  if (!matchedFeature) {
+    console.log('No exact match, using first feature');
+    matchedFeature = data.features[0];
+  }
+
+  const p = matchedFeature.properties;
+  displayModal(p.x_evcname, p.evc_bcs_desc, p.bioregion, p.evc, lat, lon);
 }
 
 // NEW FUNCTION: Fallback to try lon,lat coordinate order
