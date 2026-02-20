@@ -3,7 +3,7 @@
 let map, marker, modalMap;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Check for URL parameters from FindMyEVC FIRST
+  // NEW: Check for URL parameters from FindMyEVC FIRST
   handleURLParameters();
   
   // Legacy map (hidden via CSS)
@@ -119,7 +119,7 @@ function handleURLParameters() {
   const evcName = urlParams.get('name');
   
   if (evcCode && evcName) {
-    console.log('🔗 Loading EVC from FindMyEVC:', evcCode, evcName);
+    console.log('🔗 Loading EVC from FindMyEVC:', evcCode, decodeURIComponent(evcName));
     
     // Decode the name
     const decodedName = decodeURIComponent(evcName);
@@ -474,8 +474,24 @@ function processEVCResults(data, lat, lon) {
   displayModal(p.x_evcname, p.evc_bcs_desc, p.bioregion, p.evc, lat, lon);
 }
 
-// NEW FUNCTION: Fallback to try lon,lat coordinate order
-function fetchEVCDataLonLat(lat, lon) {
+function checkPlantImage(plantName) {
+  return new Promise((resolve) => {
+    let nameForImage = plantName;
+    const commonNameMatch = plantName.match(/\(([^)]+)\)/);
+    if (commonNameMatch) {
+      nameForImage = commonNameMatch[1].trim();
+    }
+    
+    const imageName = nameForImage.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/['']/g, '');
+    
+    const img = new Image();
+    img.onload = () => resolve({ exists: true, url: `images/plants/${imageName}.jpg` });
+    img.onerror = () => resolve({ exists: false, url: null });
+    img.src = `images/plants/${imageName}.jpg`;
+  });
+}
   const buffer = 0.01;
   
   // Try lon,lat order (standard EPSG:4326)
