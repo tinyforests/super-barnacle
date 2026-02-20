@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "version": "1.0.5",
-    "last_updated": "2025-11-30",
+    "version": "1.0.6",
+    "last_updated": "2025-02-01",
     "coverage": "Victoria, Australia",
-    "total_evcs": 25
+    "total_evcs": 29
   },
   "evcs": {
     "2": {
@@ -546,6 +546,61 @@
         }
       ]
     },
+    "29": {
+      "name": "Damp Forest",
+      "description": "Damp Forest occurs on moist, fertile soils in sheltered gullies and lower slopes where moisture accumulates. Dominated by tall eucalypts including Mountain Grey Gum, Messmate, and Manna Gum over a lush understorey of ferns, moisture-loving shrubs, and herbs. These forests support high biodiversity including tree ferns, fungi, and forest birds, and thrive in cool, humid microclimates with reliable moisture year-round.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus cypellocarpa (Mountain Grey Gum)",
+            "Eucalyptus obliqua (Messmate Stringybark)",
+            "Eucalyptus viminalis (Manna Gum)",
+            "Eucalyptus radiata (Narrow-leaf Peppermint)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Acacia dealbata (Silver Wattle)",
+            "Acacia melanoxylon (Blackwood)",
+            "Pomaderris aspera (Hazel Pomaderris)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Coprosma quadrifida (Prickly Currant-bush)",
+            "Olearia lirata (Snowy Daisy-bush)",
+            "Prostanthera lasianthos (Victorian Christmas Bush)",
+            "Bedfordia arborescens (Blanket Leaf)",
+            "Cassinia aculeata (Common Cassinia)",
+            "Ozothamnus ferrugineus (Tree Everlasting)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Dicksonia antarctica (Soft Tree-fern)",
+            "Cyathea australis (Rough Tree-fern)",
+            "Blechnum wattsii (Hard Water-fern)",
+            "Blechnum nudum (Fishbone Water-fern)",
+            "Polystichum proliferum (Mother Shield-fern)",
+            "Viola hederacea (Ivy-leaf Violet)",
+            "Hydrocotyle hirta (Hairy Pennywort)",
+            "Acaena novae-zelandiae (Bidgee-widgee)",
+            "Stellaria flaccida (Forest Starwort)",
+            "Ranunculus lappaceus (Common Buttercup)",
+            "Dichondra repens (Kidney-weed)",
+            "Carex appressa (Tall Sedge)",
+            "Microlaena stipoides (Weeping Grass)",
+            "Poa ensiformis (Sword Tussock-grass)",
+            "Pteridium esculentum (Austral Bracken)",
+            "Clematis aristata (Mountain Clematis)"
+          ]
+        }
+      ]
+    },
     "47": {
       "description": "Valley Grassy Forest is a species-rich open forest that occurs on lower slopes, valleys, and gentle rises with fertile soils and moderate rainfall. It typically features a tall but scattered canopy of Candlebark, Swamp Gum, or Messmate over a diverse ground layer of tussock grasses, lilies, orchids, and herbs. Shrubs are generally sparse, allowing for a light-filled understory that bursts into colour in spring.",
       "recommendations": [
@@ -785,48 +840,48 @@
         }
       ]
     },
-  "68": {
-    "name": "Creekline Grassy Woodland",
-    "description": "Eucalypt woodland along minor drainage lines with grassy and sedgy groundlayer. Found on fertile alluvial soils along ephemeral to intermittent creeks and drainage channels. These linear wetland systems support diverse graminoids and herbs adapted to periodic waterlogging.",
-    "recommendations": [
-      {
-        "layer": "Canopy Layer",
-        "plants": [
-          "Eucalyptus camaldulensis (River Red-gum)"
-        ]
-      },
-      {
-        "layer": "Sub-Canopy Layer",
-        "plants": [
-          "Acacia melanoxylon (Blackwood)",
-          "Acacia retinodes (Wirilda)"
-        ]
-      },
-      {
-        "layer": "Shrub Layer",
-        "plants": [
-          "Hymenanthera dentata (Tree Violet)",
-          "Rubus parvifolius (Small-leaf Bramble)",
-          "Enchylaena tomentosa (Ruby Saltbush)"
-        ]
-      },
-      {
-        "layer": "Herb Layer",
-        "plants": [
-          "Austrostipa bigeniculata (Kneed Spear-grass)",
-          "Poa labillardierei (Common Tussock-grass)",
-          "Phragmites australis (Common Reed)",
-          "Austrodanthonia racemosa (Stiped Wallaby-grass)",
-          "Austrodanthonia caespitosa (Common Wallaby-grass)",
-          "Microlaena stipoides (Weeping Grass)",
-          "Oxalis perennans (Grassland Wood-sorrel)",
-          "Azolla filiculoides (Pacific Azolla)",
-          "Lemna disperma (Common Duckweed)",
-          "Glycine clandestina (Twining Glycine)"
-        ]
-      }
-    ]
-  },
+    "68": {
+      "name": "Creekline Grassy Woodland",
+      "description": "Eucalypt woodland along minor drainage lines with grassy and sedgy groundlayer. Found on fertile alluvial soils along ephemeral to intermittent creeks and drainage channels. These linear wetland systems support diverse graminoids and herbs adapted to periodic waterlogging.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus camaldulensis (River Red-gum)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Acacia melanoxylon (Blackwood)",
+            "Acacia retinodes (Wirilda)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Hymenanthera dentata (Tree Violet)",
+            "Rubus parvifolius (Small-leaf Bramble)",
+            "Enchylaena tomentosa (Ruby Saltbush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Austrostipa bigeniculata (Kneed Spear-grass)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Phragmites australis (Common Reed)",
+            "Austrodanthonia racemosa (Stiped Wallaby-grass)",
+            "Austrodanthonia caespitosa (Common Wallaby-grass)",
+            "Microlaena stipoides (Weeping Grass)",
+            "Oxalis perennans (Grassland Wood-sorrel)",
+            "Azolla filiculoides (Pacific Azolla)",
+            "Lemna disperma (Common Duckweed)",
+            "Glycine clandestina (Twining Glycine)"
+          ]
+        }
+      ]
+    },
     "83": {
       "description": "Swampy Riparian Woodland occupies low-lying stream margins and seasonally waterlogged flats, where fluctuating water tables support a mix of wetland and woodland species. Dominated by Swamp Gum and sometimes River Red Gum, it has a patchy understorey of sedges, tussock grasses, and moisture-loving herbs.",
       "recommendations": [
@@ -1033,42 +1088,42 @@
       ]
     },
     "172": {
-    "name": "Floodplain Wetland",
-    "description": "Floodplain Wetland occurs in seasonally waterlogged depressions and drainage lines along creeks and rivers. Dominated by moisture-loving sedges, rushes, and wetland herbs, this community creates vital habitat for frogs, waterbirds, and aquatic invertebrates while naturally filtering water and storing floodwaters. Perfect for low-lying garden areas prone to seasonal moisture.",
-    "recommendations": [
-      {
-        "layer": "Canopy Layer",
-        "plants": [
-          "Eucalyptus ovata (Swamp Gum)",
-          "Eucalyptus camaldulensis (River Red Gum)",
-          "Melaleuca ericifolia (Swamp Paperbark)"
-        ]
-      },
-      {
-        "layer": "Shrub Layer",
-        "plants": [
-          "Leptospermum continentale (Prickly Tea-tree)",
-          "Melaleuca squarrosa (Scented Paperbark)",
-          "Coprosma quadrifida (Prickly Currant-bush)"
-        ]
-      },
-      {
-        "layer": "Herb Layer",
-        "plants": [
-          "Carex appressa (Tall Sedge)",
-          "Juncus pallidus (Pale Rush)",
-          "Phragmites australis (Common Reed)",
-          "Baumea articulata (Jointed Twig-rush)",
-          "Eleocharis acuta (Common Spike-sedge)",
-          "Triglochin procerum (Water Ribbons)",
-          "Persicaria decipiens (Slender Knotweed)",
-          "Lobelia anceps (Angled Lobelia)",
-          "Poa labillardierei (Common Tussock-grass)",
-          "Microlaena stipoides (Weeping Grass)"
-        ]
-      }
-    ]
-  },
+      "name": "Floodplain Wetland",
+      "description": "Floodplain Wetland occurs in seasonally waterlogged depressions and drainage lines along creeks and rivers. Dominated by moisture-loving sedges, rushes, and wetland herbs, this community creates vital habitat for frogs, waterbirds, and aquatic invertebrates while naturally filtering water and storing floodwaters. Perfect for low-lying garden areas prone to seasonal moisture.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus ovata (Swamp Gum)",
+            "Eucalyptus camaldulensis (River Red Gum)",
+            "Melaleuca ericifolia (Swamp Paperbark)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Leptospermum continentale (Prickly Tea-tree)",
+            "Melaleuca squarrosa (Scented Paperbark)",
+            "Coprosma quadrifida (Prickly Currant-bush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Carex appressa (Tall Sedge)",
+            "Juncus pallidus (Pale Rush)",
+            "Phragmites australis (Common Reed)",
+            "Baumea articulata (Jointed Twig-rush)",
+            "Eleocharis acuta (Common Spike-sedge)",
+            "Triglochin procerum (Water Ribbons)",
+            "Persicaria decipiens (Slender Knotweed)",
+            "Lobelia anceps (Angled Lobelia)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Microlaena stipoides (Weeping Grass)"
+          ]
+        }
+      ]
+    },
     "175": {
       "description": "Grassy Woodland is a scattered open woodland found on gentle slopes and undulating plains, typically with a sparse canopy of Grey Box, Yellow Box, or Red Gum over a species-rich ground layer of grasses, lilies, and wildflowers. The shrub layer is usually sparse, giving way to a light-filled understorey dominated by Kangaroo Grass and seasonal herbs.",
       "recommendations": [
@@ -1218,43 +1273,43 @@
       ]
     },
     "858": {
-  "name": "Coastal Alkaline Scrub",
-  "description": "Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.",
-  "recommendations": [
-    {
-      "layer": "Canopy Layer",
-      "plants": [
-        "Banksia integrifolia (Coast Banksia)",
-        "Eucalyptus viminalis subsp. pryoriana (Coast Manna Gum)",
-        "Allocasuarina verticillata (Drooping Sheoak)"
+      "name": "Coastal Alkaline Scrub",
+      "description": "Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Banksia integrifolia (Coast Banksia)",
+            "Eucalyptus viminalis subsp. pryoriana (Coast Manna Gum)",
+            "Allocasuarina verticillata (Drooping Sheoak)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Leptospermum laevigatum (Coast Tea-tree)",
+            "Leucopogon parviflorus (Coast Beard-heath)",
+            "Rhagodia candolleana (Seaberry Saltbush)",
+            "Acacia longifolia var. sophorae (Coast Wattle)",
+            "Alyxia buxifolia (Sea Box)",
+            "Correa alba (White Correa)",
+            "Leucophyta brownii (Cushion Bush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Tetragonia implexicoma (Bower Spinach)",
+            "Carpobrotus rossii (Karkalla)",
+            "Atriplex cinerea (Coast Saltbush)",
+            "Disphyma crassifolium (Rounded Noon-flower)",
+            "Poa poiformis (Coast Tussock-grass)",
+            "Austrostipa stipoides (Coast Spear-grass)",
+            "Senecio lautus (Variable Groundsel)"
+          ]
+        }
       ]
     },
-    {
-      "layer": "Shrub Layer",
-      "plants": [
-        "Leptospermum laevigatum (Coast Tea-tree)",
-        "Leucopogon parviflorus (Coast Beard-heath)",
-        "Rhagodia candolleana (Seaberry Saltbush)",
-        "Acacia longifolia var. sophorae (Coast Wattle)",
-        "Alyxia buxifolia (Sea Box)",
-        "Correa alba (White Correa)",
-        "Leucophyta brownii (Cushion Bush)"
-      ]
-    },
-    {
-      "layer": "Herb Layer",
-      "plants": [
-        "Tetragonia implexicoma (Bower Spinach)",
-        "Carpobrotus rossii (Karkalla)",
-        "Atriplex cinerea (Coast Saltbush)",
-        "Disphyma crassifolium (Rounded Noon-flower)",
-        "Poa poiformis (Coast Tussock-grass)",
-        "Austrostipa stipoides (Coast Spear-grass)",
-        "Senecio lautus (Variable Groundsel)"
-      ]
-    }
-  ]
-},
     "934": {
       "description": "Brackish Grassland is a salt-tolerant grassy ecosystem found in low-lying areas of the Gippsland Plain, where saline groundwater or estuarine flooding influences the soil. These open, wind-exposed grasslands are dominated by saltbushes, low sedges, and halophytic herbs, with few or no trees.",
       "recommendations": [
