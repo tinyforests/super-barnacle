@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// NEW: Handle URL parameters from FindMyEVC
+// Handle URL parameters from FindMyEVC — single source of truth
 function handleURLParameters() {
   const urlParams = new URLSearchParams(window.location.search);
   const evcCode = urlParams.get('evc');
@@ -120,14 +120,9 @@ function handleURLParameters() {
   
   if (evcCode && evcName) {
     console.log('🔗 Loading EVC from FindMyEVC:', evcCode, evcName);
-    
-    // Decode the name
     const decodedName = decodeURIComponent(evcName);
-    
-    // Call displayModal with EVC info (no coordinates since coming from external link)
     displayModal(decodedName, null, null, evcCode, null, null);
-    
-    // Clean URL
+    // Clean URL without reloading
     window.history.replaceState({}, document.title, window.location.pathname);
   }
 }
@@ -363,15 +358,10 @@ function hideAutocomplete() {
   }
 }
 
-// UPDATED: Polygon detection to match FindMyEVC
 function fetchEVCData(lat, lon) {
-  // CHANGE 1: Use buffer = 0.01 (matches FindMyEVC)
   const buffer = 0.01;
-  
-  // CHANGE 2: Try lat,lon order first
   const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
   
-  // CHANGE 3: Use version 1.1.0
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
              "?service=WFS&version=1.1.0&request=GetFeature" +
              "&typeName=open-data-platform:nv2005_evcbcs" +
@@ -395,7 +385,6 @@ function fetchEVCData(lat, lon) {
       console.log('WFS response (lat,lon):', data.features ? data.features.length + ' features' : 'no features');
       
       if (!data.features || data.features.length === 0) {
-        // Try lon,lat order as fallback
         console.log('No features with lat,lon, trying lon,lat...');
         return fetchEVCDataLonLat(lat, lon);
       }
@@ -415,17 +404,16 @@ function fetchEVCData(lat, lon) {
     });
 }
 
-// NEW: Fallback for lon,lat coordinate order
 function fetchEVCDataLonLat(lat, lon) {
   const buffer = 0.01;
   const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
-             "?service=WFS&version=1.1.0&request=GetFeature" +
-             "&typeName=open-data-platform:nv2005_evcbcs" +
-             `&bbox=${bbox}` +
-             "&srsName=EPSG:4326" +
-             "&outputFormat=application/json";
+              "?service=WFS&version=1.1.0&request=GetFeature" +
+              "&typeName=open-data-platform:nv2005_evcbcs" +
+              `&bbox=${bbox}` +
+              "&srsName=EPSG:4326" +
+              "&outputFormat=application/json";
 
   console.log('Fetching EVC data (lon,lat order, buffer=0.01)');
   
@@ -443,68 +431,6 @@ function fetchEVCDataLonLat(lat, lon) {
       console.log('WFS response (lon,lat):', data.features ? data.features.length + ' features' : 'no features');
       
       if (!data.features || data.features.length === 0) {
-        throw new Error('No EVC data found for this location.');
-      }
-      
-      processEVCResults(data, lat, lon);
-    });
-}
-
-// UPDATED: Better polygon matching (matches FindMyEVC)
-function processEVCResults(data, lat, lon) {
-  const point = turf.point([lon, lat]);
-  let matchedFeature = null;
-
-  // Find exact match
-  for (let i = 0; i < data.features.length; i++) {
-    if (turf.booleanPointInPolygon(point, data.features[i])) {
-      matchedFeature = data.features[i];
-      console.log('Found exact match at index:', i);
-      break;
-    }
-  }
-
-  // If no exact match, use first feature (nearest)
-  if (!matchedFeature) {
-    console.log('No exact match, using first feature');
-    matchedFeature = data.features[0];
-  }
-
-  const p = matchedFeature.properties;
-  displayModal(p.x_evcname, p.evc_bcs_desc, p.bioregion, p.evc, lat, lon);
-}
-
-// NEW FUNCTION: Fallback to try lon,lat coordinate order
-function fetchEVCDataLonLat(lat, lon) {
-  const buffer = 0.01;
-  
-  // Try lon,lat order (standard EPSG:4326)
-  const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
-  
-  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
-              "?service=WFS&version=1.1.0&request=GetFeature" +
-              "&typeName=open-data-platform:nv2005_evcbcs" +
-              `&bbox=${bbox}` +
-              "&srsName=EPSG:4326" +
-              "&outputFormat=application/json";
-
-  console.log('Fetching EVC data with lon,lat bbox:', bbox);
-  
-  return fetch(url)
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
-      return r.text();
-    })
-    .then(txt => {
-      if (txt.trim().startsWith("<"))
-        throw new Error("EVC service error. Try again later.");
-      return JSON.parse(txt);
-    })
-    .then(data => {
-      console.log('WFS response (lon,lat order):', data);
-      console.log('Number of features:', data.features ? data.features.length : 0);
-      
-      if (!data.features || data.features.length === 0) {
         throw new Error('No EVC data found for this location. This may be outside mapped areas.');
       }
       
@@ -512,21 +438,18 @@ function fetchEVCDataLonLat(lat, lon) {
     });
 }
 
-// CHANGE 5: Better polygon matching logic (matches FindMyEVC)
 function processEVCResults(data, lat, lon) {
   const point = turf.point([lon, lat]);
   let matchedFeature = null;
 
-  // Try to find exact polygon match
   for (let i = 0; i < data.features.length; i++) {
     if (turf.booleanPointInPolygon(point, data.features[i])) {
       matchedFeature = data.features[i];
       console.log('Found exact polygon match at index:', i);
-      break;  // Stop at first match
+      break;
     }
   }
 
-  // If no exact match, use first feature (nearest)
   if (!matchedFeature) {
     console.log('No exact match, using first feature (nearest)');
     matchedFeature = data.features[0];
@@ -536,26 +459,17 @@ function processEVCResults(data, lat, lon) {
   
   const p = matchedFeature.properties;
   
-  // Clean mosaic EVC names
   let name = p.x_evcname;
   if (name && name.includes('/')) {
     name = name.split('/')[0].trim();
     console.log('Cleaned mosaic EVC name to:', name);
   }
-  
-  // Clean aggregate EVC names
   if (name && name.includes('Aggregate')) {
     name = name.replace(/\s+Aggregate$/i, '').trim();
     console.log('Cleaned aggregate EVC name to:', name);
   }
   
-  // Map mosaic/complex EVC codes
-  const mosaicCodeMapping = {
-    '921': '2',
-    '904': '2',
-    '1': '160'
-  };
-
+  const mosaicCodeMapping = { '921': '2', '904': '2', '1': '160' };
   let code = p.evc;
   if (mosaicCodeMapping[code]) {
     console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
@@ -564,9 +478,6 @@ function processEVCResults(data, lat, lon) {
   
   displayModal(name, p.evc_bcs_desc, p.bioregion, code, lat, lon);
 }
-// ============================================================================
-// END OF CORRECTED SECTION
-// ============================================================================
 
 function checkPlantImage(plantName) {
   return new Promise((resolve) => {
@@ -592,261 +503,203 @@ function getKitDetails(evcName) {
     'Coast Banksia Woodland': {
       image: 'coast-banksia-woodland.jpg',
       description: 'Coastal banksia-dominated woodland with heath understory. Perfect for sandy coastal soils.',
-      canopy: 1,
-      shrub: 4,
-      groundcover: 5,
+      canopy: 1, shrub: 4, groundcover: 5,
       specialFeature: 'Wind and salt resistant',
       slug: 'coast-banksia-woodland'
     },
     'Damp Sands Herb-rich Woodland': {
       image: 'damp-sands-herb-rich-woodland.jpg',
       description: 'Diverse woodland on seasonally damp sandy soils. Rich herbaceous groundlayer with high biodiversity.',
-      canopy: 1,
-      shrub: 3,
-      groundcover: 6,
+      canopy: 1, shrub: 3, groundcover: 6,
       specialFeature: 'Seasonal wetland species',
       slug: 'damp-sands-herb-rich-woodland'
     },
     'Sand Heathland': {
       image: 'sand-heathland.jpg',
       description: 'Low heathland on coastal and inland sand deposits. Vibrant flowering display year-round.',
-      canopy: 1,
-      shrub: 5,
-      groundcover: 4,
+      canopy: 1, shrub: 5, groundcover: 4,
       specialFeature: 'Sandy soil specialists',
       slug: 'sand-heathland'
     },
     'Wet Heathland': {
       image: 'wet-heathland.jpg',
       description: 'Heath communities on poorly-drained soils. Spectacular seasonal flowering display.',
-      canopy: 0,
-      shrub: 6,
-      groundcover: 4,
+      canopy: 0, shrub: 6, groundcover: 4,
       specialFeature: 'Wetland heath specialists',
       slug: 'wet-heathland'
     },
     'Estuarine Wetland': {
       image: 'estuarine-wetland.jpg',
       description: 'Brackish wetland where tidal estuaries meet floodplains. Vital habitat for migratory birds.',
-      canopy: 1,
-      shrub: 2,
-      groundcover: 7,
+      canopy: 1, shrub: 2, groundcover: 7,
       specialFeature: 'Salt and flood-tolerant species',
       slug: 'estuarine-wetland'
     },
     'Lowland Forest': {
       image: 'lowland-forest.jpg',
       description: 'Tall forest on flat to gently undulating terrain. Rich, productive ecosystems.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Tall canopy shade providers',
       slug: 'lowland-forest'
     },
     'Riparian Forest': {
       image: 'riparian-forest.jpg',
       description: 'Waterway vegetation with deep-rooted trees. Stabilizes banks and filters runoff.',
-      canopy: 4,
-      shrub: 3,
-      groundcover: 3,
+      canopy: 4, shrub: 3, groundcover: 3,
       specialFeature: 'Moisture-loving species',
       slug: 'riparian-forest'
     },
     'Heathy Dry Forest': {
       image: 'heathy-dry-forest.jpg',
       description: 'Forest with dense heath understory. Thrives on nutrient-poor, well-drained soils.',
-      canopy: 4,
-      shrub: 3,
-      groundcover: 3,
+      canopy: 4, shrub: 3, groundcover: 3,
       specialFeature: 'Year-round flowering heaths',
       slug: 'heathy-dry-forest'
     },
     'Shrubby Dry Forest': {
       image: 'shrubby-dry-forest.jpg',
       description: 'Forest with prominent shrub layer. Thrives on drier, less fertile sites.',
-      canopy: 3,
-      shrub: 4,
-      groundcover: 3,
+      canopy: 3, shrub: 4, groundcover: 3,
       specialFeature: 'Drought-adapted shrub layer',
       slug: 'shrubby-dry-forest'
     },
     'Grassy Dry Forest': {
       image: 'grassy-dry-forest.jpg',
       description: 'Open forest structure with colorful wildflowers. Thrives in well-drained soils.',
-      canopy: 4,
-      shrub: 2,
-      groundcover: 4,
+      canopy: 4, shrub: 2, groundcover: 4,
       specialFeature: 'Low-maintenance once established',
       slug: 'grassy-dry-forest'
     },
     'Herb-rich Foothill Forest': {
       image: 'herb-rich-foothill-forest.jpg',
       description: 'Diverse forest with rich herbaceous layer. Found on fertile foothill soils.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Diverse herb and wildflower mix',
       slug: 'herb-rich-foothill-forest'
     },
     'Damp Forest': {
       image: 'damp-forest.jpg',
       description: 'Cool, moist forest with tree ferns and moisture-loving plants. Perfect for sheltered gullies and shaded areas with reliable moisture.',
-      canopy: 4,
-      shrub: 3,
-      groundcover: 3,
+      canopy: 4, shrub: 3, groundcover: 3,
       specialFeature: 'Tree fern specialists',
       slug: 'damp-forest'
     },
     'Valley Grassy Forest': {
       image: 'valley-grassy-forest.jpg',
       description: 'Tall eucalypt forest with rich fern and herb layer. Ideal for shaded valley slopes.',
-      canopy: 4,
-      shrub: 2,
-      groundcover: 4,
+      canopy: 4, shrub: 2, groundcover: 4,
       specialFeature: 'Shade-tolerant species mix',
       slug: 'valley-grassy-forest'
     },
     'Heathy Woodland': {
       image: 'heathy-woodland.jpg',
       description: 'Low open woodland with dense heath understory. Perfect for sandy soils.',
-      canopy: 2,
-      shrub: 4,
-      groundcover: 4,
+      canopy: 2, shrub: 4, groundcover: 4,
       specialFeature: 'Year-round flowering species',
       slug: 'heathy-woodland'
     },
     'Swamp Scrub': {
       image: 'swamp-scrub.jpg',
       description: 'Dense shrubby vegetation in seasonally inundated areas. Creates important wetland habitat.',
-      canopy: 1,
-      shrub: 6,
-      groundcover: 3,
+      canopy: 1, shrub: 6, groundcover: 3,
       specialFeature: 'Wetland and swamp specialists',
       slug: 'swamp-scrub'
     },
     'Plains Grassy Woodland': {
       image: 'plains-grassy-woodland.jpg',
       description: 'Iconic River Red Gums with diverse grassland understory. Perfect for a Melbourne indigenous garden.',
-      canopy: 3,
-      shrub: 2,
-      groundcover: 5,
+      canopy: 3, shrub: 2, groundcover: 5,
       specialFeature: 'Drought-tolerant species mix',
       slug: 'plains-grassy-woodland'
     },
     'Floodplain Riparian Woodland': {
       image: 'floodplain-riparian-woodland.jpg',
       description: 'Riverine woodlands adapted to periodic flooding. Important for water quality and flood mitigation.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Flood-tolerant species',
       slug: 'floodplain-riparian-woodland'
     },
     'Creekline Grassy Woodland': {
       image: 'creekline-grassy-woodland.jpg',
       description: 'Riparian woodland with grassy groundlayer along minor creeks. Protects waterways and provides wildlife corridors.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Creek edge specialists',
       slug: 'creekline-grassy-woodland'
     },
     'Swampy Riparian Woodland': {
       image: 'swampy-riparian-woodland.jpg',
       description: 'Waterlogged riparian areas with specialised vegetation. Natural water filtration system.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Waterlogged soil tolerant',
       slug: 'swampy-riparian-woodland'
     },
     'Swampy Riparian Complex': {
       image: 'swampy-riparian-complex.jpg',
       description: 'Wetland-riparian ecosystem along drainage lines with fluctuating water levels. Natural water filtration system.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Waterlogged soil tolerant',
       slug: 'swampy-riparian-complex'
     },
     'Valley Heathy Forest': {
       image: 'valley-heathy-forest.jpg',
       description: 'Forest with heathy understory in sheltered valleys. Rich in flowering shrubs.',
-      canopy: 3,
-      shrub: 4,
-      groundcover: 3,
+      canopy: 3, shrub: 4, groundcover: 3,
       specialFeature: 'Valley-adapted heath mix',
       slug: 'valley-heathy-forest'
     },
     'Creekline Herb-rich Woodland': {
       image: 'creekline-herb-rich-woodland.jpg',
       description: 'Diverse woodland along ephemeral creeks with rich herbaceous layer. High biodiversity in moist microhabitats.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Moisture-loving herb specialists',
       slug: 'creekline-herb-rich-woodland'
     },
     'Floodplain Wetland': {
       image: 'floodplain-wetland.jpg',
       description: 'Wetland vegetation adapted to seasonal waterlogging. Dominated by moisture-loving sedges, rushes, and wetland herbs. Natural water filtration system.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Wetland and waterway specialists',
       slug: 'floodplain-wetland'
     },
     'Grassy Woodland': {
       image: 'grassy-woodland.jpg',
       description: 'Open woodland with diverse native grasses. Perfect for larger suburban blocks.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Low-maintenance grassland mix',
       slug: 'grassy-woodland'
     },
     'Riparian Woodland': {
       image: 'riparian-woodland.jpg',
       description: 'Open woodland along permanent and ephemeral waterways. Critical wildlife habitat.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Creek and river specialists',
       slug: 'riparian-woodland'
     },
     'Stream Bank Shrubland': {
       image: 'stream-bank-shrubland.jpg',
       description: 'Shrub-dominated communities along small streams. Essential for streambank stability.',
-      canopy: 2,
-      shrub: 5,
-      groundcover: 3,
+      canopy: 2, shrub: 5, groundcover: 3,
       specialFeature: 'Erosion-controlling shrubs',
       slug: 'stream-bank-shrubland'
     },
     'Coastal Alkaline Scrub': {
       image: 'coastal-alkaline-scrub.jpg',
       description: 'Scrubland on limestone and calcarenite soils behind coastal dunes. Dominated by Coast Banksia and Coast Tea-tree with lime-loving understory species adapted to alkaline conditions.',
-      canopy: 3,
-      shrub: 3,
-      groundcover: 4,
+      canopy: 3, shrub: 3, groundcover: 4,
       specialFeature: 'Alkaline soil specialists',
       slug: 'coastal-alkaline-scrub'
     },
     'Brackish Grassland': {
       image: 'brackish-grassland.jpg',
       description: 'Salt-tolerant grassland communities near coastal areas. Important habitat for migratory birds.',
-      canopy: 0,
-      shrub: 2,
-      groundcover: 8,
+      canopy: 0, shrub: 2, groundcover: 8,
       specialFeature: 'Salt-tolerant species mix',
       slug: 'brackish-grassland'
     },
     'Swampy Woodland': {
       image: 'swampy-woodland.jpg',
       description: 'Waterlogged woodland on poorly drained soils. Dominated by Swamp Gum with sedges, grasses, and moisture-loving herbs. Natural water filtration system.',
-      canopy: 3,
-      shrub: 2,
-      groundcover: 5,
+      canopy: 3, shrub: 2, groundcover: 5,
       specialFeature: 'Wetland habitat specialists',
       slug: 'swampy-woodland'
     }
@@ -861,20 +714,13 @@ function displayModal(name, status, region, code, lat, lon) {
     name = name.split('/')[0].trim();
     console.log('Cleaned mosaic EVC name to:', name);
   }
-  
-  // Clean aggregate EVC names
   if (name && name.includes('Aggregate')) {
     name = name.replace(/\s+Aggregate$/i, '').trim();
     console.log('Cleaned aggregate EVC name to:', name);
   }
   
   // Map mosaic/complex EVC codes
-  const mosaicCodeMapping = {
-    '921': '2',
-    '904': '2',
-    '1': '160'
-  };
-
+  const mosaicCodeMapping = { '921': '2', '904': '2', '1': '160' };
   if (mosaicCodeMapping[code]) {
     console.log('Remapping mosaic EVC code', code, 'to', mosaicCodeMapping[code]);
     code = mosaicCodeMapping[code];
@@ -889,39 +735,40 @@ function displayModal(name, status, region, code, lat, lon) {
   locationBtn.disabled = false;
   locationBtn.textContent = "📍 Use My Location";
   
-  // Store coordinates globally
+  // Store globally
   window.currentLat = lat;
   window.currentLon = lon;
   window.currentEvcName = name;
   
   // Log lookup
-  const searchAddress = window.searchedAddress || `${lat}, ${lon}`;
+  const searchAddress = window.searchedAddress || (lat && lon ? `${lat}, ${lon}` : 'FindMyEVC referral');
   logEVCLookup(searchAddress, lat, lon, code, name);
   
-  // Populate modal address
+  // Address display — only shown when we have a real address
+  const titleEl = document.querySelector("#modal-info .title");
   const modalAddressEl = document.getElementById("modal-address");
-  if (modalAddressEl) {
-    let displayAddress;
+  if (lat && lon) {
     if (window.searchedAddress) {
       const parts = window.searchedAddress.split(',').map(p => p.trim());
-      
+      let displayAddress;
       if (parts.length >= 3) {
-        const streetNumber = parts[0];
-        const streetName = parts[1];
-        const suburb = parts[2];
-        displayAddress = `${streetNumber} ${streetName}, ${suburb}`;
+        displayAddress = `${parts[0]} ${parts[1]}, ${parts[2]}`;
       } else if (parts.length === 2) {
         displayAddress = `${parts[0]}, ${parts[1]}`;
       } else {
         displayAddress = parts[0];
       }
+      modalAddressEl.textContent = displayAddress;
     } else {
-      displayAddress = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+      modalAddressEl.textContent = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
     }
-    modalAddressEl.textContent = displayAddress;
+    if (titleEl) titleEl.style.display = "";
+  } else {
+    // No coordinates — coming from FindMyEVC, hide the address line
+    if (titleEl) titleEl.style.display = "none";
   }
   
-  // Set basic info
+  // Basic info
   document.getElementById("modal-evc-name").textContent = name || "Unknown";
   
   const statusEl = document.getElementById("modal-evc-status");
@@ -933,37 +780,44 @@ function displayModal(name, status, region, code, lat, lon) {
   regionEl.textContent = region || "Not specified";
   regionEl.style.lineHeight = "1.2";
 
-  // Setup modal map
+  // Modal map — only when we have coordinates
   modalMap && modalMap.remove();
-  modalMap = L.map("modal-map").setView([lat, lon], 12);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap contributors"
-  }).addTo(modalMap);
-  L.marker([lat, lon]).addTo(modalMap);
+  modalMap = null;
+  const modalMapEl = document.getElementById("modal-map");
+  if (lat && lon) {
+    modalMapEl.style.display = "block";
+    modalMap = L.map("modal-map").setView([lat, lon], 12);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap contributors"
+    }).addTo(modalMap);
+    L.marker([lat, lon]).addTo(modalMap);
+  } else {
+    modalMapEl.style.display = "none";
+  }
 
   // Show modal
   const modal = document.getElementById("evc-modal");
   modal.style.display = "flex";
-  setTimeout(() => modalMap.invalidateSize(), 0);
+  if (modalMap) setTimeout(() => modalMap.invalidateSize(), 0);
   
-  // Show loading
+  // Loading state
   const plantsDiv = document.getElementById("modal-plants");
   plantsDiv.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">Loading plant data...</p>';
   plantsDiv.style.display = "block";
 
   // Fetch plant data
   fetch('curated-plants.json')
-  .then(r => {
-    if (!r.ok) throw new Error('Could not load plant data');
-    return r.json();
-  })
-  .then(data => {
-    console.log('EVC Code being looked up:', code);
-    console.log('EVC Name:', name);
-    const evcInfo = data.evcs[code];
-    console.log('Found evcInfo:', evcInfo);
+    .then(r => {
+      if (!r.ok) throw new Error('Could not load plant data');
+      return r.json();
+    })
+    .then(data => {
+      console.log('EVC Code being looked up:', code);
+      console.log('EVC Name:', name);
+      const evcInfo = data.evcs[code];
+      console.log('Found evcInfo:', evcInfo);
       
-      // Set description
+      // Description
       const descriptionEl = document.getElementById("modal-evc-description");
       if (evcInfo?.description) {
         descriptionEl.textContent = evcInfo.description;
@@ -973,7 +827,7 @@ function displayModal(name, status, region, code, lat, lon) {
         descriptionEl.style.color = "#666";
       }
 
-      // Build plant list
+      // Plant list
       const plantsDiv = document.getElementById("modal-plants");
       plantsDiv.innerHTML = "";
       
@@ -1043,7 +897,6 @@ function displayModal(name, status, region, code, lat, lon) {
                 cameraSpan.style.backgroundColor = "#3d4535";
                 cameraSpan.style.transform = "scale(1.1)";
               });
-              
               cameraSpan.addEventListener("mouseleave", () => {
                 cameraSpan.style.backgroundColor = "transparent";
                 cameraSpan.style.transform = "scale(1)";
@@ -1083,7 +936,6 @@ function displayModal(name, status, region, code, lat, lon) {
               
               cameraSpan.addEventListener("mouseenter", () => {
                 const rect = cameraSpan.getBoundingClientRect();
-                
                 if (window.innerWidth <= 768) {
                   tooltip.style.left = "50%";
                   tooltip.style.top = (rect.bottom + 10) + "px";
@@ -1093,10 +945,8 @@ function displayModal(name, status, region, code, lat, lon) {
                   tooltip.style.top = (rect.top + rect.height / 2) + "px";
                   tooltip.style.transform = "translateY(-50%)";
                 }
-                
                 tooltip.style.display = "block";
               });
-              
               cameraSpan.addEventListener("mouseleave", () => {
                 tooltip.style.display = "none";
               });
@@ -1152,15 +1002,9 @@ function displayModal(name, status, region, code, lat, lon) {
         kitImage.style.height = "200px";
         kitImage.style.objectFit = "cover";
         kitImage.style.display = "block";
-        
         kitImage.onerror = function() {
-          console.log(`Kit image not found: images/evcs/${kitDetails.image}, using fallback`);
           this.src = 'images/evcs/ecological-garden-kit.jpg';
-          
-          this.onerror = function() {
-            this.style.display = 'none';
-            console.log('Fallback image also not found, hiding image');
-          };
+          this.onerror = function() { this.style.display = 'none'; };
         };
         
         kitImageContainer.appendChild(kitImage);
@@ -1203,7 +1047,6 @@ function displayModal(name, status, region, code, lat, lon) {
           li.style.paddingLeft = "1.5rem";
           li.style.position = "relative";
           li.style.color = "#3d4535";
-          
           const checkmark = document.createElement("span");
           checkmark.textContent = "✓";
           checkmark.style.position = "absolute";
@@ -1211,10 +1054,8 @@ function displayModal(name, status, region, code, lat, lon) {
           checkmark.style.color = "#3d4535";
           checkmark.style.fontWeight = "bold";
           li.insertBefore(checkmark, li.firstChild);
-          
           featuresList.appendChild(li);
         });
-        
         kitSection.appendChild(featuresList);
         
         const kitPrice = document.createElement("div");
@@ -1228,14 +1069,7 @@ function displayModal(name, status, region, code, lat, lon) {
         if (!document.getElementById('kit-mobile-style')) {
           const style = document.createElement('style');
           style.id = 'kit-mobile-style';
-          style.textContent = `
-            @media (max-width: 768px) {
-              .mobile-break::before {
-                content: "\\A";
-                white-space: pre;
-              }
-            }
-          `;
+          style.textContent = `@media (max-width: 768px) { .mobile-break::before { content: "\\A"; white-space: pre; } }`;
           document.head.appendChild(style);
         }
         
@@ -1251,36 +1085,16 @@ function displayModal(name, status, region, code, lat, lon) {
         kitButton.style.cursor = "pointer";
         kitButton.style.transition = "all 0.2s";
         kitButton.style.width = "100%";
-        
-        kitButton.addEventListener("mouseover", () => {
-          kitButton.style.transform = "scale(1.02)";
-        });
-        
-        kitButton.addEventListener("mouseout", () => {
-          kitButton.style.transform = "scale(1)";
-        });
-        
+        kitButton.addEventListener("mouseover", () => { kitButton.style.transform = "scale(1.02)"; });
+        kitButton.addEventListener("mouseout", () => { kitButton.style.transform = "scale(1)"; });
         kitButton.addEventListener("click", () => {
-          const cleanEvcName = name
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .toLowerCase();
-          
+          const cleanEvcName = name.replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').toLowerCase();
           const timestamp = new Date().toISOString().split('T')[0];
           const referenceId = `KIT_${cleanEvcName}_EVC-${code}_DATE-${timestamp}`;
-          
           const stripeUrl = new URL("https://buy.stripe.com/3cI9AT2Y94Srb7f6xN5Vu01");
           stripeUrl.searchParams.append("client_reference_id", referenceId);
-          
-          console.log("=== Stripe Forest Kit Order ===");
-          console.log("EVC Name:", name);
-          console.log("EVC Code:", code);
-          console.log("Reference ID:", referenceId);
-          console.log("==============================");
-          
           window.open(stripeUrl.toString(), '_blank');
         });
-
         kitSection.appendChild(kitButton);
         
       } else {
@@ -1304,19 +1118,9 @@ function displayModal(name, status, region, code, lat, lon) {
         exploreButton.style.cursor = "pointer";
         exploreButton.style.transition = "all 0.2s";
         exploreButton.style.width = "100%";
-        
-        exploreButton.addEventListener("mouseover", () => {
-          exploreButton.style.transform = "scale(1.02)";
-        });
-        
-        exploreButton.addEventListener("mouseout", () => {
-          exploreButton.style.transform = "scale(1)";
-        });
-        
-        exploreButton.addEventListener("click", () => {
-          window.location.href = "explore.html";
-        });
-        
+        exploreButton.addEventListener("mouseover", () => { exploreButton.style.transform = "scale(1.02)"; });
+        exploreButton.addEventListener("mouseout", () => { exploreButton.style.transform = "scale(1)"; });
+        exploreButton.addEventListener("click", () => { window.location.href = "explore.html"; });
         kitSection.appendChild(exploreButton);
       }
       
@@ -1342,8 +1146,7 @@ function displayModal(name, status, region, code, lat, lon) {
       const imageFilename = name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/['']/g, '')
-        .replace(/&/g, 'and')
-        + '.jpg';
+        .replace(/&/g, 'and') + '.jpg';
       
       const imageContainer = document.createElement("div");
       imageContainer.style.marginBottom = "20px";
@@ -1358,25 +1161,18 @@ function displayModal(name, status, region, code, lat, lon) {
       teeImage.style.maxHeight = "300px";
       teeImage.style.objectFit = "contain";
       
-      let teeAvailable = true;
-      
       teeImage.onerror = function() {
-        teeAvailable = false;
         this.style.display = 'none';
-        console.log(`Tee image not found: images/tees/${imageFilename}`);
-        
         const comingSoon = document.createElement("div");
         comingSoon.style.padding = "30px 20px";
         comingSoon.style.textAlign = "center";
         comingSoon.style.background = "rgba(255, 240, 220, 0.3)";
         comingSoon.style.borderRadius = "8px";
-        
         const icon = document.createElement("div");
         icon.textContent = "👕";
         icon.style.fontSize = "48px";
         icon.style.marginBottom = "15px";
         comingSoon.appendChild(icon);
-        
         const message = document.createElement("p");
         message.innerHTML = `We're creating a unique design for <strong>${name}</strong>. Check out our other ecological tees while you wait!`;
         message.style.color = "#666";
@@ -1384,7 +1180,6 @@ function displayModal(name, status, region, code, lat, lon) {
         message.style.lineHeight = "1.6";
         message.style.margin = "0";
         comingSoon.appendChild(message);
-        
         teeSection.appendChild(comingSoon);
       };
       
@@ -1455,40 +1250,16 @@ function displayModal(name, status, region, code, lat, lon) {
         teeButton.style.cursor = "pointer";
         teeButton.style.transition = "all 0.2s";
         teeButton.style.whiteSpace = "nowrap";
-        
-        teeButton.addEventListener("mouseover", () => {
-          teeButton.style.transform = "scale(1.02)";
-        });
-        
-        teeButton.addEventListener("mouseout", () => {
-          teeButton.style.transform = "scale(1)";
-        });
-        
+        teeButton.addEventListener("mouseover", () => { teeButton.style.transform = "scale(1.02)"; });
+        teeButton.addEventListener("mouseout", () => { teeButton.style.transform = "scale(1)"; });
         teeButton.addEventListener("click", async () => {
           const size = sizeSelect.value;
-          if (!size) {
-            alert("Please choose a size first.");
-            return;
-          }
-          
-          const cleanEvcName = name
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .toLowerCase();
-          
+          if (!size) { alert("Please choose a size first."); return; }
+          const cleanEvcName = name.replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').toLowerCase();
           const timestamp = new Date().toISOString().split('T')[0];
           const referenceId = `TEE_${cleanEvcName}_SIZE-${size}_EVC-${code}_DATE-${timestamp}`;
-          
           const stripeUrl = new URL("https://buy.stripe.com/bJe4gzcyJbgP1wF8FV5Vu04");
           stripeUrl.searchParams.append("client_reference_id", referenceId);
-          
-          console.log("=== Stripe T-Shirt Order ===");
-          console.log("EVC Name:", name);
-          console.log("EVC Code:", code);
-          console.log("Size:", size);
-          console.log("Reference ID:", referenceId);
-          console.log("===========================");
-          
           window.open(stripeUrl.toString(), '_blank');
         });
         
@@ -1517,15 +1288,17 @@ function displayModal(name, status, region, code, lat, lon) {
 
   document.getElementById("gf-evcCode").value = `EVC ${code}`;
   
-  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-    .then(r => r.json())
-    .then(data => {
-      const address = data.display_name || `${lat}, ${lon}`;
-      document.getElementById("gf-address").value = address;
-    })
-    .catch(() => {
-      document.getElementById("gf-address").value = `${lat}, ${lon}`;
-    });
+  // Only reverse geocode when we have real coordinates
+  if (lat && lon) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById("gf-address").value = data.display_name || `${lat}, ${lon}`;
+      })
+      .catch(() => {
+        document.getElementById("gf-address").value = `${lat}, ${lon}`;
+      });
+  }
 }
 
 function logEVCLookup(address, lat, lon, evcCode, evcName) {
@@ -1547,8 +1320,8 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
 
     const fields = {
       [ENTRY_IDS.address]: address || 'Unknown',
-      [ENTRY_IDS.latitude]: lat?.toFixed(6) || '',
-      [ENTRY_IDS.longitude]: lon?.toFixed(6) || '',
+      [ENTRY_IDS.latitude]: lat ? lat.toFixed(6) : '',
+      [ENTRY_IDS.longitude]: lon ? lon.toFixed(6) : '',
       [ENTRY_IDS.evcCode]: evcCode || '',
       [ENTRY_IDS.evcName]: evcName || ''
     };
@@ -1572,10 +1345,7 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
 
     document.body.appendChild(form);
     form.submit();
-    
-    setTimeout(() => {
-      document.body.removeChild(form);
-    }, 1000);
+    setTimeout(() => { document.body.removeChild(form); }, 1000);
 
     console.log('EVC lookup logged:', { address, lat, lon, evcCode, evcName });
   } catch (error) {
@@ -1597,8 +1367,7 @@ function openPreorderModal(evcName) {
     fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${window.currentLat}&lon=${window.currentLon}`)
       .then(r => r.json())
       .then(data => {
-        const address = data.display_name || `${window.currentLat}, ${window.currentLon}`;
-        addressField.value = address;
+        addressField.value = data.display_name || `${window.currentLat}, ${window.currentLon}`;
       })
       .catch(() => {
         addressField.value = `${window.currentLat}, ${window.currentLon}`;
@@ -1625,9 +1394,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("preorder-modal");
   if (modal) {
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closePreorderModal();
-      }
+      if (e.target === modal) closePreorderModal();
     });
   }
   
