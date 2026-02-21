@@ -14,8 +14,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
 
   
-  <title>Find My Ecological Garden | Gardener & Son</title>
-  <!-- Fonts & Leaflet CSS -->
+  <title>Find My Ecological Garden | Gardener &amp; Son</title>
+  <!-- Fonts &amp; Leaflet CSS -->
   <link
     href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
     rel="stylesheet"
@@ -45,7 +45,6 @@
       scroll-behavior: smooth;
     }
 
-    /* Hamburger Menu */
     #hamburger-menu {
       position: fixed;
       top: 20px;
@@ -79,7 +78,6 @@
       transition: all 0.3s ease;
     }
 
-    /* Nav Modal */
     #nav-modal {
       display: none;
       position: fixed;
@@ -137,7 +135,6 @@
       transform: rotate(90deg) scale(1.1);
     }
 
-    /* Step Indicator */
     .step-indicator {
       display: flex;
       justify-content: center;
@@ -178,33 +175,12 @@
       background-color: currentColor;
     }
 
-    /* Section-specific step colors */
-    #section-1 .step-indicator {
-      color: #3d4535;
-    }
-
-    #section-1 .step.active .step-number {
-      background-color: #3d4535;
-      color: #fff0dc;
-    }
-
-    #section-2 .step-indicator {
-      color: #fff0dc;
-    }
-
-    #section-2 .step.active .step-number {
-      background-color: #fff0dc;
-      color: #3d4535;
-    }
-
-    #section-3 .step-indicator {
-      color: #3d4535;
-    }
-
-    #section-3 .step.active .step-number {
-      background-color: #3d4535;
-      color: #fff0dc;
-    }
+    #section-1 .step-indicator { color: #3d4535; }
+    #section-1 .step.active .step-number { background-color: #3d4535; color: #fff0dc; }
+    #section-2 .step-indicator { color: #fff0dc; }
+    #section-2 .step.active .step-number { background-color: #fff0dc; color: #3d4535; }
+    #section-3 .step-indicator { color: #3d4535; }
+    #section-3 .step.active .step-number { background-color: #3d4535; color: #fff0dc; }
 
     .step-divider {
       width: 40px;
@@ -213,7 +189,6 @@
       opacity: 0.3;
     }
 
-    /* Hero Section */
     .page-section {
       min-height: 100vh;
       display: flex;
@@ -230,9 +205,7 @@
       width: 100%;
     }
 
-    #section-1 {
-      text-align: center;
-    }
+    #section-1 { text-align: center; }
 
     #section-2 {
       text-align: center;
@@ -245,19 +218,10 @@
       border: 1px solid rgba(255, 240, 220, 0.2);
     }
 
-    #section-2 .scroll-button {
-      background-color: #fff0dc;
-      color: #3d4535;
-    }
+    #section-2 .scroll-button { background-color: #fff0dc; color: #3d4535; }
+    #section-2 .scroll-button:hover { background-color: #e8d7bc; box-shadow: 0 8px 25px rgba(255, 240, 220, 0.3); }
 
-    #section-2 .scroll-button:hover {
-      background-color: #e8d7bc;
-      box-shadow: 0 8px 25px rgba(255, 240, 220, 0.3);
-    }
-
-    #section-3 {
-      text-align: center;
-    }
+    #section-3 { text-align: center; }
 
     #section-3 .instruction-box {
       font-size: clamp(1.1rem, 2.5vw, 1.4rem);
@@ -303,7 +267,6 @@
       animation: fadeInUp 1.2s ease-out;
     }
 
-    /* Scroll Buttons */
     .scroll-button {
       padding: 1.2rem 2.5rem;
       background-color: #3d4535;
@@ -321,16 +284,9 @@
       animation: fadeInUp 1.6s ease-out;
     }
 
-    .scroll-button:hover {
-      transform: scale(1.03) rotate(0.5deg);
-      box-shadow: 0 8px 25px rgba(61, 69, 53, 0.25);
-    }
+    .scroll-button:hover { transform: scale(1.03) rotate(0.5deg); box-shadow: 0 8px 25px rgba(61, 69, 53, 0.25); }
+    .scroll-button:active { transform: scale(0.98); }
 
-    .scroll-button:active {
-      transform: scale(0.98);
-    }
-
-    /* Scroll Arrow Indicator */
     .scroll-arrow {
       margin-top: 2rem;
       font-size: 2rem;
@@ -339,23 +295,14 @@
       cursor: pointer;
     }
 
-    #section-2 .scroll-arrow {
-      color: #fff0dc;
-    }
+    #section-2 .scroll-arrow { color: #fff0dc; }
 
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-15px);
-      }
-      60% {
-        transform: translateY(-8px);
-      }
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+      60% { transform: translateY(-8px); }
     }
 
-    /* Gardener & Son Badge */
     .brand-badge {
       position: fixed;
       bottom: 20px;
@@ -374,17 +321,9 @@
       text-transform: uppercase;
     }
 
-    .brand-badge:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
+    .brand-badge:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3); }
+    .brand-badge::before { content: "⚘ "; margin-right: 5px; }
 
-    .brand-badge::before {
-      content: "⚘ ";
-      margin-right: 5px;
-    }
-
-    /* Search Container */
     #search-container {
       width: 100%;
       max-width: 600px;
@@ -395,11 +334,7 @@
       position: relative;
     }
 
-    #address-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+    #address-form { display: flex; flex-direction: column; gap: 1rem; }
 
     #address-input {
       padding: 1.2rem 1.5rem;
@@ -413,17 +348,10 @@
       transition: all 0.3s ease;
     }
 
-    #address-input:focus {
-      border-color: #3d4535;
-      box-shadow: 0 4px 20px rgba(61, 69, 53, 0.15);
-    }
+    #address-input:focus { border-color: #3d4535; box-shadow: 0 4px 20px rgba(61, 69, 53, 0.15); }
+    #address-input::placeholder { color: #999; }
 
-    #address-input::placeholder {
-      color: #999;
-    }
-
-    #search-button,
-    #location-button {
+    #search-button, #location-button {
       padding: 1.2rem 2.5rem;
       background-color: #3d4535;
       color: #fff0dc;
@@ -438,49 +366,20 @@
       touch-action: manipulation;
     }
 
-    #search-button:hover,
-    #location-button:hover {
-      transform: scale(1.03) rotate(0.5deg);
-      box-shadow: 0 8px 25px rgba(61, 69, 53, 0.25);
-    }
+    #search-button:hover, #location-button:hover { transform: scale(1.03) rotate(0.5deg); box-shadow: 0 8px 25px rgba(61, 69, 53, 0.25); }
+    #search-button:active, #location-button:active { transform: scale(0.98); }
+    #search-button:disabled, #location-button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
-    #search-button:active,
-    #location-button:active {
-      transform: scale(0.98);
-    }
+    #location-button { background-color: transparent; border: 2px solid #3d4535; color: #3d4535; font-weight: 500; }
+    #location-button:hover { background-color: #3d4535; color: #fff0dc; }
 
-    #search-button:disabled,
-    #location-button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
+    #map { display: none; }
 
-    #location-button {
-      background-color: transparent;
-      border: 2px solid #3d4535;
-      color: #3d4535;
-      font-weight: 500;
-    }
-
-    #location-button:hover {
-      background-color: #3d4535;
-      color: #fff0dc;
-    }
-
-    /* Map - Hidden */
-    #map {
-      display: none;
-    }
-
-    /* Modal */
     #evc-modal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background-color: rgba(61, 69, 53, 0.95);
       z-index: 9999;
       align-items: center;
@@ -517,8 +416,7 @@
       color: #fff0dc;
       border: none;
       border-radius: 50%;
-      width: 45px;
-      height: 45px;
+      width: 45px; height: 45px;
       font-size: 28px;
       line-height: 1;
       cursor: pointer;
@@ -529,14 +427,9 @@
       touch-action: manipulation;
     }
 
-    #modal-close:hover {
-      transform: scale(1.1) rotate(90deg);
-      background-color: #2f3928;
-    }
+    #modal-close:hover { transform: scale(1.1) rotate(90deg); background-color: #2f3928; }
 
-    #modal-info {
-      padding: 2.5rem;
-    }
+    #modal-info { padding: 2.5rem; }
 
     #modal-info .title {
       font-size: 0.95rem;
@@ -555,12 +448,7 @@
       letter-spacing: 0px;
     }
 
-    #modal-info .status,
-    #modal-info .region {
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-      line-height: 1.3;
-    }
+    #modal-info .status, #modal-info .region { margin-bottom: 0.5rem; font-size: 1rem; line-height: 1.3; }
 
     #modal-evc-description {
       font-size: 1.05rem;
@@ -572,14 +460,8 @@
       border: 1px solid #e2e8f0;
     }
 
-    #modal-plants {
-      margin-top: 2rem;
-    }
-
-    #modal-plants h2,
-    #modal-plants h3 {
-      line-height: 1.3;
-    }
+    #modal-plants { margin-top: 2rem; }
+    #modal-plants h2, #modal-plants h3 { line-height: 1.3; }
 
     #email-section {
       background: linear-gradient(135deg, #3d4535 0%, #2f3928 100%);
@@ -597,19 +479,9 @@
       line-height: 1.2;
     }
 
-    #email-section p {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
+    #email-section p { font-size: 1rem; margin-bottom: 2rem; opacity: 0.9; }
 
-    #gf-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 500px;
-      margin: 0 auto;
-    }
+    #gf-form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: 0 auto; }
 
     #gf-email {
       padding: 1.2rem 1.5rem;
@@ -623,14 +495,8 @@
       transition: all 0.3s ease;
     }
 
-    #gf-email::placeholder {
-      color: rgba(255, 240, 220, 0.6);
-    }
-
-    #gf-email:focus {
-      background-color: rgba(255, 240, 220, 0.2);
-      box-shadow: 0 4px 20px rgba(255, 240, 220, 0.1);
-    }
+    #gf-email::placeholder { color: rgba(255, 240, 220, 0.6); }
+    #gf-email:focus { background-color: rgba(255, 240, 220, 0.2); box-shadow: 0 4px 20px rgba(255, 240, 220, 0.1); }
 
     #gf-form button {
       padding: 1.2rem 2.5rem;
@@ -647,12 +513,8 @@
       touch-action: manipulation;
     }
 
-    #gf-form button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 240, 220, 0.3);
-    }
+    #gf-form button:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255, 240, 220, 0.3); }
 
-    /* Footer */
     footer {
       margin-top: 0;
       padding: 50px 20px;
@@ -671,317 +533,79 @@
       line-height: 1.8;
     }
 
-    footer .acknowledgement p {
-      font-size: 13px;
-      line-height: 1.8;
-      margin-bottom: 30px;
-      font-weight: 300;
-    }
+    footer .acknowledgement p { font-size: 13px; line-height: 1.8; margin-bottom: 30px; font-weight: 300; }
+    footer .acknowledgement p:last-child { margin-bottom: 0; }
+    footer > p { margin-top: 40px; font-size: 12px; opacity: 0.8; }
+    footer a { color: #fff0dc; text-decoration: underline; transition: opacity 0.2s ease; }
+    footer a:hover { opacity: 0.8; }
 
-    footer .acknowledgement p:last-child {
-      margin-bottom: 0;
-    }
-
-    footer > p {
-      margin-top: 40px;
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    footer a {
-      color: #fff0dc;
-      text-decoration: underline;
-      transition: opacity 0.2s ease;
-    }
-
-    footer a:hover {
-      opacity: 0.8;
-    }
-
-    /* Animations */
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @keyframes slideUp {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
-      .page-section {
-        padding: 0.8rem 1.2rem 2rem;
-        min-height: 100vh;
-      }
-
-      #section-3 {
-        padding-top: 0.2rem;
-      }
-
-      .step-indicator {
-        gap: 0.5rem;
-        margin-bottom: 2rem;
-        font-size: 0.75rem;
-      }
-
-      .step-number {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-      }
-
-      .step-text {
-        display: none;
-      }
-
-      .step-divider {
-        width: 20px;
-      }
-
-      #hamburger-menu {
-        width: 45px;
-        height: 45px;
-        top: 15px;
-        left: 15px;
-      }
-
-      #hamburger-menu span {
-        width: 20px;
-      }
-
-      .brand-badge {
-        bottom: 15px;
-        right: 15px;
-        font-size: 0.7rem;
-        padding: 8px 16px;
-      }
-
-      .scroll-arrow {
-        font-size: 1.8rem;
-        margin-top: 1.5rem;
-      }
-
-      #page-title {
-        font-size: clamp(3rem, 13vw, 5rem);
-        margin-bottom: 1.5rem;
-      }
-
-      .hero-highlight {
-        font-size: 1.05rem;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-        padding: 1.2rem 1.5rem;
-      }
-
-      .instruction-box {
-        font-size: 1.05rem;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-        padding: 1.2rem 1.5rem;
-      }
-
-      #container > p:not(.hero-highlight) {
-        font-size: 0.95rem;
-        margin-bottom: 2rem;
-      }
-
-      #search-container {
-        max-width: 100%;
-        align-items: center;
-      }
-
-      #address-form {
-        gap: 0.8rem;
-        align-items: center;
-        width: 100%;
-      }
-
-      #address-input {
-        padding: 1rem 1.2rem;
-        font-size: 16px; /* Prevents zoom on iOS */
-        width: 100%;
-      }
-
-      #search-button,
-      #location-button {
-        padding: 1rem 2rem;
-        font-size: 0.95rem;
-        width: 100%;
-      }
-
-      /* Modal optimizations */
-      #evc-modal {
-        padding: 20px 10px;
-        padding-top: env(safe-area-inset-top, 20px);
-      }
-
-      .modal-content {
-        max-height: 90vh;
-        border-radius: 15px;
-      }
-
-      #modal-map {
-        height: 200px;
-        border-radius: 15px 15px 0 0;
-      }
-
-      #modal-close {
-        top: calc(env(safe-area-inset-top, 0px) + 10px);
-        right: calc(env(safe-area-inset-right, 0px) + 10px);
-        width: 40px;
-        height: 40px;
-        font-size: 24px;
-      }
-
-      #modal-info {
-        padding: 1.5rem 1.2rem;
-      }
-
-      #modal-info .title {
-        font-size: 0.85rem;
-      }
-      
-      #modal-address {
-        display: block;
-      }
-
-      #modal-evc-name {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-      }
-
-      #modal-info .status,
-      #modal-info .region {
-        font-size: 0.9rem;
-      }
-
-      #modal-evc-description {
-        font-size: 0.95rem;
-        padding: 1.2rem;
-        line-height: 1.7;
-      }
-
-      #email-section {
-        padding: 2rem 1.2rem;
-      }
-
-      #email-section h2 {
-        font-size: clamp(1.5rem, 5vw, 2rem);
-        margin-bottom: 0.8rem;
-      }
-
-      #email-section p {
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-      }
-
-      #gf-email {
-        padding: 1rem 1.2rem;
-        font-size: 16px; /* Prevents zoom on iOS */
-      }
-
-      #gf-form button {
-        padding: 1rem 2rem;
-        font-size: 0.95rem;
-      }
-
-      /* Footer mobile */
-      footer {
-        padding: 40px 15px;
-      }
-
-      footer .acknowledgement {
-        padding: 1.5rem;
-        margin: 0 auto;
-      }
-
-      footer .acknowledgement p {
-        font-size: 14px;
-        line-height: 1.7;
-        margin-bottom: 20px;
-      }
-
-      footer > p {
-        font-size: 13px;
-        margin-top: 30px;
-        padding: 0 10px;
-      }
+      .page-section { padding: 0.8rem 1.2rem 2rem; min-height: 100vh; }
+      #section-3 { padding-top: 0.2rem; }
+      .step-indicator { gap: 0.5rem; margin-bottom: 2rem; font-size: 0.75rem; }
+      .step-number { width: 28px; height: 28px; font-size: 0.8rem; }
+      .step-text { display: none; }
+      .step-divider { width: 20px; }
+      #hamburger-menu { width: 45px; height: 45px; top: 15px; left: 15px; }
+      #hamburger-menu span { width: 20px; }
+      .brand-badge { bottom: 15px; right: 15px; font-size: 0.7rem; padding: 8px 16px; }
+      .scroll-arrow { font-size: 1.8rem; margin-top: 1.5rem; }
+      #page-title { font-size: clamp(3rem, 13vw, 5rem); margin-bottom: 1.5rem; }
+      .hero-highlight { font-size: 1.05rem; margin-bottom: 1.5rem; line-height: 1.6; padding: 1.2rem 1.5rem; }
+      .instruction-box { font-size: 1.05rem; margin-bottom: 1.5rem; line-height: 1.6; padding: 1.2rem 1.5rem; }
+      #container > p:not(.hero-highlight) { font-size: 0.95rem; margin-bottom: 2rem; }
+      #search-container { max-width: 100%; align-items: center; }
+      #address-form { gap: 0.8rem; align-items: center; width: 100%; }
+      #address-input { padding: 1rem 1.2rem; font-size: 16px; width: 100%; }
+      #search-button, #location-button { padding: 1rem 2rem; font-size: 0.95rem; width: 100%; }
+      #evc-modal { padding: 20px 10px; padding-top: env(safe-area-inset-top, 20px); }
+      .modal-content { max-height: 90vh; border-radius: 15px; }
+      #modal-map { height: 200px; border-radius: 15px 15px 0 0; }
+      #modal-close { top: calc(env(safe-area-inset-top, 0px) + 10px); right: calc(env(safe-area-inset-right, 0px) + 10px); width: 40px; height: 40px; font-size: 24px; }
+      #modal-info { padding: 1.5rem 1.2rem; }
+      #modal-info .title { font-size: 0.85rem; }
+      #modal-address { display: block; }
+      #modal-evc-name { font-size: 2.5rem; margin-bottom: 1rem; }
+      #modal-info .status, #modal-info .region { font-size: 0.9rem; }
+      #modal-evc-description { font-size: 0.95rem; padding: 1.2rem; line-height: 1.7; }
+      #email-section { padding: 2rem 1.2rem; }
+      #email-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 0.8rem; }
+      #email-section p { font-size: 0.9rem; margin-bottom: 1.5rem; }
+      #gf-email { padding: 1rem 1.2rem; font-size: 16px; }
+      #gf-form button { padding: 1rem 2rem; font-size: 0.95rem; }
+      footer { padding: 40px 15px; }
+      footer .acknowledgement { padding: 1.5rem; margin: 0 auto; }
+      footer .acknowledgement p { font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+      footer > p { font-size: 13px; margin-top: 30px; padding: 0 10px; }
     }
 
-    /* Extra small devices */
     @media (max-width: 480px) {
-      .page-section {
-        padding: 0.5rem 1rem 1.5rem;
-      }
-
-      #section-3 {
-        padding-top: 0.2rem;
-      }
-
-      #page-title {
-        font-size: 2.8rem;
-        margin-bottom: 1.2rem;
-      }
-
-      .hero-highlight {
-        font-size: 1rem;
-        padding: 1rem 1.2rem;
-      }
-
-      .instruction-box {
-        font-size: 1rem;
-        padding: 1rem 1.2rem;
-      }
-
-      #address-input,
-      #search-button,
-      #location-button {
-        padding: 0.9rem 1rem;
-      }
-
-      #modal-info {
-        padding: 1.2rem 1rem;
-      }
-
-      #email-section {
-        padding: 1.8rem 1rem;
-      }
-
-      footer .acknowledgement {
-        padding: 1.2rem;
-      }
-
-      footer .acknowledgement p {
-        font-size: 13px;
-        margin-bottom: 15px;
-      }
-
-      footer > p {
-        font-size: 12px;
-      }
+      .page-section { padding: 0.5rem 1rem 1.5rem; }
+      #section-3 { padding-top: 0.2rem; }
+      #page-title { font-size: 2.8rem; margin-bottom: 1.2rem; }
+      .hero-highlight { font-size: 1rem; padding: 1rem 1.2rem; }
+      .instruction-box { font-size: 1rem; padding: 1rem 1.2rem; }
+      #address-input, #search-button, #location-button { padding: 0.9rem 1rem; }
+      #modal-info { padding: 1.2rem 1rem; }
+      #email-section { padding: 1.8rem 1rem; }
+      footer .acknowledgement { padding: 1.2rem; }
+      footer .acknowledgement p { font-size: 13px; margin-bottom: 15px; }
+      footer > p { font-size: 12px; }
     }
   </style>
 </head>
@@ -1002,8 +626,8 @@
     </div>
   </div>
 
-  <!-- Gardener & Son Badge -->
-  <a href="https://www.gardenerandson.com" target="_blank" class="brand-badge">Gardener & Son</a>
+  <!-- Gardener &amp; Son Badge -->
+  <a href="https://www.gardenerandson.com" target="_blank" class="brand-badge">Gardener &amp; Son</a>
 
   <!-- Section 1: Hero -->
   <section id="section-1" class="page-section">
@@ -1023,9 +647,9 @@
         <span class="step-text">Find Your Garden</span>
       </div>
     </div>
-    <h2 id="page-title">Find & Grow Your Ecological Garden.</h2>
+    <h2 id="page-title">Find &amp; Grow Your Ecological Garden.</h2>
     <button class="scroll-button" onclick="scrollToSection('section-2')">Get Started</button>
-    <div class="scroll-arrow" onclick="scrollToSection('section-2')">↓</div>
+    <div class="scroll-arrow" onclick="scrollToSection('section-2')">&#8595;</div>
   </section>
 
   <!-- Section 2: Why -->
@@ -1051,7 +675,7 @@
 By planting indigenous species, you help restore local biodiversity, support native wildlife, and build climate resilience right from your own garden.
     </p>
     <button class="scroll-button" onclick="scrollToSection('section-3')">Find Your Ecological Garden</button>
-    <div class="scroll-arrow" onclick="scrollToSection('section-3')">↓</div>
+    <div class="scroll-arrow" onclick="scrollToSection('section-3')">&#8595;</div>
   </section>
 
   <!-- Section 3: Search -->
@@ -1088,10 +712,9 @@ By planting indigenous species, you help restore local biodiversity, support nat
         </button>
       </form>
       <button id="location-button" type="button">
-        📍 Use My Location
+        &#128205; Use My Location
       </button>
     </div>
-    <!-- legacy map (hidden via CSS) -->
     <div id="map"></div>
   </section>
   
@@ -1099,11 +722,11 @@ By planting indigenous species, you help restore local biodiversity, support nat
   <footer>
     <div class="acknowledgement">
       <p>
-        At Gardener & Son, we acknowledge the Wurundjeri Woi Wurrung people of the Kulin Nation, the Traditional Custodians of the land on which we live and work. We honour their enduring connection to Country — and the grasslands, woodlands, and wetlands that once flourished here through generations of care and balance. These living systems were not lost to time, but to disconnection. Our work seeks to rekindle that relationship, restoring native ecologies and weaving biodiversity back into the urban fabric — each garden a quiet act of remembrance and renewal.
+        At Gardener &amp; Son, we acknowledge the Wurundjeri Woi Wurrung people of the Kulin Nation, the Traditional Custodians of the land on which we live and work. We honour their enduring connection to Country &#8212; and the grasslands, woodlands, and wetlands that once flourished here through generations of care and balance. These living systems were not lost to time, but to disconnection. Our work seeks to rekindle that relationship, restoring native ecologies and weaving biodiversity back into the urban fabric &#8212; each garden a quiet act of remembrance and renewal.
       </p>
     </div>
     <p>
-      Lovingly made in Melbourne by <a href="https://www.gardenerandson.com" target="_blank">Gardener & Son</a>.
+      Lovingly made in Melbourne by <a href="https://www.gardenerandson.com" target="_blank">Gardener &amp; Son</a>.
     </p>
   </footer>
 
@@ -1118,11 +741,8 @@ By planting indigenous species, you help restore local biodiversity, support nat
         <p class="status"><strong>Status:</strong> <span id="modal-evc-status"></span></p>
         <p class="region"><strong>Bioregion:</strong> <span id="modal-evc-region"></span></p>
         <p id="modal-evc-description"></p>
-        
-        <!-- Plant list container -->
         <div id="modal-plants"></div>
       </div>
-      <!-- SIGN UP SECTION -->
       <div id="email-section">
         <h2>Join the ecological movement.</h2>
         <p>Sign up to receive updates, planting tips, and stories from ecological gardens across Victoria.</p>
@@ -1152,50 +772,40 @@ By planting indigenous species, you help restore local biodiversity, support nat
   <div id="preorder-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(61, 69, 53, 0.95); z-index: 10000; align-items: center; justify-content: center; padding: 40px 20px;">
     <div style="background-color: #fff0dc; border-radius: 20px; max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); padding: 2.5rem;">
       <button id="preorder-close" style="position: absolute; top: 15px; right: 15px; background-color: #3d4535; color: #fff0dc; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 28px; line-height: 1; cursor: pointer; transition: all 0.2s;">&times;</button>
-      
       <h2 style="font-family: 'Abril Fatface', serif; font-size: clamp(1.8rem, 5vw, 2.5rem); color: #3d4535; margin-bottom: 1rem;">Pre-Order Your Tiny Forest Kit</h2>
       <p style="margin-bottom: 2rem; color: #666;">We're excited to help you create your tiny forest! Fill out the form below and we'll be in touch to finalize your order.</p>
-      
       <form id="preorder-form" action="https://docs.google.com/forms/d/e/1FAIpQLSdzMYnUrg7FuTkNk9_5u2VXV6Ea0LrRWE-_paKu7gFIdz7fWw/formResponse" method="POST" target="preorder-iframe" style="display: flex; flex-direction: column; gap: 1.2rem;">
-        
         <div>
           <label for="preorder-name" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name *</label>
           <input type="text" id="preorder-name" name="entry.1168713650" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
         </div>
-        
         <div>
           <label for="preorder-email" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email *</label>
           <input type="email" id="preorder-email" name="entry.403953874" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
         </div>
-        
         <div>
           <label for="preorder-phone" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone *</label>
           <input type="tel" id="preorder-phone" name="entry.963420574" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
         </div>
-        
         <div>
           <label for="preorder-address" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Property Address (auto-filled, you can edit)</label>
           <textarea id="preorder-address" name="entry.463300287" placeholder="Where will you be planting your forest kit?" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 12px; background-color: white; outline: none; min-height: 80px; resize: vertical;"></textarea>
         </div>
-        
         <div>
-          <label for="preorder-area" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Approximate Area (m²) *</label>
+          <label for="preorder-area" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Approximate Area (m&#178;) *</label>
           <input type="number" id="preorder-area" name="entry.2073002838" required placeholder="e.g., 50" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
         </div>
-        
         <div>
           <label for="preorder-evc" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Preferred EVC</label>
           <input type="text" id="preorder-evc" name="entry.10172062" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #e2e8f0; border-radius: 50px; background-color: #f5f5f5; outline: none; color: #666;">
         </div>
-        
         <button type="submit" style="padding: 1.2rem 2.5rem; background-color: #3d4535; color: #fff0dc; border: none; border-radius: 50px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; margin-top: 1rem;">Submit Pre-Order</button>
       </form>
-      
       <iframe name="preorder-iframe" style="display:none;"></iframe>
     </div>
   </div>
 
-  <!-- Leaflet, Turf & fetch logic -->
+  <!-- Leaflet, Turf &amp; fetch logic -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
   <script src="evc-fetch.js"></script>
@@ -1215,9 +825,8 @@ By planting indigenous species, you help restore local biodiversity, support nat
     }
   </script>
   
-  <!-- Navigation & Scroll Functions -->
+  <!-- Navigation &amp; Scroll Functions -->
   <script>
-    // Hamburger menu
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const navModal = document.getElementById('nav-modal');
     const navClose = document.getElementById('nav-close');
@@ -1232,7 +841,6 @@ By planting indigenous species, you help restore local biodiversity, support nat
       document.body.style.overflow = 'auto';
     });
 
-    // Close nav when clicking outside
     navModal.addEventListener('click', (e) => {
       if (e.target === navModal) {
         navModal.classList.remove('active');
@@ -1240,7 +848,6 @@ By planting indigenous species, you help restore local biodiversity, support nat
       }
     });
 
-    // Smooth scroll to section
     function scrollToSection(sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
@@ -1248,12 +855,9 @@ By planting indigenous species, you help restore local biodiversity, support nat
       }
     }
 
-    // Handle nav links
     document.querySelectorAll('.nav-content a').forEach(link => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
-        
-        // If it's #about or #contact, navigate to the actual pages
         if (href === '#about') {
           window.location.href = 'about.html';
           e.preventDefault();
@@ -1264,21 +868,6 @@ By planting indigenous species, you help restore local biodiversity, support nat
       });
     });
   </script>
-
-  <!-- Handle incoming EVC from findmyevc.com -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const evcCode = params.get("evc");
-      const evcName = params.get("name") ? decodeURIComponent(params.get("name")) : null;
-
-      if (evcCode && evcName) {
-        // Scroll to section 3 so the user sees the search context
-        scrollToSection("section-3");
-        // Open modal without coordinates — no location passed from findmyevc.com
-        displayModal(evcName, null, null, evcCode, null, null);
-      }
-    });
-  </script>
+  <!-- NOTE: URL parameter handling for findmyevc.com links is done inside evc-fetch.js via handleURLParameters() -->
 </body>
 </html>
