@@ -1,9 +1,9 @@
-// evc-fetch.js - Complete working version with URL parameter handling and FindMyEVC-matched polygon detection
+// evc-fetch.js - Complete working version with URL parameter handling and matched polygon detection
 
 let map, marker, modalMap;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Check for URL parameters from FindMyEVC FIRST
+  // Check for URL parameters from shared links FIRST
   handleURLParameters();
   
   // Legacy map (hidden via CSS)
@@ -112,14 +112,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Handle URL parameters from FindMyEVC — single source of truth
+// Handle URL parameters from shared links — single source of truth
 function handleURLParameters() {
   const urlParams = new URLSearchParams(window.location.search);
   const evcCode = urlParams.get('evc');
   const evcName = urlParams.get('name');
   
   if (evcCode && evcName) {
-    console.log('🔗 Loading EVC from FindMyEVC:', evcCode, evcName);
+    console.log('🔗 Loading EVC from shared link:', evcCode, evcName);
     const decodedName = decodeURIComponent(evcName);
     displayModal(decodedName, null, null, evcCode, null, null);
     // Clean URL without reloading
@@ -158,7 +158,7 @@ function geocodeAddress(address) {
       alert(err.message);
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
-      searchBtn.textContent = "Find My Garden";
+      searchBtn.textContent = "Find Native Plants";
     });
 }
 
@@ -359,7 +359,7 @@ function hideAutocomplete() {
 }
 
 function fetchEVCData(lat, lon) {
-  const buffer = 0.01;
+  const buffer = 0.1;  // 11km radius - expanded to catch urban areas with sparse EVC mapping
   const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
@@ -369,7 +369,7 @@ function fetchEVCData(lat, lon) {
              "&srsName=EPSG:4326" +
              "&outputFormat=application/json";
 
-  console.log('Fetching EVC data (lat,lon order, buffer=0.01)');
+  console.log('Fetching EVC data (lat,lon order, buffer=0.1)');
   
   fetch(url)
     .then(r => {
@@ -396,7 +396,7 @@ function fetchEVCData(lat, lon) {
       alert(err.message);
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
-      searchBtn.textContent = "Find My Garden";
+      searchBtn.textContent = "Find Native Plants";
       
       const locationBtn = document.getElementById("location-button");
       locationBtn.disabled = false;
@@ -405,7 +405,7 @@ function fetchEVCData(lat, lon) {
 }
 
 function fetchEVCDataLonLat(lat, lon) {
-  const buffer = 0.01;
+  const buffer = 0.1;  // 11km radius - expanded to catch urban areas with sparse EVC mapping
   const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
@@ -415,7 +415,7 @@ function fetchEVCDataLonLat(lat, lon) {
               "&srsName=EPSG:4326" +
               "&outputFormat=application/json";
 
-  console.log('Fetching EVC data (lon,lat order, buffer=0.01)');
+  console.log('Fetching EVC data (lon,lat order, buffer=0.1)');
   
   return fetch(url)
     .then(r => {
@@ -441,6 +441,7 @@ function fetchEVCDataLonLat(lat, lon) {
 function processEVCResults(data, lat, lon) {
   const point = turf.point([lon, lat]);
   let matchedFeature = null;
+  let isUrbanFallback = false;
 
   for (let i = 0; i < data.features.length; i++) {
     if (turf.booleanPointInPolygon(point, data.features[i])) {
@@ -451,8 +452,9 @@ function processEVCResults(data, lat, lon) {
   }
 
   if (!matchedFeature) {
-    console.log('No exact match, using first feature (nearest)');
+    console.log('No exact match, using nearest feature (urban fallback)');
     matchedFeature = data.features[0];
+    isUrbanFallback = true;
   }
 
   console.log('Matched feature:', matchedFeature);
@@ -476,7 +478,7 @@ function processEVCResults(data, lat, lon) {
     code = mosaicCodeMapping[code];
   }
   
-  displayModal(name, p.evc_bcs_desc, p.bioregion, code, lat, lon);
+  displayModal(name, p.evc_bcs_desc, p.bioregion, code, lat, lon, isUrbanFallback);
 }
 
 function checkPlantImage(plantName) {
@@ -708,7 +710,7 @@ function getKitDetails(evcName) {
   return kits[evcName] || null;
 }
 
-function displayModal(name, status, region, code, lat, lon) {
+function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
   // Clean mosaic EVC names
   if (name && name.includes('/')) {
     name = name.split('/')[0].trim();
@@ -729,7 +731,7 @@ function displayModal(name, status, region, code, lat, lon) {
   // Reset buttons
   const searchBtn = document.getElementById("search-button");
   searchBtn.disabled = false;
-  searchBtn.textContent = "Find My Garden";
+  searchBtn.textContent = "Find Native Plants";
   
   const locationBtn = document.getElementById("location-button");
   locationBtn.disabled = false;
@@ -739,9 +741,10 @@ function displayModal(name, status, region, code, lat, lon) {
   window.currentLat = lat;
   window.currentLon = lon;
   window.currentEvcName = name;
+  window.isUrbanFallback = isUrbanFallback || false;
   
   // Log lookup
-  const searchAddress = window.searchedAddress || (lat && lon ? `${lat}, ${lon}` : 'FindMyEVC referral');
+  const searchAddress = window.searchedAddress || (lat && lon ? `${lat}, ${lon}` : 'FindMyNativePlants referral');
   logEVCLookup(searchAddress, lat, lon, code, name);
   
   // Address display — only shown when we have a real address
@@ -764,7 +767,7 @@ function displayModal(name, status, region, code, lat, lon) {
     }
     if (titleEl) titleEl.style.display = "";
   } else {
-    // No coordinates — coming from FindMyEVC, hide the address line
+    // No coordinates — coming from shared link, hide the address line
     if (titleEl) titleEl.style.display = "none";
   }
   
@@ -821,6 +824,20 @@ function displayModal(name, status, region, code, lat, lon) {
       const descriptionEl = document.getElementById("modal-evc-description");
       if (evcInfo?.description) {
         descriptionEl.textContent = evcInfo.description;
+        
+        // Add urban fallback disclaimer if needed
+        if (isUrbanFallback) {
+          const disclaimerEl = document.createElement("p");
+          disclaimerEl.style.marginTop = "15px";
+          disclaimerEl.style.padding = "12px";
+          disclaimerEl.style.background = "rgba(122, 138, 111, 0.1)";
+          disclaimerEl.style.borderLeft = "3px solid #7a8a6f";
+          disclaimerEl.style.fontSize = "14px";
+          disclaimerEl.style.lineHeight = "1.6";
+          disclaimerEl.style.color = "#5a6352";
+          disclaimerEl.innerHTML = "<strong>Note:</strong> This address is in an urbanized area where detailed pre-1750 vegetation mapping isn't available. Based on nearby remnant bushland, your location would have been <strong>" + name + "</strong>.";
+          descriptionEl.parentNode.insertBefore(disclaimerEl, descriptionEl.nextSibling);
+        }
       } else {
         descriptionEl.innerHTML = `We're still researching the best plant species for <strong>${name}</strong>. Check back soon for our curated recommendations!`;
         descriptionEl.style.fontStyle = "normal";
@@ -833,7 +850,7 @@ function displayModal(name, status, region, code, lat, lon) {
       
       if (evcInfo?.recommendations && evcInfo.recommendations.length > 0) {
         const titleEl = document.createElement("h2");
-        titleEl.textContent = "Here's the indigenous plants that belong in your garden.";
+        titleEl.textContent = "Here are native and indigenous plants suited to your area.";
         titleEl.style.fontFamily = "'Abril Fatface', serif";
         titleEl.style.fontSize = "28px";
         titleEl.style.marginTop = "30px";
@@ -973,7 +990,7 @@ function displayModal(name, status, region, code, lat, lon) {
       kitSection.style.border = "1px solid #e2e8f0";
       
       const kitTitle = document.createElement("h2");
-      kitTitle.textContent = "Grow your own Ecological Garden.";
+      kitTitle.textContent = "Grow your own native plant garden.";
       kitTitle.style.fontFamily = "'Abril Fatface', serif";
       kitTitle.style.fontSize = "28px";
       kitTitle.style.marginBottom = "15px";
@@ -1126,7 +1143,7 @@ function displayModal(name, status, region, code, lat, lon) {
       
       plantsDiv.appendChild(kitSection);
       
-      // Tee Section
+      // Tee Section (continuing from kit section...)
       const teeSection = document.createElement("div");
       teeSection.style.marginTop = "20px";
       teeSection.style.padding = "30px";
@@ -1135,7 +1152,7 @@ function displayModal(name, status, region, code, lat, lon) {
       teeSection.style.border = "1px solid #e2e8f0";
       
       const teeTitle = document.createElement("h2");
-      teeTitle.textContent = "Wear your Ecological Garden.";
+      teeTitle.textContent = "Wear your native plant community.";
       teeTitle.style.fontFamily = "'Abril Fatface', serif";
       teeTitle.style.fontSize = "28px";
       teeTitle.style.marginBottom = "15px";
