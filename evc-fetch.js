@@ -158,7 +158,7 @@ function geocodeAddress(address) {
       alert(err.message);
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
-      searchBtn.textContent = "Find Native Plants";
+      searchBtn.textContent = "Find My Garden";
     });
 }
 
@@ -362,12 +362,15 @@ function fetchEVCData(lat, lon) {
   const buffer = 0.05;  // 5.5km radius - compromise to avoid CORS errors while catching urban areas
   const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
   
-  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+  const wfsUrl = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
              "?service=WFS&version=1.1.0&request=GetFeature" +
              "&typeName=open-data-platform:nv2005_evcbcs" +
              `&bbox=${bbox}` +
              "&srsName=EPSG:4326" +
              "&outputFormat=application/json";
+  
+  // Use CORS proxy to bypass CORS restrictions
+  const url = `https://corsproxy.io/?${encodeURIComponent(wfsUrl)}`;
 
   console.log('Fetching EVC data (lat,lon order, buffer=0.05)');
   
@@ -396,7 +399,7 @@ function fetchEVCData(lat, lon) {
       alert(err.message);
       const searchBtn = document.getElementById("search-button");
       searchBtn.disabled = false;
-      searchBtn.textContent = "Find Native Plants";
+      searchBtn.textContent = "Find My Garden";
       
       const locationBtn = document.getElementById("location-button");
       locationBtn.disabled = false;
@@ -408,12 +411,15 @@ function fetchEVCDataLonLat(lat, lon) {
   const buffer = 0.05;  // 5.5km radius - compromise to avoid CORS errors while catching urban areas
   const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
   
-  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+  const wfsUrl = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
               "?service=WFS&version=1.1.0&request=GetFeature" +
               "&typeName=open-data-platform:nv2005_evcbcs" +
               `&bbox=${bbox}` +
               "&srsName=EPSG:4326" +
               "&outputFormat=application/json";
+  
+  // Use CORS proxy to bypass CORS restrictions
+  const url = `https://corsproxy.io/?${encodeURIComponent(wfsUrl)}`;
 
   console.log('Fetching EVC data (lon,lat order, buffer=0.05)');
   
@@ -731,7 +737,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
   // Reset buttons
   const searchBtn = document.getElementById("search-button");
   searchBtn.disabled = false;
-  searchBtn.textContent = "Find Native Plants";
+  searchBtn.textContent = "Find My Garden";
   
   const locationBtn = document.getElementById("location-button");
   locationBtn.disabled = false;
