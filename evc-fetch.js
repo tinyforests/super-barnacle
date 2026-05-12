@@ -359,7 +359,7 @@ function hideAutocomplete() {
 }
 
 function fetchEVCData(lat, lon) {
-  const buffer = 0.1;  // 11km radius - expanded to catch urban areas with sparse EVC mapping
+  const buffer = 0.05;  // 5.5km radius - compromise to avoid CORS errors while catching urban areas
   const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
@@ -369,7 +369,7 @@ function fetchEVCData(lat, lon) {
              "&srsName=EPSG:4326" +
              "&outputFormat=application/json";
 
-  console.log('Fetching EVC data (lat,lon order, buffer=0.1)');
+  console.log('Fetching EVC data (lat,lon order, buffer=0.05)');
   
   fetch(url)
     .then(r => {
@@ -405,7 +405,7 @@ function fetchEVCData(lat, lon) {
 }
 
 function fetchEVCDataLonLat(lat, lon) {
-  const buffer = 0.1;  // 11km radius - expanded to catch urban areas with sparse EVC mapping
+  const buffer = 0.05;  // 5.5km radius - compromise to avoid CORS errors while catching urban areas
   const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
@@ -415,7 +415,7 @@ function fetchEVCDataLonLat(lat, lon) {
               "&srsName=EPSG:4326" +
               "&outputFormat=application/json";
 
-  console.log('Fetching EVC data (lon,lat order, buffer=0.1)');
+  console.log('Fetching EVC data (lon,lat order, buffer=0.05)');
   
   return fetch(url)
     .then(r => {
