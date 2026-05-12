@@ -362,17 +362,14 @@ function fetchEVCData(lat, lon) {
   const buffer = 0.05;  // 5.5km radius - compromise to avoid CORS errors while catching urban areas
   const bbox = `${lat - buffer},${lon - buffer},${lat + buffer},${lon + buffer}`;
   
-  const wfsUrl = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
              "?service=WFS&version=1.1.0&request=GetFeature" +
              "&typeName=open-data-platform:nv2005_evcbcs" +
              `&bbox=${bbox}` +
              "&srsName=EPSG:4326" +
              "&outputFormat=application/json";
-  
-  // Use AllOrigins CORS proxy
-  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(wfsUrl)}`;
 
-  console.log('Fetching EVC data (lat,lon order, buffer=0.05)');
+  console.log('Fetching EVC data (lat,lon order, buffer=0.05) - DIRECT ACCESS');
   
   fetch(url)
     .then(r => {
@@ -411,17 +408,14 @@ function fetchEVCDataLonLat(lat, lon) {
   const buffer = 0.05;  // 5.5km radius - compromise to avoid CORS errors while catching urban areas
   const bbox = `${lon - buffer},${lat - buffer},${lon + buffer},${lat + buffer}`;
   
-  const wfsUrl = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
+  const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
               "?service=WFS&version=1.1.0&request=GetFeature" +
               "&typeName=open-data-platform:nv2005_evcbcs" +
               `&bbox=${bbox}` +
               "&srsName=EPSG:4326" +
               "&outputFormat=application/json";
-  
-  // Use AllOrigins CORS proxy
-  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(wfsUrl)}`;
 
-  console.log('Fetching EVC data (lon,lat order, buffer=0.05)');
+  console.log('Fetching EVC data (lon,lat order, buffer=0.05) - DIRECT ACCESS');
   
   return fetch(url)
     .then(r => {
