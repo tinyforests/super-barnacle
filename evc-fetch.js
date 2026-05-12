@@ -369,8 +369,8 @@ function fetchEVCData(lat, lon) {
              "&srsName=EPSG:4326" +
              "&outputFormat=application/json";
   
-  // Use CORS proxy to bypass CORS restrictions
-  const url = `https://corsproxy.io/?${encodeURIComponent(wfsUrl)}`;
+  // Use AllOrigins CORS proxy
+  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(wfsUrl)}`;
 
   console.log('Fetching EVC data (lat,lon order, buffer=0.05)');
   
@@ -418,8 +418,8 @@ function fetchEVCDataLonLat(lat, lon) {
               "&srsName=EPSG:4326" +
               "&outputFormat=application/json";
   
-  // Use CORS proxy to bypass CORS restrictions
-  const url = `https://corsproxy.io/?${encodeURIComponent(wfsUrl)}`;
+  // Use AllOrigins CORS proxy
+  const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(wfsUrl)}`;
 
   console.log('Fetching EVC data (lon,lat order, buffer=0.05)');
   
