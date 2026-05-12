@@ -850,7 +850,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       
       if (evcInfo?.recommendations && evcInfo.recommendations.length > 0) {
         const titleEl = document.createElement("h2");
-        titleEl.textContent = "Here are native and indigenous plants suited to your area.";
+        titleEl.textContent = "Here are indigenous plants suited to your area.";
         titleEl.style.fontFamily = "'Abril Fatface', serif";
         titleEl.style.fontSize = "28px";
         titleEl.style.marginTop = "30px";
@@ -990,7 +990,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       kitSection.style.border = "1px solid #e2e8f0";
       
       const kitTitle = document.createElement("h2");
-      kitTitle.textContent = "Grow your own native plant garden.";
+      kitTitle.textContent = "Grow your own ecological garden.";
       kitTitle.style.fontFamily = "'Abril Fatface', serif";
       kitTitle.style.fontSize = "28px";
       kitTitle.style.marginBottom = "15px";
@@ -1152,7 +1152,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       teeSection.style.border = "1px solid #e2e8f0";
       
       const teeTitle = document.createElement("h2");
-      teeTitle.textContent = "Wear your native plant community.";
+      teeTitle.textContent = "Wear your Ecological Garden.";
       teeTitle.style.fontFamily = "'Abril Fatface', serif";
       teeTitle.style.fontSize = "28px";
       teeTitle.style.marginBottom = "15px";
