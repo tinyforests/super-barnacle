@@ -838,6 +838,50 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
           disclaimerEl.innerHTML = "<strong>Note:</strong> This address is in an urbanized area where detailed pre-1750 vegetation mapping isn't available. Based on nearby remnant bushland, your location would have been <strong>" + name + "</strong>.";
           descriptionEl.parentNode.insertBefore(disclaimerEl, descriptionEl.nextSibling);
         }
+        
+        // Add Ecological Registry banner
+        const registryBanner = document.createElement("div");
+        registryBanner.style.marginTop = "20px";
+        registryBanner.style.padding = "20px";
+        registryBanner.style.background = "linear-gradient(135deg, #3d4535 0%, #2f3928 100%)";
+        registryBanner.style.borderRadius = "8px";
+        registryBanner.style.color = "#fff0dc";
+        registryBanner.style.cursor = "pointer";
+        registryBanner.style.transition = "transform 0.2s";
+        registryBanner.addEventListener("mouseover", () => { registryBanner.style.transform = "translateY(-2px)"; });
+        registryBanner.addEventListener("mouseout", () => { registryBanner.style.transform = "translateY(0)"; });
+        
+        const registryTitle = document.createElement("h3");
+        registryTitle.textContent = "Register Your Ecological Garden";
+        registryTitle.style.fontFamily = "'Abril Fatface', serif";
+        registryTitle.style.fontSize = "20px";
+        registryTitle.style.marginBottom = "10px";
+        registryTitle.style.color = "#fff0dc";
+        registryBanner.appendChild(registryTitle);
+        
+        const registryText = document.createElement("p");
+        registryText.textContent = "Once you've planted your ecological garden, add it to the Victorian Ecological Registry to contribute to biodiversity mapping and connect with other ecological gardeners.";
+        registryText.style.fontSize = "14px";
+        registryText.style.lineHeight = "1.6";
+        registryText.style.marginBottom = "12px";
+        registryText.style.color = "rgba(255, 240, 220, 0.9)";
+        registryBanner.appendChild(registryText);
+        
+        const registryButton = document.createElement("div");
+        registryButton.textContent = "Visit the Ecological Registry →";
+        registryButton.style.display = "inline-block";
+        registryButton.style.fontSize = "14px";
+        registryButton.style.fontWeight = "600";
+        registryButton.style.color = "#fff0dc";
+        registryButton.style.borderBottom = "2px solid #fff0dc";
+        registryButton.style.paddingBottom = "2px";
+        registryBanner.appendChild(registryButton);
+        
+        registryBanner.addEventListener("click", () => {
+          window.open("https://tinyforests.github.io/reg/", "_blank");
+        });
+        
+        descriptionEl.parentNode.insertBefore(registryBanner, descriptionEl.nextSibling);
       } else {
         descriptionEl.innerHTML = `We're still researching the best plant species for <strong>${name}</strong>. Check back soon for our curated recommendations!`;
         descriptionEl.style.fontStyle = "normal";
