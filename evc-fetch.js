@@ -843,7 +843,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         const registryBanner = document.createElement("div");
         registryBanner.style.marginTop = "20px";
         registryBanner.style.padding = "20px";
-        registryBanner.style.background = "linear-gradient(135deg, #3d4535 0%, #2f3928 100%)";
+        registryBanner.style.background = "linear-gradient(135deg, rgba(61, 69, 53, 0.85) 0%, rgba(47, 57, 40, 0.85) 100%)";
         registryBanner.style.borderRadius = "8px";
         registryBanner.style.color = "#fff0dc";
         registryBanner.style.cursor = "pointer";
