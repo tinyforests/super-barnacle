@@ -842,43 +842,35 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         // Add Ecological Registry banner
         const registryBanner = document.createElement("div");
         registryBanner.style.marginTop = "20px";
-        registryBanner.style.padding = "20px";
-        registryBanner.style.background = "linear-gradient(135deg, rgba(61, 69, 53, 0.85) 0%, rgba(47, 57, 40, 0.85) 100%)";
-        registryBanner.style.borderRadius = "8px";
-        registryBanner.style.color = "#fff0dc";
+        registryBanner.style.padding = "15px";
+        registryBanner.style.background = "rgba(122, 138, 111, 0.1)";
+        registryBanner.style.borderLeft = "3px solid #7a8a6f";
+        registryBanner.style.borderRadius = "0 8px 8px 0";
         registryBanner.style.cursor = "pointer";
-        registryBanner.style.transition = "transform 0.2s";
-        registryBanner.addEventListener("mouseover", () => { registryBanner.style.transform = "translateY(-2px)"; });
-        registryBanner.addEventListener("mouseout", () => { registryBanner.style.transform = "translateY(0)"; });
+        registryBanner.style.transition = "background 0.2s";
+        registryBanner.addEventListener("mouseover", () => { registryBanner.style.background = "rgba(122, 138, 111, 0.15)"; });
+        registryBanner.addEventListener("mouseout", () => { registryBanner.style.background = "rgba(122, 138, 111, 0.1)"; });
         
-        const registryTitle = document.createElement("h3");
+        const registryTitle = document.createElement("strong");
         registryTitle.textContent = "Register Your Ecological Garden";
-        registryTitle.style.fontFamily = "'Abril Fatface', serif";
-        registryTitle.style.fontSize = "20px";
-        registryTitle.style.marginBottom = "10px";
-        registryTitle.style.color = "#fff0dc";
+        registryTitle.style.display = "block";
+        registryTitle.style.fontSize = "14px";
+        registryTitle.style.marginBottom = "8px";
+        registryTitle.style.color = "#3d4535";
         registryBanner.appendChild(registryTitle);
         
         const registryText = document.createElement("p");
-        registryText.textContent = "Once you've planted your ecological garden, add it to the Victorian Ecological Registry to contribute to biodiversity mapping and connect with other ecological gardeners.";
+        registryText.innerHTML = "Once you've planted your ecological garden, add it to the Victorian Ecological Registry to contribute to biodiversity mapping and connect with other ecological gardeners. <a href='https://tinyforests.github.io/reg/' target='_blank' style='color: #3d4535; font-weight: 600; text-decoration: underline;'>Visit the Registry →</a>";
         registryText.style.fontSize = "14px";
         registryText.style.lineHeight = "1.6";
-        registryText.style.marginBottom = "12px";
-        registryText.style.color = "rgba(255, 240, 220, 0.9)";
+        registryText.style.margin = "0";
+        registryText.style.color = "#5a6352";
         registryBanner.appendChild(registryText);
         
-        const registryButton = document.createElement("div");
-        registryButton.textContent = "Visit the Ecological Registry →";
-        registryButton.style.display = "inline-block";
-        registryButton.style.fontSize = "14px";
-        registryButton.style.fontWeight = "600";
-        registryButton.style.color = "#fff0dc";
-        registryButton.style.borderBottom = "2px solid #fff0dc";
-        registryButton.style.paddingBottom = "2px";
-        registryBanner.appendChild(registryButton);
-        
-        registryBanner.addEventListener("click", () => {
-          window.open("https://tinyforests.github.io/reg/", "_blank");
+        registryBanner.addEventListener("click", (e) => {
+          if (e.target.tagName !== 'A') {
+            window.open("https://tinyforests.github.io/reg/", "_blank");
+          }
         });
         
         descriptionEl.parentNode.insertBefore(registryBanner, descriptionEl.nextSibling);
