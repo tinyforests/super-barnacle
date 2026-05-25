@@ -130,7 +130,8 @@ function handleURLParameters() {
 function geocodeAddress(address) {
   window.searchedAddress = address;
   
-  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&addressdetails=1`)
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&addressdetails=1`;
+  fetch(url, { headers: { 'User-Agent': 'FindMyEcologicalGarden/1.0 (www.findmyecologicalgarden.com)' } })
     .then(r => {
       if (!r.ok) throw new Error(`Geocode failed (${r.status})`);
       return r.json();
@@ -246,7 +247,7 @@ function fetchAddressSuggestions(query) {
     `&limit=10` +
     `&addressdetails=1`;
   
-  fetch(url)
+  fetch(url, { headers: { 'User-Agent': 'FindMyEcologicalGarden/1.0 (www.findmyecologicalgarden.com)' } })
     .then(r => r.json())
     .then(results => {
       const victoriaResults = results.filter(result => {
@@ -1343,7 +1344,8 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
   
   // Only reverse geocode when we have real coordinates
   if (lat && lon) {
-    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+    fetch(url, { headers: { 'User-Agent': 'FindMyEcologicalGarden/1.0 (www.findmyecologicalgarden.com)' } })
       .then(r => r.json())
       .then(data => {
         document.getElementById("gf-address").value = data.display_name || `${lat}, ${lon}`;
