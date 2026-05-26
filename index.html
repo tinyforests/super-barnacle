@@ -53,7 +53,7 @@
       width: 50px;
       height: 50px;
       background-color: #3d4535;
-      border-radius: 50%;
+      border-radius: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -74,7 +74,7 @@
       width: 24px;
       height: 3px;
       background-color: #fff0dc;
-      border-radius: 2px;
+      border-radius: 0;
       transition: all 0.3s ease;
     }
 
@@ -156,7 +156,7 @@
     .step-number {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
+      border-radius: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -232,7 +232,7 @@
       max-width: 700px;
       background: rgba(255, 255, 255, 0.5);
       padding: 1.5rem 2rem;
-      border-radius: 12px;
+      border-radius: 0;
       color: #3d4535;
     }
 
@@ -256,7 +256,7 @@
       animation: fadeInUp 1s ease-out;
       background: rgba(255, 255, 255, 0.5);
       padding: 1.5rem 2rem;
-      border-radius: 12px;
+      border-radius: 0;
     }
 
     #container > p:not(.hero-highlight) {
@@ -272,7 +272,7 @@
       background-color: #3d4535;
       color: #fff0dc;
       border: none;
-      border-radius: 50px;
+      border-radius: 0;
       font-family: "IBM Plex Mono", monospace;
       font-weight: 700;
       font-size: 1rem;
@@ -310,7 +310,7 @@
       background: linear-gradient(135deg, #3d4535 0%, #2f3928 100%);
       color: #fff0dc;
       padding: 10px 20px;
-      border-radius: 50px;
+      border-radius: 0;
       font-size: 0.75rem;
       font-weight: 600;
       text-decoration: none;
@@ -341,7 +341,7 @@
       font-family: "IBM Plex Mono", monospace;
       font-size: 1rem;
       border: 2px solid #3d4535;
-      border-radius: 50px;
+      border-radius: 0;
       background-color: white;
       color: #3d4535;
       outline: none;
@@ -356,7 +356,7 @@
       background-color: #3d4535;
       color: #fff0dc;
       border: none;
-      border-radius: 50px;
+      border-radius: 0;
       font-family: "IBM Plex Mono", monospace;
       font-weight: 700;
       font-size: 1rem;
@@ -390,7 +390,7 @@
 
     .modal-content {
       background-color: #fff0dc;
-      border-radius: 20px;
+      border-radius: 0;
       max-width: 900px;
       width: 100%;
       max-height: 85vh;
@@ -405,7 +405,7 @@
     #modal-map {
       width: 100%;
       height: 300px;
-      border-radius: 20px 20px 0 0;
+      border-radius: 0;
     }
 
     #modal-close {
@@ -415,7 +415,7 @@
       background-color: #3d4535;
       color: #fff0dc;
       border: none;
-      border-radius: 50%;
+      border-radius: 0;
       width: 45px; height: 45px;
       font-size: 28px;
       line-height: 1;
@@ -456,7 +456,7 @@
       margin: 1.5rem 0;
       padding: 1.5rem;
       background-color: rgba(255, 255, 255, 0.5);
-      border-radius: 12px;
+      border-radius: 0;
       border: 1px solid #e2e8f0;
     }
 
@@ -467,7 +467,7 @@
       background: linear-gradient(135deg, #3d4535 0%, #2f3928 100%);
       padding: 3rem 2.5rem;
       color: #fff0dc;
-      border-radius: 0 0 20px 20px;
+      border-radius: 0;
       text-align: center;
     }
 
@@ -488,7 +488,7 @@
       font-family: "IBM Plex Mono", monospace;
       font-size: 1rem;
       border: 2px solid #fff0dc;
-      border-radius: 50px;
+      border-radius: 0;
       background-color: rgba(255, 240, 220, 0.1);
       color: #fff0dc;
       outline: none;
@@ -503,7 +503,7 @@
       background-color: #fff0dc;
       color: #3d4535;
       border: none;
-      border-radius: 50px;
+      border-radius: 0;
       font-family: "IBM Plex Mono", monospace;
       font-weight: 700;
       font-size: 1rem;
@@ -528,7 +528,7 @@
       margin: 0 auto;
       padding: 2rem;
       background-color: rgba(255, 240, 220, 0.05);
-      border-radius: 8px;
+      border-radius: 0;
       text-align: left;
       line-height: 1.8;
     }
@@ -591,8 +591,8 @@
       #address-input { padding: 1rem 1.2rem; font-size: 16px; width: 100%; }
       #search-button, #location-button { padding: 1rem 2rem; font-size: 0.95rem; width: 100%; }
       #evc-modal { padding: 20px 10px; padding-top: env(safe-area-inset-top, 20px); }
-      .modal-content { max-height: 90vh; border-radius: 15px; }
-      #modal-map { height: 200px; border-radius: 15px 15px 0 0; }
+      .modal-content { max-height: 90vh; border-radius: 0; }
+      #modal-map { height: 200px; border-radius: 0; }
       #modal-close { top: calc(env(safe-area-inset-top, 0px) + 10px); right: calc(env(safe-area-inset-right, 0px) + 10px); width: 40px; height: 40px; font-size: 24px; }
       #modal-info { padding: 1.5rem 1.2rem; }
       #modal-info .title { font-size: 0.85rem; }
@@ -793,36 +793,36 @@ By planting indigenous species, you help restore local biodiversity, support nat
 
   <!-- Pre-Order Modal -->
   <div id="preorder-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(61, 69, 53, 0.95); z-index: 10000; align-items: center; justify-content: center; padding: 40px 20px;">
-    <div style="background-color: #fff0dc; border-radius: 20px; max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); padding: 2.5rem;">
-      <button id="preorder-close" style="position: absolute; top: 15px; right: 15px; background-color: #3d4535; color: #fff0dc; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 28px; line-height: 1; cursor: pointer; transition: all 0.2s;">&times;</button>
+    <div style="background-color: #fff0dc; border-radius: 0; max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); padding: 2.5rem;">
+      <button id="preorder-close" style="position: absolute; top: 15px; right: 15px; background-color: #3d4535; color: #fff0dc; border: none; border-radius: 0; width: 45px; height: 45px; font-size: 28px; line-height: 1; cursor: pointer; transition: all 0.2s;">&times;</button>
       <h2 style="font-family: 'Abril Fatface', serif; font-size: clamp(1.8rem, 5vw, 2.5rem); color: #3d4535; margin-bottom: 1rem;">Pre-Order Your Tiny Forest Kit</h2>
       <p style="margin-bottom: 2rem; color: #666;">We're excited to help you create your tiny forest! Fill out the form below and we'll be in touch to finalize your order.</p>
       <form id="preorder-form" action="https://docs.google.com/forms/d/e/1FAIpQLSdzMYnUrg7FuTkNk9_5u2VXV6Ea0LrRWE-_paKu7gFIdz7fWw/formResponse" method="POST" target="preorder-iframe" style="display: flex; flex-direction: column; gap: 1.2rem;">
         <div>
           <label for="preorder-name" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name *</label>
-          <input type="text" id="preorder-name" name="entry.1168713650" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
+          <input type="text" id="preorder-name" name="entry.1168713650" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 0; background-color: white; outline: none;">
         </div>
         <div>
           <label for="preorder-email" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email *</label>
-          <input type="email" id="preorder-email" name="entry.403953874" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
+          <input type="email" id="preorder-email" name="entry.403953874" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 0; background-color: white; outline: none;">
         </div>
         <div>
           <label for="preorder-phone" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone *</label>
-          <input type="tel" id="preorder-phone" name="entry.963420574" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
+          <input type="tel" id="preorder-phone" name="entry.963420574" required style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 0; background-color: white; outline: none;">
         </div>
         <div>
           <label for="preorder-address" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Property Address (auto-filled, you can edit)</label>
-          <textarea id="preorder-address" name="entry.463300287" placeholder="Where will you be planting your forest kit?" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 12px; background-color: white; outline: none; min-height: 80px; resize: vertical;"></textarea>
+          <textarea id="preorder-address" name="entry.463300287" placeholder="Where will you be planting your forest kit?" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 0; background-color: white; outline: none; min-height: 80px; resize: vertical;"></textarea>
         </div>
         <div>
           <label for="preorder-area" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Approximate Area (m&#178;) *</label>
-          <input type="number" id="preorder-area" name="entry.2073002838" required placeholder="e.g., 50" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 50px; background-color: white; outline: none;">
+          <input type="number" id="preorder-area" name="entry.2073002838" required placeholder="e.g., 50" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #3d4535; border-radius: 0; background-color: white; outline: none;">
         </div>
         <div>
           <label for="preorder-evc" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Preferred EVC</label>
-          <input type="text" id="preorder-evc" name="entry.10172062" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #e2e8f0; border-radius: 50px; background-color: #f5f5f5; outline: none; color: #666;">
+          <input type="text" id="preorder-evc" name="entry.10172062" style="width: 100%; padding: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 1rem; border: 2px solid #e2e8f0; border-radius: 0; background-color: #f5f5f5; outline: none; color: #666;">
         </div>
-        <button type="submit" style="padding: 1.2rem 2.5rem; background-color: #3d4535; color: #fff0dc; border: none; border-radius: 50px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; margin-top: 1rem;">Submit Pre-Order</button>
+        <button type="submit" style="padding: 1.2rem 2.5rem; background-color: #3d4535; color: #fff0dc; border: none; border-radius: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; margin-top: 1rem;">Submit Pre-Order</button>
       </form>
       <iframe name="preorder-iframe" style="display:none;"></iframe>
     </div>
