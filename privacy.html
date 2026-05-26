@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- PWA Configuration -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3d4535">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ecological Garden">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <title>Privacy | Find My Ecological Garden</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "IBM Plex Sans", sans-serif;
+      background-color: #fff0dc;
+      color: #3d4535;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      width: 50px;
+      height: 50px;
+      background-color: #3d4535;
+      border-radius: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      color: #fff0dc;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .back-button:hover {
+      transform: scale(1.05);
+      background-color: #2f3928;
+    }
+
+    .brand-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #3d4535;
+      color: #fff0dc;
+      padding: 10px 20px;
+      border-radius: 0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .brand-badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-badge::before {
+      content: "⚘ ";
+      margin-right: 5px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 2px solid rgba(61, 69, 53, 0.1);
+    }
+
+    h1 {
+      font-family: "Abril Fatface", serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: #3d4535;
+      margin-bottom: 1rem;
+      letter-spacing: 0px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #666;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 2rem 2.5rem;
+      border-radius: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.9;
+    }
+
+    .intro p {
+      margin-bottom: 1rem;
+    }
+
+    .intro p:last-child {
+      margin-bottom: 0;
+    }
+
+    .updated {
+      font-size: 0.85rem;
+      color: #999;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      font-family: "Abril Fatface", serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      color: #3d4535;
+      margin-bottom: 1rem;
+      letter-spacing: 0px;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #3d4535;
+      font-weight: 600;
+    }
+
+    a:hover {
+      opacity: 0.7;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background-color: #3d4535;
+      color: #fff0dc;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .data-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(61, 69, 53, 0.1);
+      vertical-align: top;
+      line-height: 1.7;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:nth-child(even) td {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .dark-card {
+      background-color: #3d4535;
+      color: #fff0dc;
+      padding: 2rem 2.5rem;
+      border-radius: 0;
+      margin-bottom: 2.5rem;
+    }
+
+    .dark-card h2 {
+      color: #fff0dc;
+      margin-bottom: 1rem;
+    }
+
+    .dark-card p {
+      color: #fff0dc;
+    }
+
+    .dark-card a {
+      color: #fff0dc;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 2rem 2.5rem;
+      border-radius: 0;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .contact-card h2 {
+      margin-bottom: 1rem;
+    }
+
+    .contact-card .note {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    footer {
+      margin-top: 0;
+      padding: 50px 20px;
+      background-color: #3d4535;
+      color: #fff0dc;
+      text-align: center;
+    }
+
+    footer .acknowledgement {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: rgba(255, 240, 220, 0.05);
+      border-radius: 0;
+      text-align: left;
+      line-height: 1.8;
+    }
+
+    footer .acknowledgement p {
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    footer .acknowledgement p:last-child {
+      margin-bottom: 0;
+    }
+
+    footer > p {
+      margin-top: 40px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    footer a {
+      color: #fff0dc;
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+    }
+
+    footer a:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 4rem 1.5rem 2rem;
+      }
+
+      .intro, .dark-card, .contact-card {
+        padding: 1.5rem;
+      }
+
+      .back-button {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+
+      .brand-badge {
+        bottom: 15px;
+        right: 15px;
+        font-size: 0.7rem;
+        padding: 8px 16px;
+      }
+
+      .data-table {
+        font-size: 0.88rem;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 0.6rem 0.75rem;
+      }
+
+      footer {
+        padding: 40px 15px;
+      }
+
+      footer .acknowledgement {
+        padding: 1.5rem;
+      }
+
+      footer .acknowledgement p {
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      footer > p {
+        font-size: 13px;
+        margin-top: 30px;
+        padding: 0 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 3.5rem 1rem 2rem;
+      }
+
+      .intro, .dark-card, .contact-card {
+        padding: 1.2rem;
+      }
+
+      .data-table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      footer .acknowledgement {
+        padding: 1.2rem;
+      }
+
+      footer .acknowledgement p {
+        font-size: 13px;
+        margin-bottom: 15px;
+      }
+
+      footer > p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">←</a>
+  <a href="https://www.gardenerandson.com" target="_blank" class="brand-badge">Gardener & Son</a>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Privacy</h1>
+      <p class="subtitle">What this tool collects, why, and where it goes — plainly stated.</p>
+    </div>
+
+    <div class="intro">
+      <p>Find My Ecological Garden is a free tool built by Gardener & Son. It helps you discover the pre-1750 ecological vegetation class (EVC) for your address, so you know which indigenous plants belong in your garden.</p>
+      <p>This page describes what information is collected when you use the tool, why we collect it, and how it's handled. We've written it in plain language because you deserve to understand it.</p>
+    </div>
+
+    <p class="updated">Last updated: May 2026</p>
+
+    <div class="section">
+      <h2>What we collect</h2>
+      <p>Three types of information are collected depending on how you use the tool:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>When</th>
+            <th>What is collected</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Every EVC lookup</strong></td>
+            <td>Your address or GPS coordinates, and the EVC code and name returned for that location</td>
+            <td>Automatically, in the background</td>
+          </tr>
+          <tr>
+            <td><strong>Email signup</strong></td>
+            <td>Your email address, your address, and your EVC — so we can send updates relevant to your region</td>
+            <td>When you submit the form</td>
+          </tr>
+          <tr>
+            <td><strong>Preorder inquiry</strong></td>
+            <td>Your name, email, phone, property address, approximate area, and EVC</td>
+            <td>When you submit the form</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>We do not collect payment card details — that is handled entirely by Stripe. We do not create user accounts or use tracking cookies.</p>
+    </div>
+
+    <div class="section">
+      <h2>Why we collect it</h2>
+      <p>The EVC lookup log helps us understand where ecological gardens are being considered across Victoria. It's the only way we have of knowing whether this tool is useful, which plant communities are most searched, and where native garden interest is growing. This shapes how we improve the plant lists and which EVCs we prioritise.</p>
+      <p>Email signups let us reach you with content relevant to your EVC — not general newsletters, but information specific to the plant communities of your area.</p>
+      <p>Preorder information is used only to follow up with a quote for your site.</p>
+    </div>
+
+    <div class="section">
+      <h2>Where it goes</h2>
+      <p>All three forms send data to Google Forms, which stores responses in a private Google Sheet accessible only to Gardener & Son. We do not sell this data, share it with third parties, or use it for advertising. Google's infrastructure and terms of service apply to data stored there.</p>
+      <p>Address geocoding — converting your typed address into coordinates — is performed via <strong>Nominatim</strong>, a service run by the OpenStreetMap Foundation. Your address is transmitted to their servers to perform the lookup. Nominatim logs requests for abuse prevention. This is standard practice for geocoding services. You can read more at <a href="https://www.openstreetmap.org/copyright" target="_blank">openstreetmap.org/copyright</a>.</p>
+    </div>
+
+    <div class="dark-card">
+      <h2>Stripe payments</h2>
+      <p>If you purchase a forest kit or ecological tee, you'll be taken to Stripe's secure checkout. Stripe handles all payment processing — we never see or store your card details. The only information passed to Stripe is a reference code containing your EVC and the date of purchase. Stripe's <a href="https://stripe.com/en-au/privacy" target="_blank">privacy policy</a> governs payment transactions.</p>
+    </div>
+
+    <div class="section">
+      <h2>How long we keep it</h2>
+      <p>EVC lookup logs are retained in Google Sheets as long as they are useful for understanding ecological garden activity across Victoria. Email and preorder submissions are kept for as long as they are relevant to our communications with you.</p>
+      <p>You can request deletion of any information you've submitted by emailing us.</p>
+    </div>
+
+    <div class="section">
+      <h2>Your rights</h2>
+      <p>Under the Australian Privacy Act 1988, you have the right to access personal information we hold about you and to request correction or deletion. To make a request, email us below. We'll respond within a reasonable time.</p>
+    </div>
+
+    <div class="contact-card">
+      <h2>Questions</h2>
+      <p>Reach us at <a href="mailto:hello@gardenerandson.com">hello@gardenerandson.com</a></p>
+      <p class="note">We're a small studio. We'll get back to you within a couple of days.</p>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="acknowledgement">
+      <p>
+        At Gardener & Son, we acknowledge the Wurundjeri Woi Wurrung people of the Kulin Nation, the Traditional Custodians of the land on which we live and work. We honour their enduring connection to Country — and the grasslands, woodlands, and wetlands that once flourished here through generations of care and balance. These living systems were not lost to time, but to disconnection. Our work seeks to rekindle that relationship, restoring native ecologies and weaving biodiversity back into the urban fabric — each garden a quiet act of remembrance and renewal.
+      </p>
+    </div>
+    <p>© 2026 Gardener & Son · <a href="index.html">Find My Ecological Garden</a></p>
+  </footer>
+</body>
+</html>

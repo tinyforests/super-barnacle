@@ -5,6 +5,7 @@ const urlsToCache = [
   `${BASE_PATH}/`,
   `${BASE_PATH}/index.html`,
   `${BASE_PATH}/explore.html`,
+  `${BASE_PATH}/privacy.html`,
   `${BASE_PATH}/about.html`,
   `${BASE_PATH}/contact.html`,
   `${BASE_PATH}/evc-fetch.js`,
