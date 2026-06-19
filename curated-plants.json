@@ -3,7 +3,7 @@
     "version": "1.0.6",
     "last_updated": "2025-02-01",
     "coverage": "Victoria, Australia",
-    "total_evcs": 30
+    "total_evcs": 36
   },
   "evcs": {
     "2": {
@@ -188,6 +188,34 @@
             "Pteridium esculentum (Austral Bracken)",
             "Lycopodium deuterodensum (Bushy Clubmoss)",
             "Cassytha pubescens s.s. (Downy Dodder-laurel)"
+          ]
+        }
+      ]
+    },
+    "9": {
+      "name": "Coastal Saltmarsh",
+      "description": "Coastal Saltmarsh occupies the intertidal and supratidal zones of estuaries, embayments, and sheltered coastal flats, where soils are waterlogged and highly saline. Dominated by low succulent herbs and salt-tolerant groundcovers, this community has no canopy and minimal shrub layer. Despite its sparse appearance, Coastal Saltmarsh is one of Victoria's most ecologically productive communities — a nursery for fish and crustaceans, a feeding ground for migratory shorebirds, and a critical carbon sink. Now Endangered, with over 70% lost to coastal development, drainage, and sea level rise.",
+      "recommendations": [
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Tecticornia arbuscula (Shrubby Glasswort)",
+            "Suaeda australis (Austral Seablite)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Sarcocornia quinqueflora (Beaded Glasswort)",
+            "Tecticornia pergranulata (Black Samphire)",
+            "Disphyma crassifolium (Rounded Noon-flower)",
+            "Selliera radicans (Shiny Swamp-mat)",
+            "Samolus repens (Creeping Brookweed)",
+            "Triglochin striata (Streaked Arrow-grass)",
+            "Juncus kraussii (Sea Rush)",
+            "Isolepis nodosa (Knobby Club-rush)",
+            "Sporobolus virginicus (Marine Couch)",
+            "Wilsonia backhousei (Bindweed Wilsonia)"
           ]
         }
       ]
@@ -612,6 +640,90 @@
         }
       ]
     },
+    "30": {
+      "name": "Wet Forest",
+      "description": "Wet Forest grows in sheltered gullies, south-facing slopes, and moist upland areas where rainfall is high and soils remain damp year-round. A tall canopy of Mountain Ash, Alpine Ash, or Messmate rises above a dense understorey of tree ferns, shrubs, and lush herbs. These forests are among the tallest flowering plant communities on Earth and store enormous quantities of carbon in their massive trunks and deep soil. Critical habitat for Leadbeater's Possum and many other threatened species, Wet Forest is increasingly threatened by high-severity fire, logging, and climate change.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus regnans (Mountain Ash)",
+            "Eucalyptus delegatensis (Alpine Ash)",
+            "Eucalyptus obliqua (Messmate)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Acacia dealbata (Silver Wattle)",
+            "Acacia melanoxylon (Blackwood)",
+            "Olearia argophylla (Musk Daisy-bush)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Dicksonia antarctica (Soft Tree Fern)",
+            "Cyathea australis (Rough Tree Fern)",
+            "Bedfordia arborescens (Blanket-leaf)",
+            "Prostanthera lasianthos (Victorian Christmas Bush)",
+            "Coprosma quadrifida (Prickly Currant-bush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Blechnum nudum (Fishbone Water-fern)",
+            "Blechnum wattsii (Hard Water-fern)",
+            "Polystichum proliferum (Mother Shield-fern)",
+            "Viola hederacea (Ivy-leaf Violet)",
+            "Oxalis acetosella (Wood Sorrel)",
+            "Australopyrum pectinatum (Comb Wheat-grass)",
+            "Poa helmsii (Swamp Tussock-grass)",
+            "Histiopteris incisa (Bat's Wing Fern)"
+          ]
+        }
+      ]
+    },
+    "45": {
+      "name": "Shrubby Foothill Forest",
+      "description": "Shrubby Foothill Forest occupies the mid-elevation slopes and foothills of Victoria's ranges, on moderately fertile loamy soils with reliable rainfall. A tall canopy of Messmate and Mountain Grey Gum shades a dense shrub layer of wattles, cassinia, and tea-trees, with a sparser ground layer than the nearby Herb-rich Foothill Forest. This forest type supports diverse birdlife and small mammals and is an important wildlife corridor connecting highland and lowland communities. Fire shapes its structure — the shrub layer resets with each burn, gradually filling back in over decades.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus obliqua (Messmate)",
+            "Eucalyptus cypellocarpa (Mountain Grey Gum)",
+            "Eucalyptus radiata (Narrow-leaf Peppermint)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Acacia dealbata (Silver Wattle)",
+            "Acacia melanoxylon (Blackwood)",
+            "Cassinia aculeata (Common Cassinia)",
+            "Leptospermum continentale (Prickly Tea-tree)",
+            "Olearia lirata (Snowy Daisy-bush)",
+            "Goodenia ovata (Hop Goodenia)",
+            "Prostanthera lasianthos (Victorian Christmas Bush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Pteridium esculentum (Austral Bracken)",
+            "Poa sieberiana (Grey Tussock-grass)",
+            "Lomandra longifolia (Spiny-headed Mat-rush)",
+            "Blechnum nudum (Fishbone Water-fern)",
+            "Dianella tasmanica (Tasman Flax-lily)",
+            "Viola hederacea (Ivy-leaf Violet)",
+            "Oxalis acetosella (Wood Sorrel)",
+            "Stellaria flaccida (Forest Starwort)"
+          ]
+        }
+      ]
+    },
     "47": {
       "name": "Valley Grassy Forest",
       "description": "Valley Grassy Forest is a species-rich open forest that occurs on lower slopes, valleys, and gentle rises with fertile soils and moderate rainfall. It typically features a tall but scattered canopy of Candlebark, Swamp Gum, or Messmate over a diverse ground layer of tussock grasses, lilies, orchids, and herbs. Shrubs are generally sparse, allowing for a light-filled understory that bursts into colour in spring.",
@@ -856,6 +968,47 @@
         }
       ]
     },
+    "61": {
+      "name": "Box Ironbark Forest",
+      "description": "Box Ironbark Forest is a distinctive dry forest of Victoria's central goldfields and northern ranges, growing on skeletal soils over ironstone, granite, and quartz. A mixed canopy of ironbarks and boxes — including Red Ironbark, Red Box, and Yellow Box — shades a shrubby understorey rich in wattles, grevilleas, and peas. The forest floor supports native grasses and seasonal wildflowers. Box Ironbark Forest is a stronghold for woodland birds including Swift Parrots, Regent Honeyeaters, and Diamond Firetails, many of which are now threatened. Heavily impacted by goldfields-era clearing and firewood harvesting.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus tricarpa (Red Ironbark)",
+            "Eucalyptus polyanthemos (Red Box)",
+            "Eucalyptus melliodora (Yellow Box)",
+            "Eucalyptus microcarpa (Grey Box)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Acacia acinacea (Gold-dust Wattle)",
+            "Acacia pycnantha (Golden Wattle)",
+            "Grevillea alpina (Mountain Grevillea)",
+            "Grevillea humifusa (Spreading Grevillea)",
+            "Indigofera australis (Austral Indigo)",
+            "Daviesia latifolia (Hop Bitter-pea)",
+            "Bursaria spinosa (Sweet Bursaria)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Poa sieberiana (Grey Tussock-grass)",
+            "Dianella revoluta (Black-anther Flax-lily)",
+            "Lomandra filiformis (Wattle Mat-rush)",
+            "Arthropodium strictum (Chocolate Lily)",
+            "Bulbine bulbosa (Bulbine Lily)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Wahlenbergia stricta (Tall Bluebell)",
+            "Leptorhynchos squamatus (Scaly Buttons)"
+          ]
+        }
+      ]
+    },
     "68": {
       "name": "Creekline Grassy Woodland",
       "description": "Eucalypt woodland along minor drainage lines with grassy and sedgy groundlayer. Found on fertile alluvial soils along ephemeral to intermittent creeks and drainage channels. These linear wetland systems support diverse graminoids and herbs adapted to periodic waterlogging.",
@@ -946,6 +1099,39 @@
             "Lomandra filiformis (Wattle Mat-rush)",
             "Microlaena stipoides var. stipoides (Weeping Grass)",
             "Pteridium esculentum (Austral Bracken)"
+          ]
+        }
+      ]
+    },
+    "93": {
+      "name": "Sandstone Ridge Shrubland",
+      "description": "Sandstone Ridge Shrubland grows on exposed ridgelines and rocky outcrops of sandstone and granite, where thin, highly acidic soils and full sun exposure create challenging conditions for most plants. A dense layer of heath shrubs, wattles, and peas dominates, with few or no canopy trees. This community is rich in endemic and locally restricted species adapted to the nutrient-poor, droughty conditions of Victorian ridgelines. Fire plays a critical role in regeneration, and many species are obligate seeders or resprouters.",
+      "recommendations": [
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Grevillea alpina (Mountain Grevillea)",
+            "Hakea sericea (Needlebush)",
+            "Acacia stricta (Hop Wattle)",
+            "Acacia verniciflua (Varnish Wattle)",
+            "Epacris impressa (Common Heath)",
+            "Epacris microphylla (Coral Heath)",
+            "Leptospermum continentale (Prickly Tea-tree)",
+            "Cassinia longifolia (Shiny Cassinia)",
+            "Olearia teretifolia (Cypress Daisy-bush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Xanthorrhoea australis (Austral Grass-tree)",
+            "Lomandra longifolia (Spiny-headed Mat-rush)",
+            "Dianella revoluta (Black-anther Flax-lily)",
+            "Stylidium graminifolium (Grass Trigger-plant)",
+            "Gonocarpus tetragynus (Common Raspwort)",
+            "Gahnia radula (Thatch Saw-sedge)",
+            "Lepidosperma laterale (Variable Sword-sedge)",
+            "Bulbine bulbosa (Bulbine Lily)"
           ]
         }
       ]
@@ -1054,6 +1240,45 @@
             "Lindsaea linearis (Screw Fern)",
             "Billardiera scandens (Common Apple-berry)",
             "Hardenbergia violacea (Purple Coral-pea)"
+          ]
+        }
+      ]
+    },
+    "128": {
+      "name": "Grassy Forest",
+      "description": "Grassy Forest occurs on fertile soils of lower slopes and broad valleys, where a tall open eucalypt canopy shelters a predominantly grassy ground layer with few shrubs. Dominated by Red Box, Yellow Box, or Broad-leaved Peppermint, the forest floor is rich with wallaby grasses, kangaroo grass, and seasonal wildflowers. Light penetrates freely, creating a warm, open woodland feel distinct from the denser foothill forests nearby. Once widespread across Victoria's ranges and foothills, Grassy Forest has been heavily cleared for agriculture and is now listed as Vulnerable.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus macrorhyncha (Red Stringybark)",
+            "Eucalyptus polyanthemos (Red Box)",
+            "Eucalyptus melliodora (Yellow Box)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Acacia melanoxylon (Blackwood)",
+            "Bursaria spinosa (Sweet Bursaria)",
+            "Indigofera australis (Austral Indigo)",
+            "Daviesia latifolia (Hop Bitter-pea)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Poa sieberiana (Grey Tussock-grass)",
+            "Austrodanthonia racemosa (Striped Wallaby-grass)",
+            "Microlaena stipoides (Weeping Grass)",
+            "Dianella revoluta (Black-anther Flax-lily)",
+            "Arthropodium strictum (Chocolate Lily)",
+            "Wurmbea dioica (Early Nancy)",
+            "Leptorhynchos squamatus (Scaly Buttons)",
+            "Goodenia ovata (Hop Goodenia)",
+            "Stackhousia monogyna (Creamy Candles)",
+            "Hypericum gramineum (Small St John's Wort)"
           ]
         }
       ]
