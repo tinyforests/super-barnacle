@@ -177,7 +177,7 @@ function setupAddressAutocomplete() {
   dropdown.style.zIndex = "1000";
   dropdown.style.backgroundColor = "white";
   dropdown.style.border = "2px solid #3d4535";
-  dropdown.style.borderRadius = "8px";
+  dropdown.style.borderRadius = "0";
   dropdown.style.maxHeight = "300px";
   dropdown.style.overflowY = "auto";
   dropdown.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
@@ -853,7 +853,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         registryBanner.style.padding = "15px";
         registryBanner.style.background = "rgba(122, 138, 111, 0.1)";
         registryBanner.style.borderLeft = "3px solid #7a8a6f";
-        registryBanner.style.borderRadius = "0 8px 8px 0";
+        registryBanner.style.borderRadius = "0";
         registryBanner.style.cursor = "pointer";
         registryBanner.style.transition = "background 0.2s";
         registryBanner.addEventListener("mouseover", () => { registryBanner.style.background = "rgba(122, 138, 111, 0.15)"; });
@@ -950,7 +950,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
               cameraSpan.style.cursor = "pointer";
               cameraSpan.style.fontSize = "1.2rem";
               cameraSpan.style.padding = "0.3rem 0.5rem";
-              cameraSpan.style.borderRadius = "6px";
+              cameraSpan.style.borderRadius = "0";
               cameraSpan.style.transition = "all 0.3s";
               cameraSpan.style.userSelect = "none";
               
@@ -969,7 +969,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
               tooltip.style.position = "fixed";
               tooltip.style.zIndex = "99999";
               tooltip.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.3)";
-              tooltip.style.borderRadius = "8px";
+              tooltip.style.borderRadius = "0";
               tooltip.style.overflow = "hidden";
               tooltip.style.pointerEvents = "none";
               
@@ -978,7 +978,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
               img.alt = plant;
               img.style.objectFit = "cover";
               img.style.display = "block";
-              img.style.borderRadius = "8px";
+              img.style.borderRadius = "0";
               
               if (window.innerWidth <= 768) {
                 tooltip.style.width = "200px";
@@ -1030,7 +1030,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       kitSection.style.marginTop = "40px";
       kitSection.style.padding = "30px";
       kitSection.style.background = "rgba(255, 255, 255, 0.5)";
-      kitSection.style.borderRadius = "12px";
+      kitSection.style.borderRadius = "0";
       kitSection.style.border = "1px solid #e2e8f0";
       
       const kitTitle = document.createElement("h2");
@@ -1053,7 +1053,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       if (kitDetails) {
         const kitImageContainer = document.createElement("div");
         kitImageContainer.style.marginBottom = "20px";
-        kitImageContainer.style.borderRadius = "8px";
+        kitImageContainer.style.borderRadius = "0";
         kitImageContainer.style.overflow = "hidden";
         
         const kitImage = document.createElement("img");
@@ -1140,7 +1140,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         kitButton.style.color = "#fff0dc";
         kitButton.style.border = "none";
         kitButton.style.padding = "14px 28px";
-        kitButton.style.borderRadius = "50px";
+        kitButton.style.borderRadius = "0";
         kitButton.style.fontSize = "16px";
         kitButton.style.fontWeight = "600";
         kitButton.style.cursor = "pointer";
@@ -1173,7 +1173,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         exploreButton.style.color = "#fff0dc";
         exploreButton.style.border = "none";
         exploreButton.style.padding = "14px 28px";
-        exploreButton.style.borderRadius = "50px";
+        exploreButton.style.borderRadius = "0";
         exploreButton.style.fontSize = "16px";
         exploreButton.style.fontWeight = "600";
         exploreButton.style.cursor = "pointer";
@@ -1192,7 +1192,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       teeSection.style.marginTop = "20px";
       teeSection.style.padding = "30px";
       teeSection.style.background = "rgba(255, 255, 255, 0.7)";
-      teeSection.style.borderRadius = "12px";
+      teeSection.style.borderRadius = "0";
       teeSection.style.border = "1px solid #e2e8f0";
       
       const teeTitle = document.createElement("h2");
@@ -1218,7 +1218,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
       teeImage.alt = `${name} Tee`;
       teeImage.style.maxWidth = "100%";
       teeImage.style.height = "auto";
-      teeImage.style.borderRadius = "8px";
+      teeImage.style.borderRadius = "0";
       teeImage.style.maxHeight = "300px";
       teeImage.style.objectFit = "contain";
       
@@ -1228,7 +1228,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         comingSoon.style.padding = "30px 20px";
         comingSoon.style.textAlign = "center";
         comingSoon.style.background = "rgba(255, 240, 220, 0.3)";
-        comingSoon.style.borderRadius = "8px";
+        comingSoon.style.borderRadius = "0";
         const icon = document.createElement("div");
         icon.textContent = "👕";
         icon.style.fontSize = "48px";
@@ -1285,7 +1285,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         sizeSelect.style.padding = "12px";
         sizeSelect.style.fontSize = "16px";
         sizeSelect.style.border = "2px solid #3d4535";
-        sizeSelect.style.borderRadius = "50px";
+        sizeSelect.style.borderRadius = "0";
         sizeSelect.style.background = "white";
         sizeSelect.style.cursor = "pointer";
         sizeSelect.innerHTML = `
@@ -1305,7 +1305,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
         teeButton.style.color = "#fff0dc";
         teeButton.style.border = "none";
         teeButton.style.padding = "12px 24px";
-        teeButton.style.borderRadius = "50px";
+        teeButton.style.borderRadius = "0";
         teeButton.style.fontSize = "16px";
         teeButton.style.fontWeight = "600";
         teeButton.style.cursor = "pointer";
