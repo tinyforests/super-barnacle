@@ -7,6 +7,7 @@
   },
   "evcs": {
     "2": {
+      "name": "Coast Banksia Woodland",
       "description": "Coast Banksia Woodland grows on sandy soils behind coastal dunes, dominated by Banksia integrifolia with a patchy eucalypt canopy. The understorey includes grasses, climbers, and salt-tolerant shrubs, adapted to wind, salt, and low nutrients. These woodlands once extended across the Mornington Peninsula and Port Phillip coast but are now reduced to fragmented reserves.",
       "recommendations": [
         {
@@ -42,6 +43,7 @@
       ]
     },
     "3": {
+      "name": "Damp Sands Herb-rich Woodland",
       "description": "Found on deep, well-drained sandy soils, this woodland supports a canopy of Messmate or Swamp Gum over a rich ground layer of grasses, orchids, and forbs. It thrives in moist gullies and sheltered slopes with high plant diversity and seasonal colour. Sensitive to grazing and fire regime changes.",
       "recommendations": [
         {
@@ -101,6 +103,7 @@
       ]
     },
     "6": {
+      "name": "Sand Heathland",
       "description": "A low, open heath community on deep siliceous sands, this EVC features heath shrubs, sedges, and heathy wildflowers like Epacris, Boronia, and Grevillea. It is nutrient-poor, fire-prone, and rich in insect life, especially native bees and butterflies.",
       "recommendations": [
         {
@@ -146,6 +149,7 @@
       ]
     },
     "8": {
+      "name": "Wet Heathland",
       "description": "This EVC occupies poorly drained sandy soils and peaty flats. Dominated by swamp-loving heath species, sedges, and tea-trees, it supports diverse flora including orchids and carnivorous plants. Often waterlogged in winter and dry in summer.",
       "recommendations": [
         {
@@ -189,6 +193,7 @@
       ]
     },
     "10": {
+      "name": "Estuarine Wetland",
       "description": "Estuarine Wetland is a brackish to saline wetland system found where tidal estuaries meet floodplains. It includes salt-tolerant reeds, sedges, and succulent herbs adapted to fluctuating salinity and water levels. Dominant species include Phragmites australis and Sarcocornia quinqueflora. These wetlands are vital nurseries for fish, feeding grounds for migratory birds, and natural filters for coastal catchments. Now threatened by reclamation, pollution, and hydrological alteration.",
       "recommendations": [
         {
@@ -214,6 +219,7 @@
       ]
     },
     "16": {
+      "name": "Lowland Forest",
       "description": "Lowland Forest is a tall, open eucalypt forest that grows on moderately fertile soils in lower elevation foothills and flats. Dominated by Messmate, Mountain Grey Gum, or Swamp Gum, its understorey includes a mix of shrubs, grasses, ferns, and wildflowers. These forests support a wide range of birdlife, fungi, and insects and are adapted to moderate fire regimes. Once extensive across southern Victoria, they are now fragmented by agriculture and plantation forestry.",
       "recommendations": [
         {
@@ -276,6 +282,7 @@
       ]
     },
     "18": {
+      "name": "Riparian Forest",
       "description": "Riparian Forest occurs along permanent or semi-permanent streams in sheltered valleys and lower slopes. Dominated by Manna Gum, Mountain Ash, or Silver Wattle, it features a complex understorey of ferns, grasses, and moisture-loving herbs. These forests serve as wildlife corridors, filter runoff, and are vital for flood resilience.",
       "recommendations": [
         {
@@ -326,6 +333,7 @@
       ]
     },
     "20": {
+      "name": "Heathy Dry Forest",
       "description": "Heathy Dry Forest grows on nutrient-poor soils and is characterised by stringybark eucalypts and a dense understorey of heaths, peas, and grasses. Common species include Brown Stringybark and Blackwood. It supports high biodiversity and responds strongly to fire cycles.",
       "recommendations": [
         {
@@ -372,6 +380,7 @@
       ]
     },
     "21": {
+      "name": "Shrubby Dry Forest",
       "description": "Found on rocky, well-drained ridges and slopes, this EVC has a sparse eucalypt canopy (such as Red Ironbark) above a rich shrub layer of wattles, peas, and tea-trees. It provides habitat for small mammals, honeyeaters, and invertebrates and thrives under low-intensity fire regimes.",
       "recommendations": [
         {
@@ -414,6 +423,7 @@
       ]
     },
     "22": {
+      "name": "Grassy Dry Forest",
       "description": "Grassy Dry Forest is a light-filled forest on lower slopes and ranges, where open canopies of Yellow Box, Red Box, or Broad-leaved Peppermint shelter a grassy understorey. Lacking dense shrubs, it's dominated by wallaby grasses, wildflowers, and sun orchids.",
       "recommendations": [
         {
@@ -460,6 +470,7 @@
       ]
     },
     "23": {
+      "name": "Herb-rich Foothill Forest",
       "description": "This diverse forest occurs on moderate slopes with fertile loamy soils. A tall canopy of Messmate, Mountain Grey Gum, and Manna Gum shades a lush understorey teeming with grasses, ferns, orchids, lilies, and tuberous herbs. The open structure and rich plant diversity are the result of regular low-intensity fire, shallow nutrient cycling, and a long history of Aboriginal land care.",
       "recommendations": [
         {
@@ -602,6 +613,7 @@
       ]
     },
     "47": {
+      "name": "Valley Grassy Forest",
       "description": "Valley Grassy Forest is a species-rich open forest that occurs on lower slopes, valleys, and gentle rises with fertile soils and moderate rainfall. It typically features a tall but scattered canopy of Candlebark, Swamp Gum, or Messmate over a diverse ground layer of tussock grasses, lilies, orchids, and herbs. Shrubs are generally sparse, allowing for a light-filled understory that bursts into colour in spring.",
       "recommendations": [
         {
@@ -658,6 +670,7 @@
       ]
     },
     "48": {
+      "name": "Heathy Woodland",
       "description": "Heathy Woodland is a low, open woodland on sandy or gravelly soils with a dense understorey of heaths, peas, and grasses. Dominated by eucalypts like Messmate and Narrow-leaf Peppermint over a rich layer of flowering shrubs including Common Heath, tea-trees, and wattles. This community thrives on nutrient-poor soils and is adapted to periodic fire, supporting high biodiversity including nectar-feeding birds and native bees.",
       "recommendations": [
         {
@@ -693,6 +706,7 @@
       ]
     },
     "53": {
+      "name": "Swamp Scrub",
       "description": "Swamp Scrub is a dense, wetland-edge vegetation community found across the low-lying floodplains, soaks, and swamp margins of the Gippsland Plain. It's dominated by thickets of woolly tea-tree, swamp paperbark, and coastal bottlebrush, often growing around permanent or seasonal wetlands.",
       "recommendations": [
         {
@@ -737,6 +751,7 @@
       ]
     },
     "55": {
+      "name": "Plains Grassy Woodland",
       "description": "A scattered woodland on fertile plains, typically with River Red Gum, Yellow Box, or Grey Box above a grassy and herb-rich ground layer. Often lacks a dense shrub layer, allowing high light penetration that supports a wide variety of native wildflowers. Once widespread across Victoria's volcanic and sedimentary plains, less than 3% remains.",
       "recommendations": [
         {
@@ -791,6 +806,7 @@
       ]
     },
     "56": {
+      "name": "Floodplain Riparian Woodland",
       "description": "Floodplain Riparian Woodland occurs on the seasonally flooded river flats and lower terraces of large watercourses, often forming a transition between wetland and drier woodland types. It is typically dominated by River Red Gum with a sparse to moderate shrub layer of Blackwood, River Bottlebrush, or Sweet Bursaria, and a diverse understorey of grasses, sedges, and herbs.",
       "recommendations": [
         {
@@ -883,6 +899,7 @@
       ]
     },
     "83": {
+      "name": "Swampy Riparian Woodland",
       "description": "Swampy Riparian Woodland occupies low-lying stream margins and seasonally waterlogged flats, where fluctuating water tables support a mix of wetland and woodland species. Dominated by Swamp Gum and sometimes River Red Gum, it has a patchy understorey of sedges, tussock grasses, and moisture-loving herbs.",
       "recommendations": [
         {
@@ -934,6 +951,7 @@
       ]
     },
     "126": {
+      "name": "Swampy Riparian Complex",
       "description": "Swampy Riparian Complex is a wetland-riparian ecosystem found along streams and drainage lines with fluctuating water levels and seasonally waterlogged soils. Dominated by Swamp Gum and Narrow-leaf Peppermint, it features a diverse mix of moisture-tolerant shrubs, sedges, and grasses that thrive in the wet-dry cycles of riparian zones.",
       "recommendations": [
         {
@@ -982,6 +1000,7 @@
       ]
     },
     "127": {
+      "name": "Valley Heathy Forest",
       "description": "Valley Heathy Forest is a low to medium height eucalypt forest that occurs on sheltered slopes and drainage lines with relatively infertile, often sandy or gravelly soils. A scattered canopy of boxes and stringybarks sits above a dense, heathy understorey of peas, cassinias, and small shrubs, interwoven with wallaby-grasses, sedges, Grass-trees, and seasonal herbs. This community blends elements of Grassy and Heathy Dry Forest, and is strongly shaped by low-nutrient soils and periodic fire, with many species adapted to resprouting or germinating after burns.",
       "recommendations": [
         {
@@ -1040,6 +1059,7 @@
       ]
     },
     "164": {
+      "name": "Creekline Herb-rich Woodland",
       "description": "Creekline Herb-rich Woodland occurs along minor drainage lines and ephemeral creeks on fertile soils, where intermittent flows create moist microhabitats ideal for herbaceous diversity. A sparse eucalypt canopy sits above an open shrub layer or none at all, allowing sunlight to nourish a vibrant ground cover of grasses, sedges, and wildflowers.",
       "recommendations": [
         {
@@ -1125,6 +1145,7 @@
       ]
     },
     "175": {
+      "name": "Grassy Woodland",
       "description": "Grassy Woodland is a scattered open woodland found on gentle slopes and undulating plains, typically with a sparse canopy of Grey Box, Yellow Box, or Red Gum over a species-rich ground layer of grasses, lilies, and wildflowers. The shrub layer is usually sparse, giving way to a light-filled understorey dominated by Kangaroo Grass and seasonal herbs.",
       "recommendations": [
         {
@@ -1196,6 +1217,7 @@
       ]
     },
     "641": {
+      "name": "Riparian Woodland",
       "description": "Riparian Woodland is a tall, open woodland that lines the banks of rivers, creeks, and ephemeral streams, particularly those that flow across Victoria's volcanic plains. It is dominated by River Red Gums, with a diverse understorey of sedges, grasses, and moisture-adapted herbs. These woodlands thrive in seasonally flooded soils, and act as corridors for wildlife, water filtration, and cultural passage.",
       "recommendations": [
         {
@@ -1232,6 +1254,7 @@
       ]
     },
     "851": {
+      "name": "Stream Bank Shrubland",
       "description": "Stream Bank Shrubland grows along rocky creeks and flood-prone gullies, where Sweet Bursaria, Tree Violet, and Silver Wattle form dense shrub layers. This narrow EVC hugs seasonal waterways and supports sedges, rushes, and herbs adapted to disturbance.",
       "recommendations": [
         {
@@ -1311,6 +1334,7 @@
       ]
     },
     "934": {
+      "name": "Brackish Grassland",
       "description": "Brackish Grassland is a salt-tolerant grassy ecosystem found in low-lying areas of the Gippsland Plain, where saline groundwater or estuarine flooding influences the soil. These open, wind-exposed grasslands are dominated by saltbushes, low sedges, and halophytic herbs, with few or no trees.",
       "recommendations": [
         {
@@ -1336,6 +1360,7 @@
       ]
     },
     "937": {
+      "name": "Swampy Woodland",
       "description": "Swampy Woodland is a waterlogged to seasonally inundated woodland community found in poorly drained depressions, swales, and valley floors. Dominated by Swamp Gum with a diverse understorey of moisture-tolerant shrubs, sedges, grasses, and herbs, it creates important wetland habitat and water filtration zones. This EVC thrives in areas with seasonal waterlogging and supports high biodiversity including frogs, water birds, and wetland-dependent invertebrates.",
       "recommendations": [
         {
