@@ -751,16 +751,51 @@
       'Swampy Woodland': { available: true, slug: 'swampy-woodland' }
     };
     
+    // EVC names with a tee design available (images/tees/<slug>.jpg verified)
+    const TEES = new Set([
+      'Brackish Grassland',
+      'Box Ironbark Forest',
+      'Coast Banksia Woodland',
+      'Coastal Alkaline Scrub',
+      'Coastal Saltmarsh',
+      'Creekline Grassy Woodland',
+      'Creekline Herb-rich Woodland',
+      'Damp Forest',
+      'Damp Sands Herb-rich Woodland',
+      'Estuarine Wetland',
+      'Floodplain Riparian Woodland',
+      'Floodplain Wetland',
+      'Grassy Dry Forest',
+      'Grassy Forest',
+      'Grassy Woodland',
+      'Heathy Dry Forest',
+      'Heathy Woodland',
+      'Herb-rich Foothill Forest',
+      'Lowland Forest',
+      'Plains Grassy Woodland',
+      'Riparian Forest',
+      'Riparian Woodland',
+      'Sand Heathland',
+      'Shrubby Dry Forest',
+      'Stream Bank Shrubland',
+      'Swamp Scrub',
+      'Swampy Riparian Woodland',
+      'Swampy Woodland',
+      'Valley Grassy Forest',
+      'Valley Heathy Forest',
+      'Wet Heathland'
+    ]);
+
     // EVC Categorization for Filtering
     function categorizeEvc(name, description) {
       const nameLower = name.toLowerCase();
       const descLower = description.toLowerCase();
-      
+
       return {
         habitat: getHabitatType(nameLower),
         moisture: getMoistureType(nameLower, descLower),
         hasKit: FOREST_KITS[name]?.available || false,
-        hasTee: FOREST_KITS[name]?.available || false // Assuming tees match kits for now
+        hasTee: TEES.has(name)
       };
     }
     
