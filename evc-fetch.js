@@ -705,6 +705,13 @@ function getKitDetails(evcName) {
       canopy: 3, shrub: 2, groundcover: 5,
       specialFeature: 'Wetland habitat specialists',
       slug: 'swampy-woodland'
+    },
+    'Box Ironbark Forest': {
+      image: 'box-ironbark-forest.jpg',
+      description: 'Distinctive dry forest of the goldfields and northern ranges. Mixed canopy of ironbarks and boxes over a shrubby understorey rich in wattles, grevilleas, and peas — stronghold for threatened woodland birds.',
+      canopy: 4, shrub: 3, groundcover: 3,
+      specialFeature: 'Woodland bird habitat specialists',
+      slug: 'box-ironbark-forest'
     }
   };
 
