@@ -3,7 +3,7 @@
     "version": "1.0.6",
     "last_updated": "2025-02-01",
     "coverage": "Victoria, Australia",
-    "total_evcs": 29
+    "total_evcs": 30
   },
   "evcs": {
     "2": {
@@ -1054,6 +1054,39 @@
             "Lindsaea linearis (Screw Fern)",
             "Billardiera scandens (Common Apple-berry)",
             "Hardenbergia violacea (Purple Coral-pea)"
+          ]
+        }
+      ]
+    },
+    "160": {
+      "name": "Coastal Dune Scrub",
+      "description": "Coastal Dune Scrub grows on exposed coastal dunes and sandy shorelines, where wind, salt spray, and shifting sands create one of Victoria's most demanding environments. Low shrubs and ground-hugging plants bind the sand and build the dune systems that protect coastlines. Dominated by Coastal Tea-tree and Coast Wirilda, with a sparse ground layer of salt-tolerant herbs and sedges. Now Depleted — coastal development, introduced grasses, and altered dune dynamics have fragmented this community along much of the Victorian coast.",
+      "recommendations": [
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Leptospermum laevigatum (Coast Tea-tree)",
+            "Acacia sophorae (Coast Wattle)",
+            "Leucopogon parviflorus (Coast Beard-heath)",
+            "Rhagodia candolleana ssp. candolleana (Seaberry Saltbush)",
+            "Myoporum insulare (Common Boobialla)",
+            "Ozothamnus turbinatus (Coast Everlasting)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Spinifex sericeus (Beach Spinifex)",
+            "Isolepis nodosa (Knobby Club-rush)",
+            "Carpobrotus rossii (Karkalla)",
+            "Disphyma crassifolium (Rounded Noon-flower)",
+            "Selliera radicans (Shiny Swamp-mat)",
+            "Lobelia anceps (Angled Lobelia)",
+            "Dichondra repens (Kidney-weed)",
+            "Viola hederacea (Ivy-leaf Violet)",
+            "Senecio lautus (Dune Fireweed)",
+            "Tetragonia implexicoma (Bower Spinach)",
+            "Calystegia soldanella (Shore Bindweed)"
           ]
         }
       ]
