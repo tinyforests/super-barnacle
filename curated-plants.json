@@ -3,7 +3,7 @@
     "version": "1.0.6",
     "last_updated": "2025-02-01",
     "coverage": "Victoria, Australia",
-    "total_evcs": 36
+    "total_evcs": 38
   },
   "evcs": {
     "2": {
@@ -1283,6 +1283,31 @@
         }
       ]
     },
+    "132": {
+      "name": "Plains Grassland",
+      "description": "Plains Grassland is a treeless native grassland of Victoria's volcanic and sedimentary plains, dominated by native tussock grasses and a diverse ground layer of herbs, lilies, and orchids. With no canopy to obstruct the sky, these grasslands are defined by light, wind, and the seasonal pulse of flowering forbs between the grass clumps. Once the dominant vegetation across vast areas of western Victoria, Plains Grassland is now one of the most endangered ecosystems in Australia — less than 1% remains in good condition. What survives supports Striped Legless Lizards, Plains Wanderers, and numerous threatened invertebrates.",
+      "recommendations": [
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Austrodanthonia caespitosa (White-top Wallaby-grass)",
+            "Austrodanthonia racemosa (Striped Wallaby-grass)",
+            "Microlaena stipoides (Weeping Grass)",
+            "Dianella longifolia (Pale Flax-lily)",
+            "Arthropodium strictum (Chocolate Lily)",
+            "Bulbine bulbosa (Bulbine Lily)",
+            "Wurmbea dioica (Early Nancy)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Leucochrysum albicans (Hoary Sunray)",
+            "Wahlenbergia stricta (Tall Bluebell)",
+            "Convolvulus angustissimus (Pink Bindweed)",
+            "Oxalis perennans (Grassland Wood-sorrel)"
+          ]
+        }
+      ]
+    },
     "160": {
       "name": "Coastal Dune Scrub",
       "description": "Coastal Dune Scrub grows on exposed coastal dunes and sandy shorelines, where wind, salt spray, and shifting sands create one of Victoria's most demanding environments. Low shrubs and ground-hugging plants bind the sand and build the dune systems that protect coastlines. Dominated by Coastal Tea-tree and Coast Wirilda, with a sparse ground layer of salt-tolerant herbs and sedges. Now Depleted — coastal development, introduced grasses, and altered dune dynamics have fragmented this community along much of the Victorian coast.",
@@ -1507,6 +1532,44 @@
             "Triglochin procerum (Water-ribbons)",
             "Eleocharis acuta (Common Spike-sedge)",
             "Calystegia sepium (Large Bindweed)"
+          ]
+        }
+      ]
+    },
+    "803": {
+      "name": "Plains Woodland",
+      "description": "Plains Woodland is an open woodland of Victoria's flat inland plains, growing on heavy clay soils that crack in summer and waterlog in winter. A sparse canopy of Grey Box, Yellow Box, or River Red Gum stands above a grassy ground layer with few shrubs. This community once covered vast areas of the Victorian volcanic plains and riverine lowlands — now less than 5% remains, cleared for agriculture. What persists supports a remarkable diversity of woodland birds, reptiles, and invertebrates dependent on hollow-bearing trees and native grassland structure.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus microcarpa (Grey Box)",
+            "Eucalyptus melliodora (Yellow Box)",
+            "Eucalyptus camaldulensis (River Red Gum)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Bursaria spinosa (Sweet Bursaria)",
+            "Acacia pycnantha (Golden Wattle)",
+            "Indigofera australis (Austral Indigo)",
+            "Dodonaea viscosa (Sticky Hop-bush)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Austrodanthonia caespitosa (White-top Wallaby-grass)",
+            "Microlaena stipoides (Weeping Grass)",
+            "Dianella longifolia (Pale Flax-lily)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Wahlenbergia stricta (Tall Bluebell)",
+            "Arthropodium strictum (Chocolate Lily)",
+            "Leptorhynchos squamatus (Scaly Buttons)",
+            "Oxalis perennans (Grassland Wood-sorrel)"
           ]
         }
       ]
