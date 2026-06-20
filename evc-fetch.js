@@ -117,11 +117,17 @@ function handleURLParameters() {
   const urlParams = new URLSearchParams(window.location.search);
   const evcCode = urlParams.get('evc');
   const evcName = urlParams.get('name');
-  
+  const address = urlParams.get('address');
+  const lat = urlParams.get('lat');
+  const lng = urlParams.get('lng');
+
   if (evcCode && evcName) {
     console.log('🔗 Loading EVC from shared link:', evcCode, evcName);
     const decodedName = decodeURIComponent(evcName);
-    displayModal(decodedName, null, null, evcCode, null, null);
+    const parsedLat = lat ? parseFloat(lat) : null;
+    const parsedLng = lng ? parseFloat(lng) : null;
+    const decodedAddress = address ? decodeURIComponent(address) : null;
+    displayModal(decodedName, null, null, evcCode, parsedLat, parsedLng, false, decodedAddress);
     // Clean URL without reloading
     window.history.replaceState({}, document.title, window.location.pathname);
   }
@@ -718,7 +724,7 @@ function getKitDetails(evcName) {
   return kits[evcName] || null;
 }
 
-function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
+function displayModal(name, status, region, code, lat, lon, isUrbanFallback, address) {
   // Clean mosaic EVC names
   if (name && name.includes('/')) {
     name = name.split('/')[0].trim();
@@ -750,7 +756,8 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback) {
   window.currentLon = lon;
   window.currentEvcName = name;
   window.isUrbanFallback = isUrbanFallback || false;
-  
+  if (address) window.searchedAddress = address;
+
   // Log lookup
   const searchAddress = window.searchedAddress || (lat && lon ? `${lat}, ${lon}` : 'FindMyNativePlants referral');
   logEVCLookup(searchAddress, lat, lon, code, name);
