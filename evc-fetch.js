@@ -1417,6 +1417,13 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
     setTimeout(() => { document.body.removeChild(form); }, 1000);
 
     console.log('EVC lookup logged:', { address, lat, lon, evcCode, evcName });
+    console.log('Form fields being posted:', {
+      address: fields['entry.124085928'],
+      lat: fields['entry.537784608'],
+      lon: fields['entry.683705898'],
+      evcCode: fields['entry.1602420653'],
+      evcName: fields['entry.615207214']
+    });
   } catch (error) {
     console.error('Failed to log EVC lookup:', error);
   }
