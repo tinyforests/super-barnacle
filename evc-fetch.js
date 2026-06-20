@@ -120,6 +120,7 @@ function handleURLParameters() {
   const address = urlParams.get('address');
   const lat = urlParams.get('lat');
   const lng = urlParams.get('lng');
+  const source = urlParams.get('source');
 
   if (evcCode && evcName) {
     console.log('🔗 Loading EVC from shared link:', evcCode, evcName);
@@ -127,7 +128,7 @@ function handleURLParameters() {
     const parsedLat = lat ? parseFloat(lat) : null;
     const parsedLng = lng ? parseFloat(lng) : null;
     const decodedAddress = address ? decodeURIComponent(address) : null;
-    displayModal(decodedName, null, null, evcCode, parsedLat, parsedLng, false, decodedAddress);
+    displayModal(decodedName, null, null, evcCode, parsedLat, parsedLng, false, decodedAddress, source);
     // Clean URL without reloading
     window.history.replaceState({}, document.title, window.location.pathname);
   }
@@ -724,7 +725,7 @@ function getKitDetails(evcName) {
   return kits[evcName] || null;
 }
 
-function displayModal(name, status, region, code, lat, lon, isUrbanFallback, address) {
+function displayModal(name, status, region, code, lat, lon, isUrbanFallback, address, source) {
   // Clean mosaic EVC names
   if (name && name.includes('/')) {
     name = name.split('/')[0].trim();
@@ -760,7 +761,7 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
 
   // Log lookup
   const searchAddress = window.searchedAddress || (lat && lon ? `${lat}, ${lon}` : 'FindMyNativePlants referral');
-  logEVCLookup(searchAddress, lat, lon, code, name);
+  logEVCLookup(searchAddress, lat, lon, code, name, source);
   
   // Address display — only shown when we have a real address
   const titleEl = document.querySelector("#modal-info .title");
@@ -1370,14 +1371,15 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
   }
 }
 
-function logEVCLookup(address, lat, lon, evcCode, evcName) {
+function logEVCLookup(address, lat, lon, evcCode, evcName, source) {
   const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScmuvklj5OJq7tJLLS2TCR8fRYoOh96WA_63a9YsGOsznLgdQ/formResponse';
   const ENTRY_IDS = {
     address: 'entry.124085928',
     latitude: 'entry.537784608',
     longitude: 'entry.683705898',
     evcCode: 'entry.1602420653',
-    evcName: 'entry.615207214'
+    evcName: 'entry.615207214',
+    source: 'entry.200268520'
   };
 
   try {
@@ -1392,7 +1394,8 @@ function logEVCLookup(address, lat, lon, evcCode, evcName) {
       [ENTRY_IDS.latitude]: lat ? lat.toFixed(6) : '',
       [ENTRY_IDS.longitude]: lon ? lon.toFixed(6) : '',
       [ENTRY_IDS.evcCode]: evcCode || '',
-      [ENTRY_IDS.evcName]: evcName || ''
+      [ENTRY_IDS.evcName]: evcName || '',
+      [ENTRY_IDS.source]: source || 'direct'
     };
 
     Object.keys(fields).forEach(key => {
