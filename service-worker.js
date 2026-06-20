@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ecological-garden-v2';
+const CACHE_NAME = 'ecological-garden-v3';
 const BASE_PATH = '';
 
 const urlsToCache = [
@@ -28,6 +28,14 @@ self.addEventListener('install', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+  // Never serve cached response for URLs with query parameters — they carry
+  // EVC/address state that must reach the page fresh
+  const url = new URL(event.request.url);
+  if (url.search) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
