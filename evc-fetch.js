@@ -1212,10 +1212,11 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
       teeTitle.style.color = "#3d4535";
       teeSection.appendChild(teeTitle);
       
-      const imageFilename = name.toLowerCase()
+      const slug = name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/['']/g, '')
-        .replace(/&/g, 'and') + '.jpg';
+        .replace(/&/g, 'and');
+      const imageFilename = slug + '.jpg';
       
       const imageContainer = document.createElement("div");
       imageContainer.style.marginBottom = "20px";
@@ -1231,25 +1232,8 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
       teeImage.style.objectFit = "contain";
       
       teeImage.onerror = function() {
-        this.style.display = 'none';
-        const comingSoon = document.createElement("div");
-        comingSoon.style.padding = "30px 20px";
-        comingSoon.style.textAlign = "center";
-        comingSoon.style.background = "rgba(255, 240, 220, 0.3)";
-        comingSoon.style.borderRadius = "0";
-        const icon = document.createElement("div");
-        icon.textContent = "👕";
-        icon.style.fontSize = "48px";
-        icon.style.marginBottom = "15px";
-        comingSoon.appendChild(icon);
-        const message = document.createElement("p");
-        message.innerHTML = `We're creating a unique design for <strong>${name}</strong>. Check out our other ecological tees while you wait!`;
-        message.style.color = "#666";
-        message.style.fontSize = "16px";
-        message.style.lineHeight = "1.6";
-        message.style.margin = "0";
-        comingSoon.appendChild(message);
-        teeSection.appendChild(comingSoon);
+        console.log(`[Tee] No image found for "${name}" (${slug}) — add images/tees/${slug}.jpg to enable tee section`);
+        teeSection.style.display = 'none';
       };
       
       imageContainer.appendChild(teeImage);
