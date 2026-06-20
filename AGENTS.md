@@ -4,7 +4,7 @@
 **Product name:** Find My Ecological Garden
 **Live domain:** www.findmyecologicalgarden.com
 **G&S system layer:** Discovery
-**Last updated:** May 2026
+**Last updated:** June 2026
 **Status:** Functional MVP — known issues documented below
 
 > **Repo name warning.** The GitHub repository is named `super-barnacle`. The product is *Find My Ecological Garden*. Do not use "super-barnacle" in any public-facing copy, commit messages that affect user-visible text, or cross-property links. When referencing this repo in other G&S documentation, use the product name.
@@ -101,14 +101,11 @@ The address search and reverse geocode use Nominatim's public API (`nominatim.op
 **🔴 PRODUCTION-AFFECTING — Service worker BASE_PATH mismatch**
 `service-worker.js` caches paths prefixed with `/super-barnacle/`. On the live domain (`www.findmyecologicalgarden.com`) all paths resolve from `/`. The service worker never matches a request and is entirely inoperative in production. See `/docs/PWA.md`.
 
-**🟡 Brand — Border-radius not enforced**
-Every button, card, modal, and input field uses rounded corners. SUPER_MIND requires border-radius: 0 everywhere. See `/docs/BRAND.md`.
+~~**🟡 Brand — Border-radius not enforced**~~ ✅ Fixed June 2026 — all border-radius values set to 0 across HTML files and evc-fetch.js inline styles.
 
-**🟡 Brand — Wrong body font loaded**
-IBM Plex Mono is loaded as the body font. SUPER_MIND specifies IBM Plex Sans for prose and interface; IBM Plex Mono only for data and timestamps. IBM Plex Sans is not loaded anywhere. See `/docs/BRAND.md`.
+~~**🟡 Brand — Wrong body font loaded**~~ ✅ Fixed June 2026 — IBM Plex Sans now loaded; Mono retained for data/timestamps only.
 
-**🟡 Contact page — Email links broken**
-Cloudflare email-protection URLs in `about.html` and `contact.html` do not resolve on GitHub Pages (no Cloudflare proxy). The contact email link and the email-button in `contact.html` go nowhere.
+~~**🟡 Contact page — Email links broken**~~ ✅ Fixed June 2026 — replaced Cloudflare-protected URLs with direct mailto/tel links.
 
 ---
 
@@ -228,16 +225,16 @@ Issues identified in the May 2026 audit, not yet resolved. Check these off as wo
 | 1 | ⛔ BLOCKER | No privacy disclosure for coordinate logging | `/docs/PRIVACY.md` |
 | 2 | ⛔ BLOCKER | Nominatim missing User-Agent header | `/docs/EVC-SYSTEM.md` |
 | 3 | 🔴 PROD | Service worker BASE_PATH inoperative on live domain | `/docs/PWA.md` |
-| 4 | 🔴 PROD | Email links broken (Cloudflare protection, no proxy) | `about.html`, `contact.html` |
-| 5 | 🟡 BRAND | border-radius: 0 not enforced — systematic throughout | `/docs/BRAND.md` |
-| 6 | 🟡 BRAND | IBM Plex Sans not loaded; Mono used for all body text | `/docs/BRAND.md` |
-| 7 | 🟡 BRAND | Linear gradients used throughout (should be flat colour) | `/docs/BRAND.md` |
-| 8 | 🟡 BRAND | Inline styles in evc-fetch.js make brand unenforceable | `evc-fetch.js` |
-| 9 | 🟡 VOICE | "Join the ecological movement" — startup hype | `index.html`, `explore.html` |
-| 10 | 🟡 VOICE | "Make biodiversity mainstream" — vision statement hype | `about.html` |
-| 11 | 🟡 VOICE | "In harmony with" — over-spiritualised | `index.html` section-2 |
-| 12 | 🟡 VOICE | "native" used where "indigenous" is correct | Multiple files |
-| 13 | 🟡 DATA | `hasTee === hasKit` hardcoded incorrectly in explore.html | `/docs/DATA.md` |
+| 4 | ✅ FIXED | Email links broken (Cloudflare protection, no proxy) | `about.html`, `contact.html` |
+| 5 | ✅ FIXED | border-radius: 0 not enforced — systematic throughout | `/docs/BRAND.md` |
+| 6 | ✅ FIXED | IBM Plex Sans not loaded; Mono used for all body text | `/docs/BRAND.md` |
+| 7 | ✅ FIXED | Linear gradients used throughout (should be flat colour) | `/docs/BRAND.md` |
+| 8 | ✅ FIXED | Inline styles in evc-fetch.js — border-radius values corrected to 0 | `evc-fetch.js` |
+| 9 | ✅ FIXED | "Join the ecological movement" — startup hype | `index.html`, `explore.html` |
+| 10 | ✅ FIXED | "Make biodiversity mainstream" — vision statement hype | `about.html` |
+| 11 | ✅ FIXED | "In harmony with" — over-spiritualised | `index.html` section-2 |
+| 12 | ✅ FIXED | "native" used where "indigenous" is correct | Multiple files |
+| 13 | ✅ FIXED | `hasTee === hasKit` hardcoded incorrectly in explore.html — TEES Set added; evc-fetch.js modal pending (see #26) | `/docs/DATA.md` |
 | 14 | 🟡 DATA | Kit/tee product data duplicated across two files | `/docs/DATA.md` |
 | 15 | 🟠 TECH | Urban EVC fallback uses arbitrary `features[0]` | `/docs/EVC-SYSTEM.md` |
 | 16 | 🟠 TECH | Mosaic code mapping undocumented (no source reference) | `/docs/DATA.md` |
@@ -250,6 +247,12 @@ Issues identified in the May 2026 audit, not yet resolved. Check these off as wo
 | 23 | 🟠 TECH | `ecological-garden-kit.jpg` unoptimised at 219KB | Root directory |
 | 24 | 🔵 INFO | Two DOMContentLoaded listeners in evc-fetch.js | `evc-fetch.js` |
 | 25 | 🔵 INFO | Search button resets to "Find My Garden" (was "Find My Ecological Garden") | `evc-fetch.js` |
+| 26 | 🟡 DATA | evc-fetch.js modal tee section still uses `hasTee === hasKit` logic — TEES Set not applied here | `evc-fetch.js` |
+| 27 | 🟠 TECH | `CACHE_NAME` not incremented after adding `privacy.html` — new file not cached offline | `service-worker.js` |
+| 28 | 🟡 DATA | 7 new EVC plant lists are draft stubs — need botanical review before public launch (EVCs 9, 30, 45, 61, 93, 128, 160) | `curated-plants.json` |
+| 29 | 🟡 DATA | EVC 160 Coastal Dune Scrub plant list specifically flagged for revision against reference materials | `curated-plants.json` |
+| 30 | 🟠 CONTENT | Tee images missing for 5 EVCs: Wet Forest, Shrubby Foothill Forest, Sandstone Ridge Shrubland, Swampy Riparian Complex, Coastal Dune Scrub | `images/tees/` |
+| 31 | 🟠 CONTENT | EVC landscape images missing for 4 EVCs: 937 Swampy Woodland, 858 Coastal Alkaline Scrub, 23 Herb-rich Foothill Forest, 29 Damp Forest — falling back to placeholder | `images/evcs/` |
 
 ---
 
@@ -268,5 +271,5 @@ Issues identified in the May 2026 audit, not yet resolved. Check these off as wo
 - `evc-fetch.js` is the core of the application. It is large and does many things. Read it carefully before changing anything in it.
 - `curated-plants.json` is the plant database. Its structure is documented in `/docs/DATA.md`. Do not edit it without reading that file first.
 - The WFS API is a third-party Victorian Government service. It is not always reliable. Changes to EVC detection should be tested against multiple Melbourne addresses including inner-city (urban fallback), suburban, and peri-urban.
-- The brand standard (border-radius: 0, IBM Plex Sans for prose) is not yet implemented in the code. `/docs/BRAND.md` documents what correct looks like. Do not extend the existing violations; fix them as you go.
+- The core brand standard is now implemented: border-radius: 0 is enforced, gradients are replaced with flat `#3d4535`, and IBM Plex Sans is loaded for prose. Remaining brand debt: inline styles in `evc-fetch.js` should migrate to CSS classes (see #8 note — values are correct, structure is not). See `/docs/BRAND.md`.
 - The two launch blockers (privacy disclosure and Nominatim User-Agent) must be resolved before any public marketing or press coverage of this tool.
