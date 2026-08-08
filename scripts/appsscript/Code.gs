@@ -129,12 +129,9 @@ function sendPlantList(row, plants) {
     'Gardener & Son · Mont Albert & Hawthorn\n' +
     'gardenerandson.com\n';
 
-  MailApp.sendEmail({
-    to: row.email,
-    subject: subject,
-    body: body,
-    name: FROM_NAME,
-    replyTo: REPLY_TO
+  GmailApp.sendEmail(row.email, subject, body, {
+    from: REPLY_TO,
+    name: FROM_NAME
   });
 }
 
