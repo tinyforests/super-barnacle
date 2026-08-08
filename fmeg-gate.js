@@ -32,7 +32,7 @@
 (function () {
   'use strict';
 
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbyU5AXZH1WU9PI1RmScYUeaZ-FDo6u88GZbdKTpf_fMLzgx2FZOSluT3WJdqcKr6FDZzw/exec';
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuOBcTHXM8yjnmLVRGcHCPAzFdbnmTcR34v-J3LLLk3Z4LIuL_xWtUD4i2HIhxqq0h/exec';
 
   /* ---------- handoff params from findmyevc ---------- */
 
