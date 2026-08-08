@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gate test — Find My Ecological Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --green:#3d4535; --beige:#fff0dc; --brass:#B49A63; }
+  * { box-sizing:border-box; border-radius:0; }
+  body { margin:0; background:var(--beige); color:var(--green);
+         font-family:'IBM Plex Sans',sans-serif; padding:48px 24px; }
+  .wrap { max-width:560px; margin:0 auto; }
+  .brandmark { font-family:'IBM Plex Mono',monospace; font-size:11px;
+               letter-spacing:.12em; text-transform:uppercase; margin-bottom:32px; }
+  h1 { font-family:'Fraunces',serif; font-weight:600; font-size:30px; margin:0 0 6px; }
+  .meta { font-family:'IBM Plex Mono',monospace; font-size:12px;
+          letter-spacing:.06em; text-transform:uppercase; opacity:.8; margin:0 0 20px; }
+  .desc { font-size:15px; line-height:1.65; margin:0 0 12px; }
+  .taste { margin:0 0 28px; padding:0; list-style:none; }
+  .taste li { font-size:14px; padding:8px 0; border-bottom:1px solid var(--brass); }
+  .taste li b { font-family:'IBM Plex Mono',monospace; font-size:12px;
+                text-transform:uppercase; letter-spacing:.06em; margin-right:10px; }
+  .plants h2 { font-family:'Fraunces',serif; font-size:20px; margin:0 0 14px; }
+  .plants ul { list-style:none; padding:0; margin:0 0 22px; }
+  .plants li { font-size:14px; padding:7px 0; border-bottom:1px solid rgba(61,69,53,.18); }
+  .plants li i { opacity:.75; }
+  .layer-label { font-family:'IBM Plex Mono',monospace; font-size:12px;
+                 letter-spacing:.1em; text-transform:uppercase; margin:20px 0 6px; }
+  .note { margin-top:40px; font-family:'IBM Plex Mono',monospace; font-size:11px;
+          line-height:1.8; opacity:.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brandmark">Find My Ecological Garden &middot; a Gardener &amp; Son project</div>
+
+  <!-- Open, ungated: give before you gate -->
+  <h1 id="evc-name">Box Ironbark Forest</h1>
+  <p class="meta" id="evc-meta">EVC 61 &middot; Vulnerable &middot; Goldfields</p>
+  <p class="desc">Open forest of Red Ironbark and Grey Box on shallow gravelly soils,
+  with a sparse shrub layer and a ground flora of lilies, everlastings and wallaby-grasses.
+  A winter-flowering nectar engine for honeyeaters and the endangered Swift Parrot.</p>
+
+  <ul class="taste">
+    <li><b>Canopy</b> Eucalyptus tricarpa — Red Ironbark</li>
+    <li><b>Mid-storey</b> Acacia pycnantha — Golden Wattle</li>
+    <li><b>Ground</b> Chrysocephalum apiculatum — Common Everlasting</li>
+  </ul>
+
+  <!-- Gate mounts here; full list renders here after unlock -->
+  <div id="modal-plants"></div>
+
+  <p class="note">Test harness. Append ?address=…&amp;lat=…&amp;lng=…&amp;evc=EVC+61&amp;evc_name=Box+Ironbark+Forest&amp;source=fmevc
+  to simulate the findmyevc handoff. Set ENDPOINT in fmeg-gate.js before live use.</p>
+</div>
+
+<script src="fmeg-gate.js"></script>
+<script>
+  // Sample data standing in for the live evc-fetch result
+  var PLANTS = [
+    { layer:'Canopy', name:'Eucalyptus tricarpa', common:'Red Ironbark' },
+    { layer:'Canopy', name:'Eucalyptus microcarpa', common:'Grey Box' },
+    { layer:'Canopy', name:'Eucalyptus leucoxylon', common:'Yellow Gum' },
+    { layer:'Mid-storey', name:'Acacia pycnantha', common:'Golden Wattle' },
+    { layer:'Mid-storey', name:'Cassinia arcuata', common:'Drooping Cassinia' },
+    { layer:'Mid-storey', name:'Bursaria spinosa', common:'Sweet Bursaria' },
+    { layer:'Ground', name:'Chrysocephalum apiculatum', common:'Common Everlasting' },
+    { layer:'Ground', name:'Rytidosperma spp.', common:'Wallaby-grasses' },
+    { layer:'Ground', name:'Arthropodium strictum', common:'Chocolate Lily' },
+    { layer:'Ground', name:'Dianella revoluta', common:'Black-anther Flax-lily' }
+  ];
+
+  function renderList(container, plants) {
+    var byLayer = {};
+    var layerOrder = [];
+    plants.forEach(function (p) {
+      if (!byLayer[p.layer]) { layerOrder.push(p.layer); byLayer[p.layer] = []; }
+      byLayer[p.layer].push(p);
+    });
+    var html = '<div class="plants"><h2>Your full indigenous palette</h2>';
+    layerOrder.forEach(function (layer) {
+      html += '<div class="layer-label">' + layer + '</div><ul>';
+      byLayer[layer].forEach(function (p) {
+        html += '<li><i>' + p.name + '</i>' + (p.common ? ' — ' + p.common : '') + '</li>';
+      });
+      html += '</ul>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  FMEGGate.mount({
+    container: document.getElementById('modal-plants'),
+    evcCode: FMEGGate.handoff.evcCode || 'EVC 61',
+    evcName: FMEGGate.handoff.evcName || 'Box Ironbark Forest',
+    plants: PLANTS,
+    renderList: renderList
+  });
+</script>
+</body>
+</html>

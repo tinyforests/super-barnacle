@@ -896,142 +896,169 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
         descriptionEl.style.color = "#666";
       }
 
-      // Plant list
-      const plantsDiv = document.getElementById("modal-plants");
-      plantsDiv.innerHTML = "";
-      
-      if (evcInfo?.recommendations && evcInfo.recommendations.length > 0) {
-        const titleEl = document.createElement("h2");
-        titleEl.textContent = "Here are indigenous plants suited to your area.";
-        titleEl.style.fontFamily = "'Abril Fatface', serif";
-        titleEl.style.fontSize = "28px";
-        titleEl.style.marginTop = "30px";
-        titleEl.style.marginBottom = "20px";
-        titleEl.style.lineHeight = "1.2";
-        titleEl.style.color = "inherit";
-        plantsDiv.appendChild(titleEl);
-
+      // Flatten recommendations to {layer, name, common}[] for the gate
+      const flatPlants = [];
+      if (evcInfo?.recommendations) {
         evcInfo.recommendations.forEach(sec => {
-          const layerDiv = document.createElement("div");
-          layerDiv.className = "layer";
-          layerDiv.style.marginBottom = "20px";
-          layerDiv.style.overflow = "visible";
-          
-          const heading = document.createElement("h3");
-          heading.textContent = sec.layer;
-          heading.style.fontWeight = "700";
-          heading.style.fontSize = "16px";
-          heading.style.marginBottom = "10px";
-          heading.style.lineHeight = "1.3";
-          heading.style.color = "inherit";
-          layerDiv.appendChild(heading);
-          
-          const list = document.createElement("ul");
-          list.style.listStyle = "none";
-          list.style.padding = "0";
-          list.style.margin = "0";
-          list.style.overflow = "visible";
-          
-          sec.plants.forEach(async (plant) => {
-            const item = document.createElement("li");
-            item.style.padding = "8px 12px";
-            item.style.borderBottom = "1px solid #e2e8f0";
-            item.style.fontSize = "14px";
-            item.style.display = "flex";
-            item.style.alignItems = "center";
-            item.style.justifyContent = "space-between";
-            item.style.gap = "10px";
-            item.style.position = "relative";
-            item.style.overflow = "visible";
-            
-            const nameSpan = document.createElement("span");
-            nameSpan.textContent = plant;
-            nameSpan.style.flex = "1";
-            item.appendChild(nameSpan);
-            
-            const imageCheck = await checkPlantImage(plant);
-            
-            if (imageCheck.exists) {
-              const cameraSpan = document.createElement("span");
-              cameraSpan.className = "plant-camera";
-              cameraSpan.innerHTML = "&#128247;";
-              cameraSpan.style.cursor = "pointer";
-              cameraSpan.style.fontSize = "1.2rem";
-              cameraSpan.style.padding = "0.3rem 0.5rem";
-              cameraSpan.style.borderRadius = "0";
-              cameraSpan.style.transition = "all 0.3s";
-              cameraSpan.style.userSelect = "none";
-              
-              cameraSpan.addEventListener("mouseenter", () => {
-                cameraSpan.style.backgroundColor = "#3d4535";
-                cameraSpan.style.transform = "scale(1.1)";
-              });
-              cameraSpan.addEventListener("mouseleave", () => {
-                cameraSpan.style.backgroundColor = "transparent";
-                cameraSpan.style.transform = "scale(1)";
-              });
-              
-              const tooltip = document.createElement("div");
-              tooltip.className = "plant-image-tooltip";
-              tooltip.style.display = "none";
-              tooltip.style.position = "fixed";
-              tooltip.style.zIndex = "99999";
-              tooltip.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.3)";
-              tooltip.style.borderRadius = "0";
-              tooltip.style.overflow = "hidden";
-              tooltip.style.pointerEvents = "none";
-              
-              const img = document.createElement("img");
-              img.src = imageCheck.url;
-              img.alt = plant;
-              img.style.objectFit = "cover";
-              img.style.display = "block";
-              img.style.borderRadius = "0";
-              
-              if (window.innerWidth <= 768) {
-                tooltip.style.width = "200px";
-                tooltip.style.height = "200px";
-                img.style.width = "200px";
-                img.style.height = "200px";
-              } else {
-                tooltip.style.width = "250px";
-                tooltip.style.height = "250px";
-                img.style.width = "250px";
-                img.style.height = "250px";
-              }
-              
-              tooltip.appendChild(img);
-              document.body.appendChild(tooltip);
-              
-              cameraSpan.addEventListener("mouseenter", () => {
-                const rect = cameraSpan.getBoundingClientRect();
-                if (window.innerWidth <= 768) {
-                  tooltip.style.left = "50%";
-                  tooltip.style.top = (rect.bottom + 10) + "px";
-                  tooltip.style.transform = "translateX(-50%)";
-                } else {
-                  tooltip.style.left = (rect.left - 250 - 20) + "px";
-                  tooltip.style.top = (rect.top + rect.height / 2) + "px";
-                  tooltip.style.transform = "translateY(-50%)";
-                }
-                tooltip.style.display = "block";
-              });
-              cameraSpan.addEventListener("mouseleave", () => {
-                tooltip.style.display = "none";
-              });
-              
-              item.appendChild(cameraSpan);
-            }
-            
-            list.appendChild(item);
+          sec.plants.forEach(plantStr => {
+            const m = plantStr.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+            flatPlants.push(m
+              ? { layer: sec.layer, name: m[1].trim(), common: m[2].trim() }
+              : { layer: sec.layer, name: plantStr, common: '' });
           });
-          
-          layerDiv.appendChild(list);
-          plantsDiv.appendChild(layerDiv);
         });
       }
 
-      // Forest Kit Section
+      const plantsDiv = document.getElementById("modal-plants");
+      plantsDiv.innerHTML = "";
+
+      FMEGGate.mount({
+        container: plantsDiv,
+        evcCode: String(code),
+        evcName: name,
+        plants: flatPlants,
+        renderList: function(container, plants) {
+          if (plants.length > 0) {
+            const titleEl = document.createElement("h2");
+            titleEl.textContent = "Here are indigenous plants suited to your area.";
+            titleEl.style.fontFamily = "'Abril Fatface', serif";
+            titleEl.style.fontSize = "28px";
+            titleEl.style.marginTop = "30px";
+            titleEl.style.marginBottom = "20px";
+            titleEl.style.lineHeight = "1.2";
+            titleEl.style.color = "inherit";
+            container.appendChild(titleEl);
+
+            // Group by layer, preserving order
+            const layerOrder = [];
+            const byLayer = {};
+            plants.forEach(p => {
+              if (!byLayer[p.layer]) { layerOrder.push(p.layer); byLayer[p.layer] = []; }
+              byLayer[p.layer].push(p);
+            });
+
+            layerOrder.forEach(layerName => {
+              const layerDiv = document.createElement("div");
+              layerDiv.className = "layer";
+              layerDiv.style.marginBottom = "20px";
+              layerDiv.style.overflow = "visible";
+
+              const heading = document.createElement("h3");
+              heading.textContent = layerName;
+              heading.style.fontWeight = "700";
+              heading.style.fontSize = "16px";
+              heading.style.marginBottom = "10px";
+              heading.style.lineHeight = "1.3";
+              heading.style.color = "inherit";
+              layerDiv.appendChild(heading);
+
+              const list = document.createElement("ul");
+              list.style.listStyle = "none";
+              list.style.padding = "0";
+              list.style.margin = "0";
+              list.style.overflow = "visible";
+
+              byLayer[layerName].forEach(async (p) => {
+                const plantStr = p.name + (p.common ? ' (' + p.common + ')' : '');
+                const item = document.createElement("li");
+                item.style.padding = "8px 12px";
+                item.style.borderBottom = "1px solid #e2e8f0";
+                item.style.fontSize = "14px";
+                item.style.display = "flex";
+                item.style.alignItems = "center";
+                item.style.justifyContent = "space-between";
+                item.style.gap = "10px";
+                item.style.position = "relative";
+                item.style.overflow = "visible";
+
+                const nameSpan = document.createElement("span");
+                nameSpan.textContent = plantStr;
+                nameSpan.style.flex = "1";
+                item.appendChild(nameSpan);
+
+                const imageCheck = await checkPlantImage(plantStr);
+
+                if (imageCheck.exists) {
+                  const cameraSpan = document.createElement("span");
+                  cameraSpan.className = "plant-camera";
+                  cameraSpan.innerHTML = "&#128247;";
+                  cameraSpan.style.cursor = "pointer";
+                  cameraSpan.style.fontSize = "1.2rem";
+                  cameraSpan.style.padding = "0.3rem 0.5rem";
+                  cameraSpan.style.borderRadius = "0";
+                  cameraSpan.style.transition = "all 0.3s";
+                  cameraSpan.style.userSelect = "none";
+
+                  cameraSpan.addEventListener("mouseenter", () => {
+                    cameraSpan.style.backgroundColor = "#3d4535";
+                    cameraSpan.style.transform = "scale(1.1)";
+                  });
+                  cameraSpan.addEventListener("mouseleave", () => {
+                    cameraSpan.style.backgroundColor = "transparent";
+                    cameraSpan.style.transform = "scale(1)";
+                  });
+
+                  const tooltip = document.createElement("div");
+                  tooltip.className = "plant-image-tooltip";
+                  tooltip.style.display = "none";
+                  tooltip.style.position = "fixed";
+                  tooltip.style.zIndex = "99999";
+                  tooltip.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.3)";
+                  tooltip.style.borderRadius = "0";
+                  tooltip.style.overflow = "hidden";
+                  tooltip.style.pointerEvents = "none";
+
+                  const img = document.createElement("img");
+                  img.src = imageCheck.url;
+                  img.alt = plantStr;
+                  img.style.objectFit = "cover";
+                  img.style.display = "block";
+                  img.style.borderRadius = "0";
+
+                  if (window.innerWidth <= 768) {
+                    tooltip.style.width = "200px";
+                    tooltip.style.height = "200px";
+                    img.style.width = "200px";
+                    img.style.height = "200px";
+                  } else {
+                    tooltip.style.width = "250px";
+                    tooltip.style.height = "250px";
+                    img.style.width = "250px";
+                    img.style.height = "250px";
+                  }
+
+                  tooltip.appendChild(img);
+                  document.body.appendChild(tooltip);
+
+                  cameraSpan.addEventListener("mouseenter", () => {
+                    const rect = cameraSpan.getBoundingClientRect();
+                    if (window.innerWidth <= 768) {
+                      tooltip.style.left = "50%";
+                      tooltip.style.top = (rect.bottom + 10) + "px";
+                      tooltip.style.transform = "translateX(-50%)";
+                    } else {
+                      tooltip.style.left = (rect.left - 250 - 20) + "px";
+                      tooltip.style.top = (rect.top + rect.height / 2) + "px";
+                      tooltip.style.transform = "translateY(-50%)";
+                    }
+                    tooltip.style.display = "block";
+                  });
+                  cameraSpan.addEventListener("mouseleave", () => {
+                    tooltip.style.display = "none";
+                  });
+
+                  item.appendChild(cameraSpan);
+                }
+
+                list.appendChild(item);
+              });
+
+              layerDiv.appendChild(list);
+              container.appendChild(layerDiv);
+            });
+          }
+
+          // Forest Kit Section
       const kitDetails = getKitDetails(name);
       
       const kitSection = document.createElement("div");
@@ -1193,9 +1220,9 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
         kitSection.appendChild(exploreButton);
       }
       
-      plantsDiv.appendChild(kitSection);
-      
-      // Tee Section (continuing from kit section...)
+          container.appendChild(kitSection);
+
+          // Tee Section (continuing from kit section...)
       const teeSection = document.createElement("div");
       teeSection.style.marginTop = "20px";
       teeSection.style.padding = "30px";
@@ -1327,8 +1354,10 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
         teeSection.appendChild(teeHint);
       };
       
-      plantsDiv.appendChild(teeSection);
-      plantsDiv.style.display = "block";
+          container.appendChild(teeSection);
+          container.style.display = "block";
+        }
+      });
     })
     .catch(err => {
       console.error('Failed to load plant data:', err);
