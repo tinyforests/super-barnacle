@@ -32,7 +32,7 @@
 (function () {
   'use strict';
 
-  var ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE';
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbyU5AXZH1WU9PI1RmScYUeaZ-FDo6u88GZbdKTpf_fMLzgx2FZOSluT3WJdqcKr6FDZzw/exec';
 
   /* ---------- handoff params from findmyevc ---------- */
 
