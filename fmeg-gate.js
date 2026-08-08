@@ -178,6 +178,7 @@
       var gateEl = box.querySelector('.fmeg-gate');
       gateEl.style.opacity = '0';
       setTimeout(function () {
+        box.innerHTML = '';
         opts.renderList(box, opts.plants);
       }, 300);
     });
