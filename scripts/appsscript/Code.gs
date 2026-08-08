@@ -24,7 +24,7 @@
  */
 
 var SHEET_NAME = 'Submissions';       // tab name inside the spreadsheet
-var SHEET_ID = '';                    // leave blank if script is bound to the sheet
+var SHEET_ID = '1w_H8aplOy-qtR18zXWUfAXl-suRFyW4ugdoQzjr5Tn0';
 var FROM_NAME = 'Find My Ecological Garden';
 var REPLY_TO = 'hello@gardenerandson.com';   // update if needed
 var MAX_PLANTS = 120;                 // cap on plant lines accepted in payload
