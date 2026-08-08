@@ -172,3 +172,8 @@ function respond(obj) {
 function doGet() {
   return respond({ ok: true, service: 'fmeg-plant-gate' });
 }
+
+// Run this once from the editor to grant MailApp scope to the deployment.
+function authorizeMail() {
+  MailApp.sendEmail(REPLY_TO, 'FMEG gate — MailApp auth', 'MailApp scope granted.');
+}

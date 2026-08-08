@@ -49,8 +49,8 @@
   /* ---------- styles (G&S system, injected once) ---------- */
 
   var CSS = [
-    '.fmeg-gate{border:1px solid #3d4535;background:#fff0dc;color:#3d4535;',
-    'padding:28px 24px;max-width:520px;font-family:"IBM Plex Sans",sans-serif;}',
+    '.fmeg-gate{border-top:1px solid #3d4535;background:#fff0dc;color:#3d4535;',
+    'padding:2.5rem 0;width:100%;font-family:"IBM Plex Sans",sans-serif;}',
     '.fmeg-gate *{box-sizing:border-box;border-radius:0;}',
     '.fmeg-gate .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;',
     'letter-spacing:.12em;text-transform:uppercase;color:#3d4535;opacity:.75;',
