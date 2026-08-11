@@ -460,9 +460,33 @@ function processEVCResults(data, lat, lon) {
   }
 
   if (!matchedFeature) {
-    console.log('No exact match, using nearest feature (urban fallback)');
-    matchedFeature = data.features[0];
+    console.log('No exact match, majority EVC + nearest centroid fallback');
     isUrbanFallback = true;
+    const evcCounts = {};
+    const evcGroups = {};
+    data.features.forEach(f => {
+      const code = f.properties.evc;
+      evcCounts[code] = (evcCounts[code] || 0) + 1;
+      if (!evcGroups[code]) evcGroups[code] = [];
+      evcGroups[code].push(f);
+    });
+    const topCode = Object.keys(evcCounts).reduce((a, b) => evcCounts[a] >= evcCounts[b] ? a : b);
+    const group = evcGroups[topCode];
+    let bestDist = Infinity;
+    group.forEach(f => {
+      try {
+        let pts = [];
+        const g = f.geometry;
+        if (g.type === 'MultiPolygon') g.coordinates.forEach(poly => poly.forEach(ring => pts = pts.concat(ring)));
+        else g.coordinates.forEach(ring => pts = pts.concat(ring));
+        const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+        const cy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+        const dist = Math.sqrt((cx - lon) ** 2 + (cy - lat) ** 2);
+        if (dist < bestDist) { bestDist = dist; matchedFeature = f; }
+      } catch (e) {}
+    });
+    matchedFeature = matchedFeature || group[0] || data.features[0];
+    console.log('Majority EVC fallback:', topCode, matchedFeature?.properties?.bioregion);
   }
 
   console.log('Matched feature:', matchedFeature);
