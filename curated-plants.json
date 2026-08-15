@@ -1,9 +1,9 @@
 {
   "metadata": {
     "version": "1.0.6",
-    "last_updated": "2025-02-01",
+    "last_updated": "2026-08-09",
     "coverage": "Victoria, Australia",
-    "total_evcs": 38
+    "total_evcs": 44
   },
   "evcs": {
     "2": {
@@ -12,7 +12,9 @@
       "recommendations": [
         {
           "layer": "Canopy Layer",
-          "plants": ["Banksia integrifolia (Coast Banksia)"]
+          "plants": [
+            "Banksia integrifolia (Coast Banksia)"
+          ]
         },
         {
           "layer": "Shrub Layer",
@@ -48,7 +50,9 @@
       "recommendations": [
         {
           "layer": "Canopy Layer",
-          "plants": ["Eucalyptus baxteri s.s. (Brown Stringybark)"]
+          "plants": [
+            "Eucalyptus baxteri s.s. (Brown Stringybark)"
+          ]
         },
         {
           "layer": "Sub-Canopy Layer",
@@ -108,7 +112,9 @@
       "recommendations": [
         {
           "layer": "Canopy Layer",
-          "plants": ["Eucalyptus obliqua (Messmate Stringybark)"]
+          "plants": [
+            "Eucalyptus obliqua (Messmate Stringybark)"
+          ]
         },
         {
           "layer": "Shrub Layer",
@@ -226,7 +232,9 @@
       "recommendations": [
         {
           "layer": "Shrub Layer",
-          "plants": ["Leptospermum lanigerum (Woolly Tea-tree)"]
+          "plants": [
+            "Leptospermum lanigerum (Woolly Tea-tree)"
+          ]
         },
         {
           "layer": "Herb Layer",
@@ -315,7 +323,9 @@
       "recommendations": [
         {
           "layer": "Canopy Layer",
-          "plants": ["Eucalyptus viminalis (Manna Gum)"]
+          "plants": [
+            "Eucalyptus viminalis (Manna Gum)"
+          ]
         },
         {
           "layer": "Sub-Canopy Layer",
@@ -421,7 +431,9 @@
         },
         {
           "layer": "Sub-Canopy Layer",
-          "plants": ["Acacia pycnantha (Golden Wattle)"]
+          "plants": [
+            "Acacia pycnantha (Golden Wattle)"
+          ]
         },
         {
           "layer": "Shrub Layer",
@@ -739,7 +751,9 @@
         },
         {
           "layer": "Sub-Canopy Layer",
-          "plants": ["Acacia mearnsii (Black Wattle)"]
+          "plants": [
+            "Acacia mearnsii (Black Wattle)"
+          ]
         },
         {
           "layer": "Shrub Layer",
@@ -1356,7 +1370,9 @@
         },
         {
           "layer": "Sub-Canopy Layer",
-          "plants": ["Acacia melanoxylon (Blackwood)"]
+          "plants": [
+            "Acacia melanoxylon (Blackwood)"
+          ]
         },
         {
           "layer": "Shrub Layer",
@@ -1505,11 +1521,15 @@
       "recommendations": [
         {
           "layer": "Canopy Layer",
-          "plants": ["Eucalyptus camaldulensis (River Red-gum)"]
+          "plants": [
+            "Eucalyptus camaldulensis (River Red-gum)"
+          ]
         },
         {
           "layer": "Shrub Layer",
-          "plants": ["Acacia melanoxylon (Blackwood)"]
+          "plants": [
+            "Acacia melanoxylon (Blackwood)"
+          ]
         },
         {
           "layer": "Herb Layer",
@@ -1580,7 +1600,9 @@
       "recommendations": [
         {
           "layer": "Canopy Layer",
-          "plants": ["Eucalyptus camaldulensis (River Red-gum)"]
+          "plants": [
+            "Eucalyptus camaldulensis (River Red-gum)"
+          ]
         },
         {
           "layer": "Shrub Layer",
@@ -1716,6 +1738,253 @@
             "Lepidosperma laterale (Variable Sword-sedge)",
             "Poa tenera (Slender Tussock-grass)",
             "Juncus holoschoenus (Joint-leaf Rush)"
+          ]
+        }
+      ]
+    },
+    "67": {
+      "name": "Alluvial Terraces Herb-rich Woodland",
+      "description": "A woodland of fertile alluvial river terraces in western Victoria, with River Red Gum and Swamp Gum above a rich ground layer of grasses, sedges, and seasonal wildflowers. The herb layer reflects the fertile, seasonally moist soils of creek floodplains and riverine flats. Often found fringing rivers like the Wimmera and Hopkins, where periodic flooding maintains soil fertility and plant diversity.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus camaldulensis (River Red-gum)",
+            "Eucalyptus ovata (Swamp Gum)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Acacia melanoxylon (Blackwood)",
+            "Acacia paradoxa (Hedge Wattle)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Acacia pycnantha (Golden Wattle)",
+            "Bursaria spinosa (Sweet Bursaria)",
+            "Ozothamnus ferrugineus (Tree Everlasting)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Microlaena stipoides var. stipoides (Weeping Grass)",
+            "Carex appressa (Tall Sedge)",
+            "Bulbine bulbosa (Bulbine Lily)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Wahlenbergia spp. (Bluebells)",
+            "Ranunculus lappaceus (Common Buttercup)",
+            "Oxalis perennans (Grassland Wood-sorrel)",
+            "Veronica gracilis (Slender Speedwell)"
+          ]
+        }
+      ]
+    },
+    "76": {
+      "name": "Grassy Woodland",
+      "description": "Open grassy woodland of the drier inland ranges and alluvial slopes of central Victoria, dominated by Grey Box and Yellow Box over a continuous native grass cover. Found on sandy or loamy soils in the goldfields and Loddon Plains country. The ground layer is rich in native grasses and seasonal wildflowers, supporting many grassland-dependent invertebrates and reptiles.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus microcarpa (Grey Box)",
+            "Eucalyptus melliodora (Yellow Box)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Allocasuarina luehmannii (Buloke)",
+            "Acacia pycnantha (Golden Wattle)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Acacia paradoxa (Hedge Wattle)",
+            "Dodonaea viscosa (Sticky Hop-bush)",
+            "Bursaria spinosa (Sweet Bursaria)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Austrostipa spp. (Spear-grass)",
+            "Poa sieberiana (Grey Tussock-grass)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Leptorhynchos squamatus (Scaly Buttons)",
+            "Wahlenbergia spp. (Bluebells)",
+            "Lomandra filiformis (Wattle Mat-rush)",
+            "Oxalis perennans (Grassland Wood-sorrel)"
+          ]
+        }
+      ]
+    },
+    "896": {
+      "name": "Grassy Woodland / Heathy Dry Forest Complex",
+      "description": "A mosaic of open Grassy Woodland and Heathy Dry Forest on the low hills and ranges of central-western Victoria. Ironbark and grey box eucalypts shade a diverse shrub and herb layer combining grassland wildflowers with heath-forming shrubs. Found on shallow, well-drained soils on ridges and upper slopes, this community supports woodland birds and lizards that rely on the mosaic of open grass and shrubby cover.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus microcarpa (Grey Box)",
+            "Eucalyptus leucoxylon (Yellow Gum)",
+            "Eucalyptus tricarpa (Red Ironbark)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Acacia pycnantha (Golden Wattle)",
+            "Acacia paradoxa (Hedge Wattle)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Dodonaea viscosa (Sticky Hop-bush)",
+            "Hakea rostrata (Beaked Hakea)",
+            "Grevillea alpina (Cat's Claw Grevillea)",
+            "Dillwynia sericea (Showy Parrot-pea)",
+            "Hibbertia obtusifolia (Grey Guinea-flower)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Austrostipa spp. (Spear-grass)",
+            "Poa sieberiana (Grey Tussock-grass)",
+            "Lomandra filiformis (Wattle Mat-rush)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Goodenia ovata (Hop Goodenia)",
+            "Wahlenbergia spp. (Bluebells)"
+          ]
+        }
+      ]
+    },
+    "897": {
+      "name": "Plains Grassland / Plains Grassy Woodland Mosaic",
+      "description": "A mosaic of treeless Plains Grassland and scattered-tree Plains Grassy Woodland on the volcanic basalt plains of western and south-western Victoria. Kangaroo Grass dominates a continuous ground layer beneath occasional River Red Gum and Yellow Box, rich in native wildflowers. Once widespread across the western suburbs of Melbourne and the Werribee Plains; now critically reduced to tiny fragments.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus camaldulensis (River Red-gum)",
+            "Eucalyptus melliodora (Yellow Box)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Acacia pycnantha (Golden Wattle)",
+            "Bursaria spinosa (Sweet Bursaria)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Austrostipa spp. (Spear-grass)",
+            "Poa sieberiana (Grey Tussock-grass)",
+            "Microlaena stipoides var. stipoides (Weeping Grass)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Leptorhynchos squamatus (Scaly Buttons)",
+            "Wahlenbergia spp. (Bluebells)",
+            "Bulbine bulbosa (Bulbine Lily)",
+            "Oxalis perennans (Grassland Wood-sorrel)",
+            "Hypericum gramineum (Small St John's Wort)",
+            "Dichondra repens (Kidney-weed)",
+            "Vittadinia cervicularis (New Holland Daisy)",
+            "Pimelea humilis (Common Rice-flower)"
+          ]
+        }
+      ]
+    },
+    "921": {
+      "name": "Coast Banksia Woodland / Coastal Dune Scrub Mosaic",
+      "description": "A mosaic of Coast Banksia Woodland and Coastal Dune Scrub on sandy, calcareous soils along the Port Phillip, Western Port, and Bass Strait coastlines. Banksia integrifolia anchors the canopy where soils are stable; lower, windswept dunes support dense scrub of coast tea-tree, cushion bush, and salt-tolerant ground covers. These coastal communities protect dune systems, shelter migratory shorebirds, and support specialised insects tied to Banksia and spinifex.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Banksia integrifolia (Coast Banksia)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Leptospermum laevigatum (Coast Tea-tree)",
+            "Acacia sophorae (Coastal Wattle)",
+            "Myoporum insulare (Boobyalla)",
+            "Leucophyta brownii (Cushion Bush)",
+            "Rhagodia candolleana ssp. candolleana (Seaberry Saltbush)",
+            "Ozothamnus turbinatus (Coast Everlasting)",
+            "Leucopogon parviflorus (Coast Beard-heath)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Carpobrotus rossii (Karkalla)",
+            "Tetragonia implexicoma (Bower Spinach)",
+            "Spinifex sericeus (Hairy Spinifex)",
+            "Poa poiformis (Coast Tussock-grass)",
+            "Ficinia nodosa (Knobby Club-sedge)",
+            "Lomandra longifolia (Spiny-headed Mat-rush)",
+            "Pelargonium australe (Austral Stork's-bill)",
+            "Senecio lautus (Variable Groundsel)",
+            "Dichondra repens (Kidney-weed)"
+          ]
+        }
+      ]
+    },
+    "927": {
+      "name": "Plains Grassy Woodland / Swamp Scrub / Plains Grassy Wetland Mosaic",
+      "description": "A complex mosaic of open Plains Grassy Woodland, dense Swamp Scrub thickets, and seasonally flooded Plains Grassy Wetland in low-lying areas of the southern Port Phillip plains. Where drainage is impeded, the landscape shifts abruptly between dry woodland and wet scrub, supporting both open grassland birds and wetland species within a few metres of each other. Contains some of Melbourne's most botanically diverse grassland and wetland remnants.",
+      "recommendations": [
+        {
+          "layer": "Canopy Layer",
+          "plants": [
+            "Eucalyptus camaldulensis (River Red-gum)",
+            "Eucalyptus ovata (Swamp Gum)"
+          ]
+        },
+        {
+          "layer": "Sub-Canopy Layer",
+          "plants": [
+            "Melaleuca ericifolia (Swamp Paperbark)"
+          ]
+        },
+        {
+          "layer": "Shrub Layer",
+          "plants": [
+            "Leptospermum continentale (Prickly Tea-tree)",
+            "Acacia melanoxylon (Blackwood)",
+            "Bursaria spinosa (Sweet Bursaria)",
+            "Ozothamnus ferrugineus (Tree Everlasting)"
+          ]
+        },
+        {
+          "layer": "Herb Layer",
+          "plants": [
+            "Themeda triandra (Kangaroo Grass)",
+            "Carex appressa (Tall Sedge)",
+            "Poa labillardierei (Common Tussock-grass)",
+            "Juncus procerus (Tall Rush)",
+            "Ficinia nodosa (Knobby Club-sedge)",
+            "Triglochin procerum s.l. (Water Ribbons)",
+            "Schoenoplectus tabernaemontani (River Club-sedge)",
+            "Chrysocephalum apiculatum (Common Everlasting)",
+            "Persicaria decipiens (Slender Knotweed)",
+            "Wahlenbergia spp. (Bluebells)",
+            "Microlaena stipoides var. stipoides (Weeping Grass)"
           ]
         }
       ]
