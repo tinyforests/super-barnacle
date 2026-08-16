@@ -13,113 +13,8 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   
   <title>Contact | Gardener & Son</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="stylesheet" href="/assets/brand.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: "IBM Plex Sans", sans-serif;
-      background-color: #fff0dc;
-      color: #3d4535;
-      line-height: 1.8;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Back Button */
-    .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-      width: 50px;
-      height: 50px;
-      background-color: #3d4535;
-      border-radius: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      text-decoration: none;
-      color: #fff0dc;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .back-button:hover {
-      transform: scale(1.05);
-      background-color: #2f3928;
-    }
-
-    /* Brand Badge */
-    .brand-badge {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #3d4535;
-      color: #fff0dc;
-      padding: 10px 20px;
-      border-radius: 0;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 999;
-      transition: all 0.3s ease;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .brand-badge:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    .brand-badge::before {
-      content: "⚘ ";
-      margin-right: 5px;
-    }
-
-    /* Container */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 5rem 2rem 3rem;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    h1 {
-      font-family: "Abril Fatface", serif;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      color: #3d4535;
-      margin-bottom: 1rem;
-      letter-spacing: 0px;
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: #666;
-      line-height: 1.8;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-    }
-
-    /* Contact Grid */
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -128,52 +23,43 @@
     }
 
     .contact-card {
-      background-color: #3d4535;
-      color: #fff0dc;
+      background-color: var(--green);
+      color: var(--beige);
       padding: 2rem;
-      border-radius: 0;
       text-align: center;
     }
 
     .contact-card h2 {
-      font-family: "Abril Fatface", serif;
+      font-family: var(--font-hero);
       font-size: 1.8rem;
       margin-bottom: 1rem;
-      letter-spacing: 0px;
+      letter-spacing: 0;
     }
 
-    .contact-card p {
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
+    .contact-card p { font-size: 1rem; line-height: 1.7; margin-bottom: 1rem; }
 
     .contact-card a {
-      color: #fff0dc;
+      color: var(--beige);
       text-decoration: none;
       font-weight: 600;
       transition: opacity 0.3s;
     }
 
-    .contact-card a:hover {
-      opacity: 0.8;
-    }
+    .contact-card a:hover { opacity: 0.8; }
 
-    /* Inquiry Section */
     .inquiry-section {
       background: rgba(255, 255, 255, 0.5);
       padding: 2.5rem;
-      border-radius: 0;
       margin-bottom: 3rem;
     }
 
     .inquiry-section h2 {
-      font-family: "Abril Fatface", serif;
+      font-family: var(--font-hero);
       font-size: clamp(1.8rem, 5vw, 2.5rem);
-      color: #3d4535;
+      color: var(--ink);
       margin-bottom: 1.5rem;
       text-align: center;
-      letter-spacing: 0px;
+      letter-spacing: 0;
     }
 
     .inquiry-section p {
@@ -181,7 +67,7 @@
       line-height: 1.8;
       margin-bottom: 2rem;
       text-align: center;
-      color: #666;
+      color: var(--ink-muted);
     }
 
     .inquiry-list {
@@ -194,8 +80,7 @@
     .inquiry-list li {
       font-size: 1.05rem;
       line-height: 1.8;
-      padding: 0.75rem 0;
-      padding-left: 2rem;
+      padding: 0.75rem 0 0.75rem 2rem;
       position: relative;
     }
 
@@ -203,18 +88,16 @@
       content: "→";
       position: absolute;
       left: 0;
-      color: #3d4535;
+      color: var(--ink);
       font-weight: bold;
     }
 
-    /* Email Button */
     .email-button {
       display: inline-block;
       padding: 1.2rem 2.5rem;
-      background-color: #3d4535;
-      color: #fff0dc;
+      background-color: var(--green);
+      color: var(--beige);
       text-decoration: none;
-      border-radius: 0;
       font-weight: 700;
       font-size: 1rem;
       transition: all 0.3s ease;
@@ -226,158 +109,32 @@
       box-shadow: 0 8px 25px rgba(61, 69, 53, 0.25);
     }
 
-    /* Location Info */
     .location-info {
       text-align: center;
       padding: 2rem;
-      background-color: #3d4535;
-      color: #fff0dc;
-      border-radius: 0;
+      background-color: var(--green);
+      color: var(--beige);
       margin-bottom: 3rem;
     }
 
     .location-info h2 {
-      font-family: "Abril Fatface", serif;
+      font-family: var(--font-hero);
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
-      letter-spacing: 0px;
+      letter-spacing: 0;
     }
 
-    .location-info p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 0.5rem;
-    }
+    .location-info p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 0.5rem; }
+    .location-info p:last-child { margin-bottom: 0; font-style: italic; opacity: 0.9; }
 
-    .location-info p:last-child {
-      margin-bottom: 0;
-      font-style: italic;
-      opacity: 0.9;
-    }
-
-    /* Footer - matching evc-map page exactly */
-    footer {
-      margin-top: 0;
-      padding: 50px 20px;
-      background-color: #3d4535;
-      color: #fff0dc;
-      text-align: center;
-    }
-
-    footer .acknowledgement {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-      background-color: rgba(255, 240, 220, 0.05);
-      border-radius: 0;
-      text-align: left;
-      line-height: 1.8;
-    }
-
-    footer .acknowledgement p {
-      font-size: 13px;
-      line-height: 1.8;
-      margin-bottom: 30px;
-      font-weight: 300;
-    }
-
-    footer .acknowledgement p:last-child {
-      margin-bottom: 0;
-    }
-
-    footer > p {
-      margin-top: 40px;
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    footer a {
-      color: #fff0dc;
-      text-decoration: underline;
-      transition: opacity 0.2s ease;
-    }
-
-    footer a:hover {
-      opacity: 0.8;
-    }
-
-
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .container {
-        padding: 4rem 1.5rem 2rem;
-      }
-
-      .contact-card, .inquiry-section, .location-info {
-        padding: 1.5rem;
-      }
-
-      .back-button {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-      }
-
-      .brand-badge {
-        bottom: 15px;
-        right: 15px;
-        font-size: 0.7rem;
-        padding: 8px 16px;
-      }
-
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      footer {
-        padding: 40px 15px;
-      }
-
-      footer .acknowledgement {
-        padding: 1.5rem;
-        margin: 0 auto;
-      }
-
-      footer .acknowledgement p {
-        font-size: 14px;
-        line-height: 1.7;
-        margin-bottom: 20px;
-      }
-
-      footer > p {
-        font-size: 13px;
-        margin-top: 30px;
-        padding: 0 10px;
-      }
+      .contact-card, .inquiry-section, .location-info { padding: 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 3.5rem 1rem 2rem;
-      }
-
-      .contact-card, .inquiry-section, .location-info {
-        padding: 1.2rem;
-      }
-
-      .email-button {
-        padding: 1rem 2rem;
-        font-size: 0.95rem;
-      }
-
-      footer .acknowledgement {
-        padding: 1.2rem;
-      }
-
-      footer .acknowledgement p {
-        font-size: 13px;
-        margin-bottom: 15px;
-      }
-
-      footer > p {
-        font-size: 12px;
-      }
+      .contact-card, .inquiry-section, .location-info { padding: 1.2rem; }
+      .email-button { padding: 1rem 2rem; font-size: 0.95rem; }
     }
   </style>
 </head>
