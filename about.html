@@ -13,203 +13,69 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   
   <title>About Us | Gardener & Son</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="stylesheet" href="/assets/brand.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    .container { max-width: 900px; }
 
-    body {
-      font-family: "IBM Plex Sans", sans-serif;
-      background-color: #fff0dc;
-      color: #3d4535;
-      line-height: 1.8;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Back Button */
-    .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-      width: 50px;
-      height: 50px;
-      background-color: #3d4535;
-      border-radius: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      text-decoration: none;
-      color: #fff0dc;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .back-button:hover {
-      transform: scale(1.05);
-      background-color: #2f3928;
-    }
-
-    /* Brand Badge */
-    .brand-badge {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #3d4535;
-      color: #fff0dc;
-      padding: 10px 20px;
-      border-radius: 0;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 999;
-      transition: all 0.3s ease;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .brand-badge:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    .brand-badge::before {
-      content: "⚘ ";
-      margin-right: 5px;
-    }
-
-    /* Container */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 5rem 2rem 3rem;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: 4rem;
-      padding-bottom: 3rem;
-      border-bottom: 2px solid rgba(61, 69, 53, 0.1);
-    }
-
-    h1 {
-      font-family: "Abril Fatface", serif;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      color: #3d4535;
-      margin-bottom: 1rem;
-      letter-spacing: 0px;
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: #666;
-      font-weight: 400;
-      margin-bottom: 2rem;
-    }
-
-    /* Intro Section */
     .intro {
       background: rgba(255, 255, 255, 0.5);
       padding: 2rem 2.5rem;
-      border-radius: 0;
       margin-bottom: 4rem;
       font-size: 1.1rem;
       line-height: 1.9;
     }
 
-    /* Profile Sections */
     .profile {
       margin-bottom: 4rem;
       padding: 2.5rem;
-      background-color: #3d4535;
-      color: #fff0dc;
-      border-radius: 0;
+      background-color: var(--green);
+      color: var(--beige);
     }
 
     .profile h2 {
-      font-family: "Abril Fatface", serif;
+      font-family: var(--font-hero);
       font-size: clamp(1.8rem, 5vw, 2.5rem);
       margin-bottom: 0.5rem;
-      letter-spacing: 0px;
+      letter-spacing: 0;
       line-height: 1.2;
     }
 
-    .profile h3 {
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-      font-style: italic;
-    }
+    .profile h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 2rem; opacity: 0.9; font-style: italic; }
+    .profile p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 1.5rem; }
+    .profile p:last-child { margin-bottom: 0; }
 
-    .profile p {
-      font-size: 1.05rem;
-      line-height: 1.9;
-      margin-bottom: 1.5rem;
-    }
-
-    .profile p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Transition text between profiles */
     .transition-text {
       text-align: center;
       font-size: clamp(1.3rem, 3vw, 1.7rem);
       font-style: italic;
-      color: #3d4535;
+      color: var(--ink);
       margin: 3rem 0;
       padding: 0 2rem;
       opacity: 0.85;
     }
 
-    /* Together Section */
     .together {
       background: rgba(255, 255, 255, 0.5);
       padding: 2.5rem;
-      border-radius: 0;
       margin-bottom: 3rem;
     }
 
     .together h2 {
-      font-family: "Abril Fatface", serif;
+      font-family: var(--font-hero);
       font-size: clamp(1.8rem, 5vw, 2.5rem);
-      color: #3d4535;
+      color: var(--ink);
       margin-bottom: 2rem;
-      letter-spacing: 0px;
+      letter-spacing: 0;
       line-height: 1.2;
     }
 
-    .together p {
-      font-size: 1.05rem;
-      line-height: 1.9;
-      margin-bottom: 1.5rem;
-    }
-
-    .together ul {
-      list-style: none;
-      padding: 0;
-      margin: 2rem 0;
-    }
+    .together p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 1.5rem; }
+    .together ul { list-style: none; padding: 0; margin: 2rem 0; }
 
     .together ul li {
       font-size: 1.05rem;
       line-height: 1.8;
-      padding: 0.75rem 0;
-      padding-left: 2rem;
+      padding: 0.75rem 0 0.75rem 2rem;
       position: relative;
     }
 
@@ -217,18 +83,16 @@
       content: "✓";
       position: absolute;
       left: 0;
-      color: #3d4535;
+      color: var(--ink);
       font-weight: bold;
       font-size: 1.2rem;
     }
 
-    /* Vision */
     .vision {
       text-align: center;
       padding: 3rem 2rem;
-      background-color: #3d4535;
-      color: #fff0dc;
-      border-radius: 0;
+      background-color: var(--green);
+      color: var(--beige);
       margin-bottom: 3rem;
     }
 
@@ -240,21 +104,19 @@
       margin: 0 auto;
     }
 
-    /* Contact Info Section */
     .contact-info-section {
       background: rgba(255, 255, 255, 0.5);
       padding: 2.5rem;
-      border-radius: 0;
       margin-bottom: 3rem;
       text-align: center;
     }
 
     .contact-info-section h2 {
-      font-family: "Abril Fatface", serif;
+      font-family: var(--font-hero);
       font-size: clamp(1.8rem, 5vw, 2.5rem);
-      color: #3d4535;
+      color: var(--ink);
       margin-bottom: 2rem;
-      letter-spacing: 0px;
+      letter-spacing: 0;
     }
 
     .contact-details {
@@ -264,166 +126,22 @@
       margin-top: 2rem;
     }
 
-    .contact-item {
-      padding: 1.5rem;
-      background: white;
-      border-radius: 0;
-    }
+    .contact-item { padding: 1.5rem; background: white; }
+    .contact-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; opacity: 0.7; }
+    .contact-item p { font-size: 1.1rem; line-height: 1.6; }
+    .contact-item a { color: var(--ink); text-decoration: none; font-weight: 500; }
+    .contact-item a:hover { opacity: 0.7; }
 
-    .contact-item h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      opacity: 0.7;
-    }
-
-    .contact-item p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .contact-item a {
-      color: #3d4535;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .contact-item a:hover {
-      opacity: 0.7;
-    }
-
-    /* Footer - matching evc-map page exactly */
-    footer {
-      margin-top: 0;
-      padding: 50px 20px;
-      background-color: #3d4535;
-      color: #fff0dc;
-      text-align: center;
-    }
-
-    footer .acknowledgement {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-      background-color: rgba(255, 240, 220, 0.05);
-      border-radius: 0;
-      text-align: left;
-      line-height: 1.8;
-    }
-
-    footer .acknowledgement p {
-      font-size: 13px;
-      line-height: 1.8;
-      margin-bottom: 30px;
-      font-weight: 300;
-    }
-
-    footer .acknowledgement p:last-child {
-      margin-bottom: 0;
-    }
-
-    footer > p {
-      margin-top: 40px;
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    footer a {
-      color: #fff0dc;
-      text-decoration: underline;
-      transition: opacity 0.2s ease;
-    }
-
-    footer a:hover {
-      opacity: 0.8;
-    }
-
-
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .container {
-        padding: 4rem 1.5rem 2rem;
-      }
-
-      .intro, .profile, .together, .contact-info-section {
-        padding: 1.5rem;
-      }
-
-      .profile h3 {
-        font-size: 1rem;
-      }
-
-      .transition-text {
-        font-size: 1.2rem;
-        margin: 2rem 0;
-      }
-
-      .back-button {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-      }
-
-      .brand-badge {
-        bottom: 15px;
-        right: 15px;
-        font-size: 0.7rem;
-        padding: 8px 16px;
-      }
-
-      .contact-details {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      footer {
-        padding: 40px 15px;
-      }
-
-      footer .acknowledgement {
-        padding: 1.5rem;
-        margin: 0 auto;
-      }
-
-      footer .acknowledgement p {
-        font-size: 14px;
-        line-height: 1.7;
-        margin-bottom: 20px;
-      }
-
-      footer > p {
-        font-size: 13px;
-        margin-top: 30px;
-        padding: 0 10px;
-      }
+      .intro, .profile, .together, .contact-info-section { padding: 1.5rem; }
+      .profile h3 { font-size: 1rem; }
+      .transition-text { font-size: 1.2rem; margin: 2rem 0; }
+      .contact-details { grid-template-columns: 1fr; gap: 1rem; }
     }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 3.5rem 1rem 2rem;
-      }
-
-      .intro, .profile, .together, .contact-info-section {
-        padding: 1.2rem;
-      }
-
-      .transition-text {
-        font-size: 1.1rem;
-      }
-
-      footer .acknowledgement {
-        padding: 1.2rem;
-      }
-
-      footer .acknowledgement p {
-        font-size: 13px;
-        margin-bottom: 15px;
-      }
-
-      footer > p {
-        font-size: 12px;
-      }
+      .intro, .profile, .together, .contact-info-section { padding: 1.2rem; }
+      .transition-text { font-size: 1.1rem; }
     }
   </style>
 </head>
