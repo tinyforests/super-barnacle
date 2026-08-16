@@ -1,9 +1,9 @@
 # BRAND.md — Brand Compliance
 
 **Repo:** Find My Ecological Garden (`super-barnacle`)
-**Last updated:** May 2026
+**Last updated:** August 2026
 
-Read this before making any visual or copy change. This file documents what the correct brand state looks like and where the current codebase diverges from it. The correct state is drawn from `SUPER_MIND.md` — this file is the repo-specific application of those standards.
+Read this before making any visual or copy change. This file documents what the correct brand state looks like. The correct state is drawn from `SUPER_MIND.md` — this file is the repo-specific application of those standards.
 
 ---
 
@@ -11,13 +11,17 @@ Read this before making any visual or copy change. This file documents what the 
 
 ### Colours
 
-| Token | Value | Use |
+| Token | Value | Role |
 |---|---|---|
-| Gardener Green | `#3d4535` | Primary — backgrounds, text, buttons, borders |
-| Nostalgic Beige | `#fff0dc` | Secondary — page background, text-on-green |
-| Dark Green | `#2f3928` | Hover states only — a slightly darker green |
-| Signal Green | Functional only | Use only where meaning is being conveyed (status indicators). Do not use decoratively. |
-| White | `#ffffff` | Input fields, card backgrounds where contrast is needed |
+| Gardener Green | `#3d4535` | Primary — backgrounds, text, borders |
+| Nostalgic Beige | `#fff0dc` | Page background; text on green |
+| Beige Deep | `#f7e8cf` | Middle section band (light/deep/dark sandwich) |
+| Dark Green | `#2f3928` | Hover states on green surfaces only |
+| Signal Green | `#7C9A52` | **The accent role** — CTAs, active states, links, focus rings, card accents |
+| Signal Green Hover | `#6A8544` | Hover state for Signal Green elements |
+| Dry Grass Brass | `#B49A63` | Dividers and accents on **light backgrounds only**. Never body text. Never label text. Never on beige. |
+
+**Brass restriction is absolute.** It reads as body copy colour on beige. Do not use it for any text role, even if muted.
 
 No other colours should be introduced without a specific ecological reason. Do not add blues, purples, or warm greys — these drift the brand toward a generic consumer product.
 
@@ -25,38 +29,20 @@ No other colours should be introduced without a specific ecological reason. Do n
 
 | Role | Typeface | When to use |
 |---|---|---|
-| Display / ceremonial | Abril Fatface | Page titles, EVC names in the modal, section headers, email section headings |
-| Body and interface | IBM Plex Sans | All prose, labels, navigation, button text, descriptions, the about page, all paragraph copy |
-| Data and identity | IBM Plex Mono | EVC codes (e.g. "EVC 55"), coordinates, timestamps, form inputs where monospace aids legibility |
+| Hero | Abril Fatface | **Hero only — once per page, never below the fold.** Page hero title exclusively. |
+| Editorial display | Fraunces | Section headings (h1/h2/h3), pull quotes, card titles, EVC names in the modal. |
+| Body and interface | IBM Plex Sans | All prose, navigation, button text, descriptions, paragraph copy. |
+| Labels, data, identity | IBM Plex Mono | Labels, eyebrows, botanical names, EVC codes, coordinates, numerals, form inputs where monospace aids legibility. |
 
-**IBM Plex Sans is not currently loaded.** Until it is, every line of prose reads as data output. Add it to the Google Fonts link in all four HTML files:
+**Fraunces in `gate-test.html` is correct.** Do not remove it. Fraunces is the canonical editorial display face — it is not a deviation.
+
+**Abril Fatface is hero-only.** One instance per page, in the above-the-fold hero section. It must not appear in section headings, modals, cards, or anywhere below the first viewport.
+
+Google Fonts link (all four faces, correct weights):
 
 ```html
-<link
-  href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
-  rel="stylesheet"
-/>
-```
-
-Then update the body font-family:
-
-```css
-body {
-  font-family: "IBM Plex Sans", sans-serif;
-}
-```
-
-And restrict Mono to data contexts only:
-
-```css
-.evc-code,
-.coordinates,
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="number"] {
-  font-family: "IBM Plex Mono", monospace;
-}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 ```
 
 ### Border radius
@@ -65,68 +51,59 @@ input[type="number"] {
 
 SUPER_MIND.md: *"No rounded corners anywhere. This is a registry and a record, not a consumer product."*
 
-This means:
-- Buttons: `border-radius: 0`
-- Modals and panels: `border-radius: 0`
-- Cards: `border-radius: 0`
-- Inputs: `border-radius: 0`
-- Badges and chips: `border-radius: 0`
-- Navigation close button: `border-radius: 0` (square, not circular)
-- Hamburger menu: `border-radius: 0` (square, not circular)
-
-The only exception is the map tiles themselves (rendered by Leaflet) — those cannot be overridden without affecting map functionality.
+The only exception is third-party vendor widgets (Leaflet map tiles, Places autocomplete dropdown) that cannot be overridden without breaking functionality. Wrap these in `.vendor` — do not loosen the global rule.
 
 ### No gradients
 
-All background colours must be flat. Replace all `linear-gradient(135deg, #3d4535 0%, #2f3928 100%)` with `background-color: #3d4535`. The darker `#2f3928` should appear only on hover states via CSS transitions, not as part of a gradient fill.
+All background colours must be flat. Replace any `linear-gradient(135deg, #3d4535 0%, #2f3928 100%)` with `background-color: #3d4535`. The darker `#2f3928` appears only on hover states via CSS transitions.
 
-### No inline styles
+### No inline styles in JS
 
-All visual properties must be in CSS classes, not `element.style.foo = "..."`. Inline styles in `evc-fetch.js` make the brand unenforceable — they cannot be overridden by CSS without `!important`, cannot be found by searching stylesheets, and cannot be updated from a design token.
+All visual properties must be in CSS classes, not `element.style.foo = "..."`. Inline styles in JS make the brand unenforceable — they can't be found by searching stylesheets and can't be updated from a design token. Exception: dynamically computed values (coordinates, transforms) that cannot be expressed as classes.
 
 ---
 
 ## 2. CSS custom properties (design tokens)
 
-These tokens should be defined in a `<style>` block in each HTML file (or in a shared `styles.css` once extracted) and referenced throughout. They are **not yet implemented** — this is the target state.
+Defined in `assets/brand.css` and linked from every page. Reference these tokens — do not hardcode hex values.
 
 ```css
 :root {
-  /* Colours */
-  --color-green:       #3d4535;
-  --color-green-dark:  #2f3928;
-  --color-beige:       #fff0dc;
-  --color-white:       #ffffff;
+  /* Core palette */
+  --green:         #3d4535;
+  --beige:         #fff0dc;
+  --beige-deep:    #f7e8cf;
+  --signal:        #7C9A52;   /* the accent role */
+  --signal-hover:  #6A8544;
+  --brass:         #B49A63;   /* dividers on light backgrounds only */
 
-  /* Typography */
-  --font-display:      "Abril Fatface", serif;
-  --font-body:         "IBM Plex Sans", sans-serif;
-  --font-data:         "IBM Plex Mono", monospace;
+  /* Derived text */
+  --ink:           var(--green);
+  --ink-muted:     rgba(61, 69, 53, 0.68);
+  --ink-faint:     rgba(61, 69, 53, 0.42);
+  --ink-invert:    var(--beige);
+  --ink-invert-muted: rgba(255, 240, 220, 0.70);
 
-  /* Spacing */
-  --space-xs:  0.5rem;
-  --space-sm:  1rem;
-  --space-md:  1.5rem;
-  --space-lg:  2.5rem;
-  --space-xl:  4rem;
+  /* Hairlines */
+  --rule:          rgba(61, 69, 53, 0.16);
+  --rule-invert:   rgba(255, 240, 220, 0.20);
+
+  /* Type */
+  --font-hero:     'Abril Fatface', Georgia, serif;
+  --font-display:  'Fraunces', Georgia, serif;
+  --font-body:     'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:     'IBM Plex Mono', ui-monospace, monospace;
 
   /* Shape */
-  --radius:    0;  /* Border-radius: 0 everywhere */
-
-  /* Transitions */
-  --transition: all 0.3s ease;
+  --radius: 0;
 }
 ```
-
-Using `var(--color-green)` instead of `#3d4535` throughout means the palette can be updated in one place. Using `var(--radius)` means the no-rounded-corners rule is enforced by the token, not by memory.
-
-When implementing this, also replace the inline styles in `evc-fetch.js` with CSS classes that use these tokens.
 
 ---
 
 ## 3. Current violations — known debt
 
-This is the inventory of brand violations present in the codebase as of May 2026. Address these as you work through the files, rather than re-auditing from scratch.
+Address these as you work through the files. Do not re-audit from scratch.
 
 ### Border-radius violations
 
@@ -134,7 +111,7 @@ This is the inventory of brand violations present in the codebase as of May 2026
 |---|---|---|
 | Hamburger menu | `border-radius: 50%` | `index.html` |
 | Nav close button | circular | `index.html` |
-| All CTA buttons (search, location, scroll, kit, tee) | `border-radius: 50px` | `index.html`, `evc-fetch.js` |
+| All CTA buttons | `border-radius: 50px` | `index.html`, `evc-fetch.js` |
 | Modal content container | `border-radius: 20px` | `index.html`, `explore.html` |
 | Modal close button | `border-radius: 50%` | `index.html`, `explore.html` |
 | Back buttons | `border-radius: 50%` | `about.html`, `contact.html` |
@@ -144,7 +121,7 @@ This is the inventory of brand violations present in the codebase as of May 2026
 | EVC cards | `border-radius: 12px` | `explore.html` |
 | Step indicator circles | `border-radius: 50%` | `index.html` |
 | Filter chips and badges | `border-radius: 20px` | `explore.html` |
-| Autocomplete dropdown | `border-radius: 8px` | `evc-fetch.js` inline |
+| Autocomplete dropdown | `border-radius: 8px` | `evc-fetch.js` inline — **vendor, do not change** |
 | Kit section | `border-radius: 12px` | `evc-fetch.js` inline |
 | Tee section | `border-radius: 12px` | `evc-fetch.js` inline |
 | Registry banner | `border-radius: 0 8px 8px 0` | `evc-fetch.js` inline |
@@ -154,44 +131,34 @@ This is the inventory of brand violations present in the codebase as of May 2026
 | Contact and about cards | `border-radius: 12px` | `about.html`, `contact.html` |
 | Footer acknowledgement box | `border-radius: 8px` | `index.html`, `about.html`, `contact.html` |
 
-### Font violations
-
-| Issue | Location |
-|---|---|
-| IBM Plex Sans not loaded | All four HTML files |
-| `body { font-family: "IBM Plex Mono" }` — Mono used for all prose | All four HTML files |
-| Inline `style.fontFamily` = Mono or Abril set throughout | `evc-fetch.js` |
+The Autocomplete dropdown is a vendor widget. Use `.vendor` wrapper rather than overriding directly.
 
 ### Gradient violations
 
 | Element | Current value | Should be |
 |---|---|---|
-| Section 2 background | `linear-gradient(135deg, #3d4535 0%, #2f3928 100%)` | `background-color: #3d4535` |
+| Section 2 background | `linear-gradient(135deg, #3d4535 0%, #2f3928 100%)` | `background-color: var(--green)` |
 | Hamburger menu | gradient on hover | flat `#2f3928` on hover |
-| Email section | gradient | flat `#3d4535` |
-| Contact cards | gradient | flat `#3d4535` |
-| Location info block | gradient | flat `#3d4535` |
-| Brand badge | gradient | flat `#3d4535` |
+| Email section | gradient | flat `var(--green)` |
+| Contact cards | gradient | flat `var(--green)` |
+| Location info block | gradient | flat `var(--green)` |
+| Brand badge | gradient | flat `var(--green)` |
 | Back button hover | gradient | flat `#2f3928` |
 
 ---
 
 ## 4. Voice — current violations
 
-These copy violations are present in the codebase as of May 2026.
-
 | Copy | File | Issue | Suggested replacement |
 |---|---|---|---|
-| "Join the ecological movement." | `index.html:748`, `explore.html:711` | "Movement" is startup hype | "Stay connected to the ecology of your place." |
-| "Their vision is simple: To make biodiversity mainstream — one garden, one story, one community at a time." | `about.html:473` | Hype; "mainstream" is a commercial aspiration | Remove or reframe: "Their work begins with one place, and one garden." |
-| "Indigenous plants have grown in harmony with local soils, climate, and wildlife for countless generations" | `index.html:673` | Over-spiritualised | "Indigenous plants have co-evolved with local soils, climate, and wildlife over thousands of years." |
-| "native wildlife" | `index.html:674` | Should be "indigenous" or "local" | "local wildlife" |
-| "Native plant selections and EVC-appropriate plantings" | `contact.html:415` | Should be "indigenous" | "Indigenous plant selections and EVC-appropriate plantings" |
-| "Custom t-shirt and merchandise inquiries" | `contact.html:416` | "merchandise" is not G&S voice | "Ecological tee inquiries" |
+| "Join the ecological movement." | `index.html`, `explore.html` | "Movement" is startup hype | "Stay connected to the ecology of your place." |
+| "Their vision is simple: To make biodiversity mainstream…" | `about.html` | "mainstream" is a commercial aspiration | "Their work begins with one place, and one garden." |
+| "Indigenous plants have grown in harmony with local soils…" | `index.html` | Over-spiritualised | "Indigenous plants have co-evolved with local soils, climate, and wildlife over thousands of years." |
+| "native wildlife" | `index.html` | Should be "indigenous" or "local" | "local wildlife" |
+| "Native plant selections and EVC-appropriate plantings" | `contact.html` | Should be "indigenous" | "Indigenous plant selections and EVC-appropriate plantings" |
+| "Custom t-shirt and merchandise inquiries" | `contact.html` | "merchandise" is not G&S voice | "Ecological tee inquiries" |
 
 ### Words that matter (from SUPER_MIND.md)
-
-These substitutions apply across all copy in this repo:
 
 | Avoid | Use instead |
 |---|---|
@@ -209,103 +176,77 @@ These substitutions apply across all copy in this repo:
 
 ## 5. Brand-correct patterns
 
-Reference these when building new UI elements.
-
 ### Correct button
 
 ```css
-.btn {
-  padding: 1.2rem 2.5rem;
-  background-color: var(--color-green);
-  color: var(--color-beige);
-  border: none;
-  border-radius: var(--radius);           /* 0 */
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 1rem;
+.btn-primary-action {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.6rem;
+  background: var(--signal);
+  color: var(--beige);
+  border: 1px solid var(--signal);
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: var(--transition);
+  transition: background 160ms ease, border-color 160ms ease;
 }
+.btn-primary-action:hover { background: var(--signal-hover); border-color: var(--signal-hover); }
 
-.btn:hover {
-  background-color: var(--color-green-dark);
+.btn-secondary-action {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
 }
-
-.btn--outline {
-  background-color: transparent;
-  border: 2px solid var(--color-green);
-  color: var(--color-green);
-}
-
-.btn--outline:hover {
-  background-color: var(--color-green);
-  color: var(--color-beige);
-}
+.btn-secondary-action:hover { border-color: var(--signal); color: var(--signal); }
 ```
 
-### Correct card / panel
+### Correct card
 
 ```css
-.panel {
-  background-color: var(--color-white);
-  border: 1px solid rgba(61, 69, 53, 0.15);
-  border-radius: var(--radius);           /* 0 */
-  padding: var(--space-lg);
-}
-
-.panel--green {
-  background-color: var(--color-green);
-  color: var(--color-beige);
+.card {
+  background: transparent;
+  border-top: 2px solid var(--signal);
+  border-radius: var(--radius);
+  padding: var(--gap-m) 0 0;
 }
 ```
 
 ### Correct input
 
 ```css
-input[type="text"],
-input[type="email"],
-input[type="search"] {
-  padding: 1.2rem 1.5rem;
-  font-family: var(--font-data);          /* Mono for inputs */
-  font-size: 1rem;
-  border: 2px solid var(--color-green);
-  border-radius: var(--radius);           /* 0 */
-  background-color: var(--color-white);
-  color: var(--color-green);
-  outline: none;
+.field {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--font-body);
+  border-radius: var(--radius);
 }
-```
-
-### Correct EVC code display
-
-```css
-.evc-code {
-  font-family: var(--font-data);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #999;
-}
+.field:focus { border-color: var(--signal); outline: none; }
 ```
 
 ---
 
 ## 6. Imagery
 
-- **EVC images** (`images/evcs/`) — landscape and habitat photography. Show the living EVC community, not a styled garden. These should feel like ecological fieldwork, not lifestyle photography.
+- **EVC images** (`images/evcs/`) — landscape and habitat photography. Show the living EVC community, not a styled garden.
 - **Plant images** (`images/plants/`) — close-up botanical. Clean background or natural context. Identifiable.
 - **Tee images** (`images/tees/`) — product photography. Flat lay or worn. The EVC name or illustration should be legible.
-- **No stock photography** that looks generic or lifestyle-oriented. The Ecologist Mind and Designer Mind both reject this.
-- **No decorative borders, drop shadows, or vignettes** on imagery. Let the photograph speak.
+- **No stock photography** that looks generic or lifestyle-oriented.
+- **No decorative borders, drop shadows, or vignettes** on imagery.
 
 ---
 
-## 7. The signal principle (from SUPER_MIND.md)
+## 7. The signal principle
 
-*"Signal Green is functional, not decorative — it appears only where meaning is being conveyed."*
+Signal Green (`#7C9A52`) is **the accent role** — it appears on CTAs, active states, hover states, focus rings, card accent bars, and interactive links. It is the single accent colour in the system.
 
-In this repo, Signal Green (a brighter green used for status indicators) should only appear on:
-- "Plant list available" status badges (functional: tells the user data exists)
-- Explicit success states
+It does not appear on purely decorative elements with no interactive or semantic meaning. When in doubt: if a user can interact with it or if it conveys status, Signal Green is correct. If it is purely decoration, it is probably wrong.
 
-It should not appear on decorative accents, dividers, borders as visual interest, or any element that doesn't carry ecological or status meaning.
+Brass (`#B49A63`) is the divider colour on light backgrounds only. It never appears as text, label, or accent on beige or dark backgrounds.
