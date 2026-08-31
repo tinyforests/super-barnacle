@@ -990,37 +990,30 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
                 item.style.fontSize = "14px";
                 item.style.display = "flex";
                 item.style.alignItems = "center";
-                item.style.justifyContent = "space-between";
-                item.style.gap = "10px";
+                item.style.justifyContent = "flex-start";
+                item.style.gap = "12px";
                 item.style.position = "relative";
                 item.style.overflow = "visible";
 
-                const nameSpan = document.createElement("span");
-                nameSpan.textContent = plantStr;
-                nameSpan.style.flex = "1";
-                item.appendChild(nameSpan);
-
                 const imageCheck = await checkPlantImage(plantStr);
+                const thumbSize = window.innerWidth <= 768 ? 40 : 48;
 
                 if (imageCheck.exists) {
-                  const cameraSpan = document.createElement("span");
-                  cameraSpan.className = "plant-camera";
-                  cameraSpan.innerHTML = "&#128247;";
-                  cameraSpan.style.cursor = "pointer";
-                  cameraSpan.style.fontSize = "1.2rem";
-                  cameraSpan.style.padding = "0.3rem 0.5rem";
-                  cameraSpan.style.borderRadius = "0";
-                  cameraSpan.style.transition = "all 0.3s";
-                  cameraSpan.style.userSelect = "none";
-
-                  cameraSpan.addEventListener("mouseenter", () => {
-                    cameraSpan.style.backgroundColor = "#3d4535";
-                    cameraSpan.style.transform = "scale(1.1)";
-                  });
-                  cameraSpan.addEventListener("mouseleave", () => {
-                    cameraSpan.style.backgroundColor = "transparent";
-                    cameraSpan.style.transform = "scale(1)";
-                  });
+                  // Inline thumbnail shown in the modal, enlarges on hover
+                  const thumb = document.createElement("img");
+                  thumb.className = "plant-thumb";
+                  thumb.src = imageCheck.url;
+                  thumb.alt = plantStr;
+                  thumb.loading = "lazy";
+                  thumb.style.width = thumbSize + "px";
+                  thumb.style.height = thumbSize + "px";
+                  thumb.style.objectFit = "cover";
+                  thumb.style.flex = "0 0 auto";
+                  thumb.style.display = "block";
+                  thumb.style.borderRadius = "0";
+                  thumb.style.cursor = "pointer";
+                  thumb.style.transition = "transform 0.3s";
+                  item.appendChild(thumb);
 
                   const tooltip = document.createElement("div");
                   tooltip.className = "plant-image-tooltip";
@@ -1039,40 +1032,47 @@ function displayModal(name, status, region, code, lat, lon, isUrbanFallback, add
                   img.style.display = "block";
                   img.style.borderRadius = "0";
 
-                  if (window.innerWidth <= 768) {
-                    tooltip.style.width = "200px";
-                    tooltip.style.height = "200px";
-                    img.style.width = "200px";
-                    img.style.height = "200px";
-                  } else {
-                    tooltip.style.width = "250px";
-                    tooltip.style.height = "250px";
-                    img.style.width = "250px";
-                    img.style.height = "250px";
-                  }
+                  const preview = window.innerWidth <= 768 ? 200 : 250;
+                  tooltip.style.width = preview + "px";
+                  tooltip.style.height = preview + "px";
+                  img.style.width = preview + "px";
+                  img.style.height = preview + "px";
 
                   tooltip.appendChild(img);
                   document.body.appendChild(tooltip);
 
-                  cameraSpan.addEventListener("mouseenter", () => {
-                    const rect = cameraSpan.getBoundingClientRect();
+                  thumb.addEventListener("mouseenter", () => {
+                    thumb.style.transform = "scale(1.08)";
+                    const rect = thumb.getBoundingClientRect();
                     if (window.innerWidth <= 768) {
                       tooltip.style.left = "50%";
                       tooltip.style.top = (rect.bottom + 10) + "px";
                       tooltip.style.transform = "translateX(-50%)";
                     } else {
-                      tooltip.style.left = (rect.left - 250 - 20) + "px";
+                      tooltip.style.left = (rect.right + 20) + "px";
                       tooltip.style.top = (rect.top + rect.height / 2) + "px";
                       tooltip.style.transform = "translateY(-50%)";
                     }
                     tooltip.style.display = "block";
                   });
-                  cameraSpan.addEventListener("mouseleave", () => {
+                  thumb.addEventListener("mouseleave", () => {
+                    thumb.style.transform = "scale(1)";
                     tooltip.style.display = "none";
                   });
-
-                  item.appendChild(cameraSpan);
+                } else {
+                  // Reserve the thumbnail column so plant names stay aligned
+                  const spacer = document.createElement("span");
+                  spacer.style.width = thumbSize + "px";
+                  spacer.style.height = thumbSize + "px";
+                  spacer.style.flex = "0 0 auto";
+                  spacer.style.display = "block";
+                  item.appendChild(spacer);
                 }
+
+                const nameSpan = document.createElement("span");
+                nameSpan.textContent = plantStr;
+                nameSpan.style.flex = "1";
+                item.appendChild(nameSpan);
 
                 list.appendChild(item);
               });
