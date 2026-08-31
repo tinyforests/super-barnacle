@@ -20,7 +20,6 @@
           "layer": "Shrub Layer",
           "plants": [
             "Myoporum petiolatum (Sticky Boobialla)",
-            "Austromyrtus dulcis (Midgen Berry)",
             "Leucopogon parviflorus (Coast Beard-heath)",
             "Rhagodia candolleana ssp. candolleana (Seaberry Saltbush)",
             "Leptospermum laevigatum (Coast Tea-tree)"
@@ -249,7 +248,7 @@
             "Poa labillardierei (Common Tussock-grass)",
             "Phragmites australis (Common Reed)",
             "Triglochin striatum (Streaked Arrowgrass)",
-            "Calystegia sepium (Large Bindweed)"
+            "Calystegia sepium subsp. roseata (Large Bindweed)"
           ]
         }
       ]
@@ -689,7 +688,6 @@
             "Blechnum wattsii (Hard Water-fern)",
             "Polystichum proliferum (Mother Shield-fern)",
             "Viola hederacea (Ivy-leaf Violet)",
-            "Oxalis acetosella (Wood Sorrel)",
             "Australopyrum pectinatum (Comb Wheat-grass)",
             "Poa helmsii (Swamp Tussock-grass)",
             "Histiopteris incisa (Bat's Wing Fern)"
@@ -730,7 +728,6 @@
             "Blechnum nudum (Fishbone Water-fern)",
             "Dianella tasmanica (Tasman Flax-lily)",
             "Viola hederacea (Ivy-leaf Violet)",
-            "Oxalis acetosella (Wood Sorrel)",
             "Stellaria flaccida (Forest Starwort)"
           ]
         }
@@ -779,7 +776,7 @@
             "Gonocarpus tetragynus (Common Raspwort)",
             "Drosera peltata ssp. auriculata (Tall Sundew)",
             "Solenogyne dominii (Smooth Solenogyne)",
-            "Oxalis corniculata s.l. (Yellow Wood-sorrel)",
+            "Oxalis perennans (Grassland Wood-sorrel)",
             "Oxalis exilis (Shady Wood-sorrel)",
             "Opercularia varia (Variable Stinkweed)",
             "Austrostipa rudis (Veined Spear-grass)",
@@ -870,7 +867,7 @@
             "Triglochin procerum s.l. (Water Ribbons)",
             "Microlaena stipoides var. stipoides (Weeping Grass)",
             "Ficinia nodosa (Knobby Club-sedge)",
-            "Calystegia sepium (Large Bindweed)",
+            "Calystegia sepium subsp. roseata (Large Bindweed)",
             "Blechnum cartilagineum (Gristle Fern)"
           ]
         }
@@ -969,7 +966,7 @@
             "Hydrocotyle hirta (Hairy Pennywort)",
             "Stellaria pungens (Prickly Starwort)",
             "Veronica plebeia (Trailing Speedwell)",
-            "Oxalis corniculata s.l. (Yellow Wood-sorrel)",
+            "Oxalis perennans (Grassland Wood-sorrel)",
             "Dichondra repens (Kidney-weed)",
             "Carex appressa (Tall Sedge)",
             "Poa labillardierei (Common Tussock-grass)",
@@ -977,7 +974,7 @@
             "Juncus amabilis (Hollow Rush)",
             "Microlaena stipoides var. stipoides (Weeping Grass)",
             "Eleocharis acuta (Common Spike-sedge)",
-            "Calystegia sepium (Large Bindweed)"
+            "Calystegia sepium subsp. roseata (Large Bindweed)"
           ]
         }
       ]
@@ -1001,7 +998,6 @@
             "Acacia acinacea (Gold-dust Wattle)",
             "Acacia pycnantha (Golden Wattle)",
             "Grevillea alpina (Mountain Grevillea)",
-            "Grevillea humifusa (Spreading Grevillea)",
             "Indigofera australis (Austral Indigo)",
             "Daviesia latifolia (Hop Bitter-pea)",
             "Bursaria spinosa (Sweet Bursaria)"
@@ -1125,7 +1121,6 @@
           "layer": "Shrub Layer",
           "plants": [
             "Grevillea alpina (Mountain Grevillea)",
-            "Hakea sericea (Needlebush)",
             "Acacia stricta (Hop Wattle)",
             "Acacia verniciflua (Varnish Wattle)",
             "Epacris impressa (Common Heath)",
@@ -1241,7 +1236,7 @@
             "Helichrysum scorpioides (Button Everlasting)",
             "Opercularia varia (Variable Stinkweed)",
             "Drosera whittakeri ssp. aberrans (Scented Sundew)",
-            "Oxalis corniculata s.l. (Yellow Wood-sorrel)",
+            "Oxalis perennans (Grassland Wood-sorrel)",
             "Xanthorrhoea minor ssp. lutea (Small Grass-tree)",
             "Deyeuxia quadriseta (Reed Bent-grass)",
             "Gahnia radula (Thatch Saw-sedge)",
@@ -1551,7 +1546,7 @@
             "Lachnagrostis filiformis var. filiformis (Common Blown-grass)",
             "Triglochin procerum (Water-ribbons)",
             "Eleocharis acuta (Common Spike-sedge)",
-            "Calystegia sepium (Large Bindweed)"
+            "Calystegia sepium subsp. roseata (Large Bindweed)"
           ]
         }
       ]
@@ -1633,7 +1628,7 @@
             "Triglochin procerum s.l. (Water Ribbons)",
             "Microlaena stipoides var. stipoides (Weeping Grass)",
             "Ficinia nodosa (Knobby Club-sedge)",
-            "Calystegia sepium (Large Bindweed)"
+            "Calystegia sepium subsp. roseata (Large Bindweed)"
           ]
         }
       ]
