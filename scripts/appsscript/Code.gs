@@ -107,6 +107,7 @@ function sendPlantList(row, plants) {
   var evc = row.evcName || 'your Ecological Vegetation Class';
   var subject = 'Your indigenous plant list — ' + evc;
 
+  // Plain-text fallback (accessibility + clients that block HTML).
   var lines = plants.map(function (pl) {
     return pl.layer
       ? pl.layer.toUpperCase() + '  ·  ' + pl.name + (pl.common ? ' — ' + pl.common : '')
@@ -131,8 +132,207 @@ function sendPlantList(row, plants) {
 
   GmailApp.sendEmail(row.email, subject, body, {
     from: REPLY_TO,
-    name: FROM_NAME
+    name: FROM_NAME,
+    htmlBody: buildHtmlEmail(row, evc, plants, getAvailablePlantImages())
   });
+}
+
+var SITE = 'https://www.findmyecologicalgarden.com';
+
+/**
+ * Returns a lookup { slug: true } of plant images available on the live site,
+ * read from /images/plants/manifest.json (an array of filename slugs), cached
+ * for 6 hours. Returns null on any failure so the email degrades gracefully
+ * to a text-only list rather than showing broken images.
+ */
+function getAvailablePlantImages() {
+  try {
+    var cache = CacheService.getScriptCache();
+    var cached = cache.get('plant_img_manifest');
+    var arr;
+    if (cached) {
+      arr = JSON.parse(cached);
+    } else {
+      var resp = UrlFetchApp.fetch(SITE + '/images/plants/manifest.json', {
+        muteHttpExceptions: true
+      });
+      if (resp.getResponseCode() !== 200) return null;
+      arr = JSON.parse(resp.getContentText());
+      cache.put('plant_img_manifest', JSON.stringify(arr), 21600);
+    }
+    var map = {};
+    for (var i = 0; i < arr.length; i++) map[arr[i]] = true;
+    return map;
+  } catch (err) {
+    return null;
+  }
+}
+
+// Common-name slug matching the image filename convention used site-wide
+// (see checkPlantImage in evc-fetch.js): lowercase, spaces → '-', drop apostrophes.
+function plantSlug(pl) {
+  var base = (pl.common || pl.name || '');
+  return base.toLowerCase().replace(/\s+/g, '-').replace(/['’]/g, '');
+}
+
+/**
+ * Builds the Gardener & Son HTML email for the plant list.
+ * Email-safe: table layout, inline styles, border-radius 0, web-safe
+ * font fallbacks (Abril Fatface / IBM Plex resolve only in clients that
+ * honour the web-font link; Georgia / system stacks everywhere else).
+ */
+function buildHtmlEmail(row, evc, plants, available) {
+  var GREEN = '#3d4535';
+  var BEIGE = '#fff0dc';
+  var ACCENT = '#a8c285';
+  var MUTED = '#6b7263';
+  var RULE = 'rgba(61,69,53,0.14)';
+  var SERIF = "'Abril Fatface', Georgia, 'Times New Roman', serif";
+  var BODYSERIF = "Georgia, 'Times New Roman', serif";
+  var SANS = "'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
+  var MONO = "'IBM Plex Mono', 'Courier New', Courier, monospace";
+  var REGISTRY_URL = 'https://ecologicalregistry.org';
+
+  // Deep link back to this reader's EVC result on the site (re-opens the
+  // full palette + kit + registry). Every plant row links here.
+  var resultUrl = SITE + '/?evc=' + encodeURIComponent(row.evcCode || '') +
+    '&name=' + encodeURIComponent(evc);
+
+  var groups = groupByLayer(plants);
+  var showedThumb = false;
+
+  var out = [];
+  out.push('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">');
+  out.push('<meta name="viewport" content="width=device-width, initial-scale=1">');
+  out.push('<meta name="color-scheme" content="light only">');
+  out.push('<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">');
+  out.push('</head>');
+  out.push('<body style="margin:0;padding:0;background:' + BEIGE + ';">');
+  // Hidden preheader (inbox preview text)
+  out.push('<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your indigenous plant palette for ' + esc(evc) + '.</div>');
+
+  out.push('<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + BEIGE + ';">');
+  out.push('<tr><td align="center" style="padding:32px 16px;">');
+  out.push('<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:' + BEIGE + ';">');
+
+  // Masthead
+  out.push('<tr><td style="padding:0 8px 16px 8px;border-bottom:1px solid ' + GREEN + ';">' +
+    '<div style="font-family:' + MONO + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + GREEN + ';line-height:1.5;">Find My Ecological Garden</div>' +
+    '<div style="font-family:' + MONO + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + MUTED + ';line-height:1.5;">A Gardener &amp; Son Project</div>' +
+    '</td></tr>');
+
+  // Headline
+  out.push('<tr><td style="padding:24px 8px 6px 8px;font-family:' + SERIF + ';font-size:32px;line-height:1.2;color:' + GREEN + ';">Your ecological garden begins here.</td></tr>');
+
+  // Meta block (EVC / code / address)
+  out.push('<tr><td style="padding:18px 8px 6px 8px;">');
+  out.push('<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">');
+  out.push(metaRow(MONO, SANS, GREEN, MUTED, 'EVC', esc(evc) + (row.evcCode ? ' &nbsp;<span style="color:' + MUTED + ';">(' + esc(row.evcCode) + ')</span>' : '')));
+  if (row.address) out.push(metaRow(MONO, SANS, GREEN, MUTED, 'Location', esc(row.address)));
+  out.push('</table></td></tr>');
+
+  // Palette label
+  out.push('<tr><td style="padding:26px 8px 4px 8px;font-family:' + MONO + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + GREEN + ';">Your indigenous plant palette</td></tr>');
+
+  // Layers — each rendered as a tinted band that deepens from a pale
+  // canopy at the top to a soft green ground layer at the bottom,
+  // echoing the vertical structure of the vegetation itself.
+  var TINT_TOP = [250, 243, 226];  // pale cream (canopy)
+  var TINT_BOTTOM = [199, 224, 173]; // soft green (ground layer)
+  for (var g = 0; g < groups.length; g++) {
+    var grp = groups[g];
+    var t = groups.length > 1 ? g / (groups.length - 1) : 0;
+    var tint = lerpColor(TINT_TOP, TINT_BOTTOM, t);
+    out.push('<tr><td style="padding:3px 8px;">');
+    out.push('<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + tint + ';"><tr><td bgcolor="' + tint + '" style="padding:16px 20px;">');
+    if (grp.layer) {
+      out.push('<div style="font-family:' + MONO + ';font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:' + GREEN + ';padding-bottom:6px;">' + esc(grp.layer) + '</div>');
+    }
+    out.push('<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">');
+    for (var i = 0; i < grp.items.length; i++) {
+      var pl = grp.items[i];
+      var last = (i === grp.items.length - 1);
+      var border = last ? '' : 'border-bottom:1px solid ' + RULE + ';';
+      var slug = plantSlug(pl);
+      var hasImg = available && available[slug];
+      if (hasImg) showedThumb = true;
+
+      var sci = '<span style="font-family:' + BODYSERIF + ';font-style:italic;font-size:15px;color:' + GREEN + ';">' + esc(pl.name) + '</span>';
+      var common = pl.common ? '<span style="font-family:' + SANS + ';font-size:13px;color:' + MUTED + ';">&nbsp; ' + esc(pl.common) + '</span>' : '';
+
+      var thumbCell = hasImg
+        ? '<a href="' + resultUrl + '" style="text-decoration:none;"><img src="' + SITE + '/images/plants/' + slug + '.jpg" width="44" height="44" alt="' + esc(pl.common || pl.name) + '" style="display:block;width:44px;height:44px;object-fit:cover;border:0;border-radius:0;"></a>'
+        : '<span style="display:block;width:44px;height:44px;"></span>';
+
+      out.push('<tr>' +
+        '<td valign="middle" width="44" style="width:44px;padding:8px 12px 8px 0;' + border + '">' + thumbCell + '</td>' +
+        '<td valign="middle" style="padding:9px 0;' + border + '"><a href="' + resultUrl + '" style="text-decoration:none;">' + sci + common + '</a></td>' +
+        '</tr>');
+    }
+    out.push('</table></td></tr></table></td></tr>');
+  }
+
+  // Grounding note
+  out.push('<tr><td style="padding:26px 8px 0 8px;font-family:' + BODYSERIF + ';font-size:15px;line-height:1.6;color:' + MUTED + ';">These species belong to your ground — grown in step with your soils, climate and wildlife for countless generations.</td></tr>');
+
+  // Registry focus block
+  out.push('<tr><td style="padding:34px 8px 8px 8px;">');
+  out.push('<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + GREEN + ';">');
+  out.push('<tr><td style="padding:34px 30px;">');
+  out.push('<div style="font-family:' + MONO + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + ACCENT + ';">The Ecological Registry</div>');
+  out.push('<div style="font-family:' + SERIF + ';font-size:26px;line-height:1.2;color:' + BEIGE + ';padding:12px 0 10px 0;">Put your garden on the map.</div>');
+  out.push('<div style="font-family:' + SANS + ';font-size:14px;line-height:1.6;color:' + BEIGE + ';opacity:0.88;padding-bottom:22px;">When your indigenous garden is planted, register it. Each registered garden becomes part of a living map of restored ground across Victoria — evidence that the landscape is being rebuilt, one plot at a time.</div>');
+  // Bulletproof button
+  out.push('<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="' + ACCENT + '" style="padding:14px 30px;">');
+  out.push('<a href="' + REGISTRY_URL + '" style="font-family:' + MONO + ';font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:' + GREEN + ';text-decoration:none;display:inline-block;">Register your garden &rarr;</a>');
+  out.push('</td></tr></table>');
+  out.push('</td></tr></table></td></tr>');
+
+  // Photo attribution (CC BY-NC) — only when thumbnails were shown
+  if (showedThumb) {
+    out.push('<tr><td style="padding:22px 8px 0 8px;font-family:' + MONO + ';font-size:10px;letter-spacing:0.5px;line-height:1.5;color:' + MUTED + ';">Plant photography by <a href="https://www.inaturalist.org" style="color:' + MUTED + ';">iNaturalist</a> contributors, licensed CC BY-NC.</td></tr>');
+  }
+
+  // Footer
+  out.push('<tr><td style="padding:26px 8px 4px 8px;font-family:' + MONO + ';font-size:11px;letter-spacing:1px;color:' + MUTED + ';">Gardener &amp; Son &nbsp;·&nbsp; Mont Albert &amp; Hawthorn</td></tr>');
+  out.push('<tr><td style="padding:0 8px;font-family:' + MONO + ';font-size:11px;letter-spacing:1px;"><a href="https://gardenerandson.com" style="color:' + GREEN + ';text-decoration:none;">gardenerandson.com</a></td></tr>');
+
+  out.push('</table></td></tr></table></body></html>');
+  return out.join('');
+}
+
+function metaRow(mono, sans, green, muted, label, valueHtml) {
+  return '<tr>' +
+    '<td valign="top" style="width:96px;padding:4px 0;font-family:' + mono + ';font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:' + muted + ';">' + esc(label) + '</td>' +
+    '<td valign="top" style="padding:4px 0;font-family:' + sans + ';font-size:15px;color:' + green + ';">' + valueHtml + '</td>' +
+    '</tr>';
+}
+
+function groupByLayer(plants) {
+  var order = [];
+  var map = {};
+  plants.forEach(function (pl) {
+    var layer = pl.layer || '';
+    if (!map[layer]) { map[layer] = []; order.push(layer); }
+    map[layer].push(pl);
+  });
+  return order.map(function (l) { return { layer: l, items: map[l] }; });
+}
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// Linear interpolation between two [r,g,b] colours → '#rrggbb'.
+function lerpColor(a, b, t) {
+  return '#' + [0, 1, 2].map(function (i) {
+    var v = Math.round(a[i] + (b[i] - a[i]) * t);
+    return ('0' + v.toString(16)).slice(-2);
+  }).join('');
 }
 
 /* ---------- helpers ---------- */
