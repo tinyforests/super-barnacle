@@ -372,7 +372,7 @@ function fetchEVCData(lat, lon) {
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
              "?service=WFS&version=1.1.0&request=GetFeature" +
-             "&typeName=open-data-platform:nv2005_evcbcs" +
+             "&typeName=open-data-platform:nv1750_evcbcs" +
              `&bbox=${bbox}` +
              "&srsName=EPSG:4326" +
              "&outputFormat=application/json";
@@ -418,7 +418,7 @@ function fetchEVCDataLonLat(lat, lon) {
   
   const url = "https://opendata.maps.vic.gov.au/geoserver/wfs" +
               "?service=WFS&version=1.1.0&request=GetFeature" +
-              "&typeName=open-data-platform:nv2005_evcbcs" +
+              "&typeName=open-data-platform:nv1750_evcbcs" +
               `&bbox=${bbox}` +
               "&srsName=EPSG:4326" +
               "&outputFormat=application/json";
