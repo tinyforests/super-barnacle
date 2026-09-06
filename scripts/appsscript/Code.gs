@@ -51,7 +51,13 @@ function doPost(e) {
       evcName: clean(p.evc_name, 120),
       source: clean(p.source, 40) || 'direct',
       referrer: clean(p.referrer, 300),
-      page: clean(p.page, 300)
+      page: clean(p.page, 300),
+      // Proof of express consent (Spam Act 2003). The gate only submits when
+      // the box is ticked, so consent should always be true here — recorded
+      // anyway, alongside the exact wording shown and when it was given.
+      consent: p.consent === true || p.consent === 'true',
+      consentText: clean(p.consent_text, 300),
+      consentTimestamp: clean(p.consent_timestamp, 40)
     };
 
     var sheet = getSheet();
@@ -62,7 +68,8 @@ function doPost(e) {
     if (!isDuplicate) {
       sheet.appendRow([
         new Date(), row.email, row.address, row.lat, row.lng,
-        row.evcCode, row.evcName, row.source, row.referrer, row.page
+        row.evcCode, row.evcName, row.source, row.referrer, row.page,
+        row.consent ? 'Yes' : 'No', row.consentText, row.consentTimestamp
       ]);
     }
 
@@ -87,7 +94,8 @@ function getSheet() {
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow(['Timestamp', 'Email', 'Address', 'Lat', 'Lng',
-      'EVC Code', 'EVC Name', 'Source', 'Referrer', 'Page']);
+      'EVC Code', 'EVC Name', 'Source', 'Referrer', 'Page',
+      'Consent', 'Consent Text', 'Consent Timestamp']);
   }
   return sheet;
 }
