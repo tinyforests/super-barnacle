@@ -34,6 +34,11 @@
 
   var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuOBcTHXM8yjnmLVRGcHCPAzFdbnmTcR34v-J3LLLk3Z4LIuL_xWtUD4i2HIhxqq0h/exec';
 
+  // Exact consent wording shown to the user. Recorded verbatim with each
+  // signup (consent_text + consent_timestamp) as proof of express consent
+  // under the Spam Act 2003 (Cth). Change here = single source of truth.
+  var CONSENT_TEXT = 'Yes, email me my plant list and occasional field notes from Gardener & Son. I can unsubscribe any time.';
+
   /* ---------- handoff params from findmyevc ---------- */
 
   var params = new URLSearchParams(window.location.search);
@@ -70,6 +75,11 @@
     'background:#3d4535;color:#fff0dc;font-family:"IBM Plex Mono",monospace;',
     'font-size:13px;letter-spacing:.08em;text-transform:uppercase;}',
     '.fmeg-gate button:disabled{opacity:.6;cursor:wait;}',
+    '.fmeg-gate .consent{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;',
+    'cursor:pointer;font-family:"IBM Plex Sans",sans-serif;font-size:13px;line-height:1.5;',
+    'text-transform:none;letter-spacing:0;color:#3d4535;}',
+    '.fmeg-gate .consent input{flex:0 0 auto;width:16px;height:16px;margin:2px 0 0;',
+    'accent-color:#3d4535;cursor:pointer;}',
     '.fmeg-gate .fine{font-size:11px;line-height:1.6;opacity:.78;margin:12px 0 0;}',
     '.fmeg-gate .err{display:none;font-family:"IBM Plex Mono",monospace;',
     'font-size:12px;color:#6b2f28;margin:0 0 12px;}',
@@ -125,6 +135,10 @@
       'autocomplete="email" required>' +
       '<input type="text" class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">' +
       '<div class="err" id="fmeg-err">Enter a valid email address.</div>' +
+      '<label class="consent" for="fmeg-consent">' +
+      '<input type="checkbox" id="fmeg-consent" name="consent" required>' +
+      '<span>' + esc(CONSENT_TEXT) + '</span>' +
+      '</label>' +
       '<button type="submit" id="fmeg-btn">Unlock my plant list</button>' +
       '</form>' +
       '<p class="fine">We’ll email your list and occasional field notes from the studio. ' +
@@ -135,14 +149,22 @@
     var input = box.querySelector('#fmeg-email');
     var btn = box.querySelector('#fmeg-btn');
     var err = box.querySelector('#fmeg-err');
+    var consent = box.querySelector('#fmeg-consent');
 
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       err.classList.remove('on');
       var email = (input.value || '').trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        err.textContent = 'Enter a valid email address.';
         err.classList.add('on');
         input.focus();
+        return;
+      }
+      if (!consent.checked) {
+        err.textContent = 'Please tick the box so we can send your list.';
+        err.classList.add('on');
+        consent.focus();
         return;
       }
 
@@ -157,6 +179,9 @@
         lng: handoff.lng,
         evc_code: evcCode,
         evc_name: evcName,
+        consent: true,
+        consent_text: CONSENT_TEXT,
+        consent_timestamp: new Date().toISOString(),
         source: handoff.source,
         referrer: document.referrer || '',
         page: window.location.href,
