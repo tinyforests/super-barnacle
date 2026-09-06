@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Local build/scrape logs
+scripts/*.log
